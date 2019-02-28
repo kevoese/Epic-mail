@@ -1,0 +1,31 @@
+:root {
+  --myPurple: rgba(63, 9, 114, 0.9);
+  --myTransPurple: rgba(39, 10, 56, 0.7);
+  --myLightPurple: rgba(74, 25, 119, 0.9);
+}
+
+@font-face {
+  font-family: myfont;
+  src: url("fonts/Darleston.otf");
+}
+
+.icon::after {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  top: 10%;
+  right: 8%;
+  position: absolute;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  min-height: 100vh;
+}
