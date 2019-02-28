@@ -4,69 +4,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>sign up epic mail</title>
+    <title>Epic-mail</title>
     <link rel="stylesheet" href="CSS/epic-mail.css" />
     <link
       href="CSS/fonts/fontawesome-free-5.7.2-web/css/all.css"
       rel="stylesheet"
     />
   </head>
-  <body>
-    <div class="backgnd"></div>
-        <div class="icon SignUp wrapper">
-            <div class="close"></div>
-            <div class="content">
-                <h2 class="welcome">Welcome to Epic Mail</h2>
-                <p>Experience fast, smooth and easy exchange of information</p>
-                <div class="getstarted">Get Started Here</div>
-            </div>
-            <div class="getInfo">
-                <h2 class="signup">Sign up</h2>
-                <hr />
-                <div class="icon fname">
-                <input
-                    type="text"
-                    id="name"
-                    class="firstName"
-                    placeholder="First name"
-                />
-                </div>
-                <div class="icon lname">
-                <input
-                    id="name"
-                    type="text"
-                    class="lastName"
-                    placeholder="Last name"
-                />
-                </div>
-                <div class="icon emailicon">
-                <input
-                value="@epicmail.com"
-                    required
-                    type="text"
-                    id="email"
-                    class="email"
-                    placeholder="Email"
-                />
-                <p class="require">Email must be a valid address e.g my@epicmail.com</p>
-                </div>
-                <div class="icon passwrd">
-                <input
-                    id="password"
-                    type="password"
-                    class="password"
-                    placeholder="Password"
-                />
-                <p class="require">
-                    Password must be alphanumeric (-@. and _ are also included) and must
-                    contain 7 to 20 characters long
-                </p>
-                </div>
-                <button class="submit">Sign up</button>
-                <span class="loginlink">Already a Member? Login Here</span>
-            </div>
+  <div class="backgnd"></div>
+ <div class="container">
+     <div class="pageContent">
+         <h2 class="pageWelcome">
+             Epic Mail
+         </h2>
+         <p>Get Connected with friends and family. Experience fast, smooth and easy exchange
+              of information with Epic Mail. Register now to get started.
+         </p>
+         <div class="register">
+           Register Now 
+         </div>
+     </div>
 
-           
-    </div>
+     <div class="icon SignUp wrapper">
+         <div class="close"></div>
+         <div class="content">
+             <h2 class="welcome">Welcome to Epic Mail</h2>
+             <p>Experience fast, smooth and easy exchange of information</p>
+             <div class="getstarted">Get Started Here</div>
+         </div>
+         <div class="getInfo">
+             <h2 class="signup">Sign up</h2>
+             <hr />
+             <div class="icon fname">
+             <input
+                 type="text"
+                 id="name"
+                 class="firstName"
+                 placeholder="First name"
+             />
+             </div>
+             <div class="icon lname">
+             <input
+                 id="name"
+                 type="text"
+                 class="lastName"
+                 placeholder="Last name"
+             />
+             </div>
+             <div class="icon emailicon">
+             <input
+             value="@epicmail.com"
+                 required
+                 type="text"
+                 id="email"
+                 class="email"
+                 placeholder="Email"
+             />
+             <p class="require">Email must be a valid address e.g my@epicmail.com</p>
+             </div>
+             <div class="icon passwrd">
+             <input
+                 id="password"
+                 type="password"
+                 class="password"
+                 placeholder="Password"
+             />
+             <p class="require">
+                 Password must be alphanumeric (-@. and _ are also included) and must
+                 contain 7 to 20 characters long
+             </p>
+             </div>
+             <button class="submit">Sign up</button>
+             <span class="loginlink">Already a Member? Login Here</span>
+         </div>
+
+        
+ </div>
+ <div class=" Login wrapper blockwrap">
+         <div class="content lcontent">
+           <h3 class="login">Sign In</h3>
+         </div>
+         <div class="getInfo lgetinfo">
+           <div class="icon emailicon linfo">
+             <input
+               required
+               type="text"
+               id="email"
+               class="email"
+               placeholder="Email"
+             />
+           </div>
+           <div class="icon passwrd linfo">
+             <input
+               id="password"
+               type="password"
+               class="password"
+               placeholder="Password"
+             />
+           </div>
+           <button class="submit">Login</button>
+           <span class="loginlink">Not a Member? Register Here</span>
+         </div>
+       </div>
+
+ </div>
+
+ <script src="JS/epic-mail.js"></script>
   </body>
 </html>
