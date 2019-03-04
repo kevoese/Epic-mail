@@ -85,7 +85,7 @@ body {
 }
 
 .pageContent p {
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: white;
   flex-wrap: wrap;
   margin: 0px 0px 1.2em;
@@ -94,7 +94,7 @@ body {
 .register {
   margin: 1.1em auto;
   padding: 1.1em 6%;
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: coral;
   border: 2px solid coral;
   width: 14em;
@@ -166,12 +166,13 @@ button:focus {
   top: 50%;
   transform: translateY(-50%);
   right: 1%;
+    font-size: 1.3em;
 }
 
 .loginlink {
   margin: 0.31em;
   letter-spacing: 0.1em;
-  font-size: 0.85em;
+  font-size: 0.9em;
   cursor: pointer;
   font-style: italic;
   color: var(--myPurple);
@@ -282,8 +283,8 @@ input {
   border-radius: 0.31em;
   box-shadow: 0.31em;
   width: 90%;
-  height: 2em;
-  padding: 3px 1.2em 3px 0.31em;
+  height: 3em;
+  padding: 1em 1.2em 1em 0.31em;
   margin: 1.1em auto 0.31em;
 }
 
@@ -353,9 +354,11 @@ input:focus {
   grid-template-columns: 45% 55%;
   position: relative;
   min-width: 350px;
-  max-width: 850px;
+    width: 90%;
+  max-width: 1000px;
   left: 50%;
   transform: scale(0) translateX(-50%);
+    font-size: 1.3em;
 }
 
 .showsignup {
@@ -417,6 +420,7 @@ input:focus {
   .SignUp {
     display: block;
     max-width: 400px;
+      font-size: 0.9em;
   }
 }
 
@@ -439,8 +443,8 @@ input:focus {
     
   .Login {
     margin: 0 auto;
-    top: 72%;
-    font-size: 0.75em;
+    top: 70%;
+    font-size: 0.8em;
     width: 80%;
     min-width: 150px;
   }
@@ -452,8 +456,7 @@ input:focus {
   }
 
   .SignUp {
-    font-size: 0.8em;
     max-width: 400px;
-    min-width: 200px;
+    min-width: 300px;
   }
 }
