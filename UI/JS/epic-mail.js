@@ -22,24 +22,22 @@ inputs.forEach(input => {
 });
 
 const registerBtn = document.querySelector(".register");
-const backgroundStyle = document.querySelector(".backgnd").style;
+const backgroundStyle = document.querySelector(".back").style;
 const loginStyle = document.querySelector(".Login").style;
-const signUpStyle = document.querySelector(".SignUp").style;
+const signUp = document.querySelector(".SignUp");
 const content = document.querySelector(".pageContent").style;
 const close = document.querySelector(".close");
 
 registerBtn.addEventListener("click", event => {
   loginStyle.display = "none";
-  signUpStyle.transform = "scale(1)";
-  signUpStyle.opacity = "1";
+  signUp.classList.add("showsignup");
   backgroundStyle.filter = "blur(10px)";
   content.display = "none";
 });
 
 close.addEventListener("click", event => {
   loginStyle.display = "initial";
-  signUpStyle.transform = "scale(0)";
-  signUpStyle.opacity = "0";
+  signUp.classList.remove("showsignup");
   backgroundStyle.filter = "blur(0px)";
   content.display = "initial";
 });

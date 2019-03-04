@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Main epic-mail</title>
+    <title>Admin epic-mail</title>
     <link rel="stylesheet" href="CSS/main.css" />
     <link
       href="CSS/fonts/fontawesome-free-5.7.2-web/css/all.css"
@@ -17,17 +17,17 @@
          <div id="navhide" class="menu icon"></div>
          <h4 class="vcenter logo">Epic mail</h4>
          <div class="vcenter search icon">
-             <input type="text" placeholder="Search Messages..." class="searchbar">
+             <input type="text" placeholder="Search Groups..." class="searchbar">
          </div> 
          <div class="vcenter menulist">
             <ul class="navmenu">
             <li>
                 <div class="profile vcenter">
-                    <img src="images/dummy2.png" alt="" class="profileimg">
-                    <span class="profilename">John Doe</span>
+                    <img src="images/admin.png" alt="" class="profileimg">
+                    <span class="profilename">Admin</span>
                 </div>  
             </li> 
-                <li ><a data-tool-tip="Edit Profile" class=" vcenter editprofile icon"></a></li> 
+                <!-- <li ><a data-tool-tip="Edit Profile" class=" vcenter editprofile icon"></a></li>  -->
                 <li> <span class="vcenter signout icon">Sign out</span></li> 
              </ul>
                 
@@ -37,132 +37,74 @@
     <div class="wrapper">
         <div class="inbox">
             <div id= "close" class="show icon"></div>
-            <div class="inboxcontent">
-                <button class="createMessage icon">Compose</button>
-                <button class="createGroup icon"> Groups</button>
+            <div class="groupcontent">
+                <!-- <button class="createMessage icon">Compose</button> -->
+                <button class="createGroup admincreategroup icon">New Group</button>
             </div>
-            <div class="msgbuttons">
-                    <a id="allbutton" href="#allbutton" data-tool-tip="All" class="allbutton icon"><span class=" vcenter allno">3</span></a>
-                    <a id="sentbutton" href="#sentbutton" data-tool-tip="Sent" class="sentbutton icon"><span class="vcenter sentno">3</span></a>
-                    <a id="draftbutton" href="#draftbutton" data-tool-tip="Draft" class="draftbutton icon"><span class="vcenter draftno">3</span></a>
+            <div class="groupbutton">
+                    <a id="allbutton" href="#allbutton" data-tool-tip="Groups" class="allbutton allgroupbutton icon"><span class=" vcenter allno groupbuttonNo">7</span></a>
+                    <!-- <a id="sentbutton" href="#sentbutton" data-tool-tip="Sent" class="sentbutton icon"><span class="vcenter sentno">3</span></a>
+                    <a id="draftbutton" href="#draftbutton" data-tool-tip="Draft" class="draftbutton icon"><span class="vcenter draftno">3</span></a> -->
             </div>
             <div class="messages">
                <div class="msgcontain">
-                    <div class="all">
+                    <div class="all allgroups">
                         <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
+                            <p class="username icon">Engineering Group</p><p class="msgdate icon">Feb 20 2019</p>
+                            <p class="msgtitle groupnumbers">
+                                Users: (8)
                             </p>
                             <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                             Molestiae distinctio tempora expedita soluta, voluptatibus </p>
                             <span class="arrow icon"></span>
                         </div>
                         <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
+                            <p class="username icon">Programming Group</p><p class="msgdate icon">Feb 20 2019</p>
+                            <p class="msgtitle groupnumbers">
+                                    Users: (21)
+                            </p>
+                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
+                            <span class="arrow icon"></span>
+                        </div>
+                        <div class="wrapmsghead">
+                            <p class="username icon">Social Group</p><p class="msgdate icon">Feb 20 2019</p>
+                            <p class="msgtitle groupnumbers">
+                                Users: (13)
+                            </p>
+                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
+                            <span class="arrow icon"></span>
+                        </div>
+                        <div class="wrapmsghead">
+                            <p class="username icon">Culture Group</p><p class="msgdate icon">Feb 20 2019</p>
+                            <p class="msgtitle groupnumbers">
+                                Users: (8)
                             </p>
                             <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                             Molestiae distinctio tempora expedita soluta, voluptatibus </p>
                             <span class="arrow icon"></span>
                         </div>
                         <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
+                            <p class="username icon">Music Group</p><p class="msgdate icon">Feb 20 2019</p>
+                            <p class="msgtitle groupnumbers">
+                                    Users: (21)
                             </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                    </div>
-                    <div class="sent">
-                            <div class="wrapmsghead">
-                                <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                                <p class="msgtitle">
-                                    Lorem ipsum dolor
-                                </p>
-                                <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                                <span class="delete icon" data-tool-tip="Delete"></span>
-                            </div>
-                            <div class="wrapmsghead">
-                                <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                                <p class="msgtitle">
-                                    Lorem ipsum dolor
-                                </p>
-                                <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                                <span class="delete icon" data-tool-tip="Delete"></span>
-                            </div>
-                            <div class="wrapmsghead">
-                                <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                                <p class="msgtitle">
-                                    Lorem ipsum dolor
-                                </p>
-                                <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                                <span class="delete icon" data-tool-tip="Delete"></span>
-                            </div>
-                    </div>
-                    <div class="draft">
-                        <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                             Molestiae distinctio tempora expedita soluta, voluptatibus </p>
                             <span class="arrow icon"></span>
                         </div>
                         <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
+                            <p class="username icon">Football Group</p><p class="msgdate icon">Feb 20 2019</p>
+                            <p class="msgtitle groupnumbers">
+                                Users: (13)
                             </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">John Doe</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle">
-                                Lorem ipsum dolor
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                             Molestiae distinctio tempora expedita soluta, voluptatibus </p>
                             <span class="arrow icon"></span>
                         </div>
                     </div>
-             </div> 
+                 </div> 
             </div>
             
         </div>
@@ -170,25 +112,16 @@
             <div class="composewrapper">
                 
                     <div class="container ">
-                       <div class="newmsg icon">New Message <div class="cutmsg icon"></div></div>
+                       <div class="newmsg icon">New Group <div class="cutmsg icon"></div></div>
                        <span class="composefrom">From</span>
-                       <span class="composesender">Johndoe@epicmail.com</span>
-                       <span class="composeto icon">to</span>
-                       <div class="addContacts">
-                            <input type="text" class="newmsgsearch" placeholder="Enter Email">
-                               <select id = "contacts" class="contactselect" name="gender" >
-                                   <option  disabled selected>Add contacts</option>
-                                   <option >John Doe</option>
-                                   <option >Amos Doe</option>
-                                   <option >Nonso Jude</option>
-                               </select>
-                               <span class="added icon">John Doe</span>
-                               <span class="added icon">Nonso Jude</span>
-                               <span class="added icon">John Doe</span>
+                       <span class="composesender">Admin</span>
+                       <span class="composeto icon">Group</span>
+                       <div class="addContacts groupcontacts">
+                            <input type="text" class="newmsgsearch" placeholder="Enter Group Name">
                        </div>
                        <input id="composesubject" type="text" placeholder="Subjects" class="composesubject">
-                       <textarea name="" id="composemessage" class="composemessage" cols="30" rows="10"></textarea>
-                       <button class="composesend icon">Send Message</button>
+                       <textarea name="" id="composemessage" class="composemessage adminmessage" cols="30" rows="10"></textarea>
+                       <button class="composesend icon">Add Group</button>
                     </div>
                 </div>
             <div class="thread">
@@ -302,6 +235,6 @@ Also, we invite you to dive into our recen
         </div>
         
     </div>
-    <script src="JS/main.js"></script>
+    <script src="JS/admin-page.js"></script>
   </body>
 </html>

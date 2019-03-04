@@ -1,902 +1,1172 @@
 :root {
-    --myPurple: rgba(71, 27, 112, 0.9);
-    --myTransPurple: rgba(39, 10, 56, 0.7);
-    --myLightPurple: rgba(106, 66, 143, 0.7);
-    --myLightPurpleV: whitesmoke;
-  }
+  --myPurple: rgba(71, 27, 112, 0.9);
+  --myTransPurple: rgba(39, 10, 56, 0.7);
+  --myLightPurple: rgba(106, 66, 143, 0.7);
+  --myLightPurpleV: whitesmoke;
+}
+
+.vcenter {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@font-face {
+  font-family: myfont;
+  src: url("fonts/Darleston.otf");
+}
+
+button,
+input {
+  border: none;
+}
+
+.icon::after {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  min-height: 100vh;
+  height: 100%;
+  background-color: rgb(130, 130, 130);
+  position: relative;
+}
+
+body::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(15, 11, 34, 0.7);
+  background-color: var(--myTransPurple);
+  z-index: 1;
+}
+
+.backgnd {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url(../images/emailbng.jpg) center no-repeat fixed;
+  background-size: cover;
+  filter: blur(10px);
+}
+
+nav {
+/*
+  background: url(images/elogo.png) no-repeat;
+  background-size: 4%;
+  background-position: 1% 50%;
+*/
+  background-color: rgb(71, 27, 112);
+  width: 96.4%;
+  position: fixed;
+  height: 10%;
+    min-height: 3em;
+  margin-top: 0;
+  right: 1.7%;
+  z-index: 4;
   
-  @font-face {
-    font-family: myfont;
-    src: url("fonts/Darleston.otf");
-  }
-  
-  button, input {
-    border: none;
-  }
-  
-  .icon::after {
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    position: absolute;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    display: flex;
+}
+.menulist ul{
+    list-style: none;
+    display: inline-flex;
     margin: 0;
-    min-height: 100vh;
-    background-color: rgb(130, 130, 130);
-  }
-  
-  body::before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(15, 11, 34, 0.7);
-    background-color: var(--myTransPurple);
-    z-index: 1;
-  }
-  
-  .backgnd {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: url(../images/emailbng.jpg) center no-repeat fixed;
-    background-size: cover;
-    filter: blur(10px);
-  }
-  
-  nav {
-   
-      background: url(../images/elogo.png) no-repeat ;
-      background-size: 4%;
-      background-position:  1% 50%;
-       background-color: var(--myPurple);
-    width: 92.4%;
-    position: fixed;
-    z-index: 2;
-    height: 10vh;
-    margin-top: 2vh;
-    right: 3.7%;
-    z-index: 4;
+}
+
+.logo {
+  color: white;
+  font-family: myfont;
+  font-weight: 100;
+  font-size: 1.8em;
+  margin: 0 1em;
+  align-self: center;
+  letter-spacing: 0.05em;
+  float: left;
+}
+
+.search {
+  align-self: center;
+  position: relative;
+  width: 45%;
+  float: left;
+}
+
+.searchbar {
+  background-color: whitesmoke;
+  height: 2.5em;
+  width: 98%;
+  font-size: 0.9em;
+  font-family: cambria;
+  padding: 5px 3%;
+  color: var(--myPurple);
+  transition: all 0.2s linear;
+}
+
+.searchbar:focus {
+  background-color: white;
+}
+
+.search:hover::after {
+  font-size: 1.7em;
+}
+
+.search::after {
+  content: "\f002";
+  right: 11%;
+  top: 15%;
+  font-size: 1.5em;
+  position: absolute;
+  color: var(--myPurple);
+  transition: all 0.2s linear;
+}
+
+.menulist {
+  float: right;
+}
+
+.menulist li{
+    margin: 0 0.5em;
+}
+.profile {
     display: grid;
-    grid-template-columns: 20% 50% 5% 10% 5% 10%;
-  }
-  
-  .logo{
-      color: white;
-      font-family: myfont;
-      font-weight: 100;
-      font-size: 1.8em;
-      margin: 0.1em 2em;
-      align-self: center;
-      letter-spacing: 0.05em;
-  }
-  
-  .search{
-      align-self: center;
-      position: relative;
-  }
-  
-  .searchbar {
-      background-color: whitesmoke;
-      height: 2.5em;
-      width: 80%;
-      font-size: 0.9em;
-      font-family: cambria;
-      padding: 5px 8%;
-       color: var(--myPurple);
-      transition: all 0.2s linear;
-  }
-  
-  .searchbar:focus {
-      background-color: white;
-  }
-  
-  .search:hover::after{
-      font-size: 1.7em;
-  }
-  
-  .search::after{
-      content: "\f002";
-      left: 1%;
-      top: 15%;
-      font-size: 1.5em;
-      position: absolute;
-      color: var(--myPurple);
-      transition: all 0.2s linear;
-  }
-  
-  .profileimg {
-    border-radius: 100%;
-    width: 2.4em;
-      object-fit: cover;
-      object-position: center right;
-    align-self: center;
-    margin-left: 0.3em;
-  }
-  
-  .profilename {
-    color: white;
-    padding: 0.4em 2px;
-     text-align: center;
-     margin: 0.8em 0.4em 1em 0.2em;  
-     font-size: 1em;
-  }
-  
-  .editprofile {
+    grid-template-rows: 10% 50% 40%;  
+}
+
+.profileimg {
+    grid-row: 2/3;
+  border-radius: 100%;
     position: relative;
-  }
-  
-  .editprofile::after {
-    content: "\f4ff";
-    color: white;
-      top: 20%;
-      bottom: 20%;
-      padding: 0.6em 0.3em;
-      left: -15%;
-      transform: scale(1.3);
-      cursor: pointer;
-  }
-  
-  .editprofile::before {
-      content: attr(data-tool-tip);
-      position: absolute;
-      color: white;
-      font-size: 0.9em;
-      white-space: nowrap;
-      z-index: 2;
-      bottom: -0.62em;
-      left: -2em;
-      opacity: 0;
-      padding: 5px;
-      transition: opacity 0.5s ease;
-      background-color: var(--myPurple);
-  
-    }
-    
-    .editprofile:hover::before {
-        opacity: 1;
-    }
-    
-  .signout {
-       color: white;
-      padding: 10px 2px;
-      text-align: center;
-      margin: 0.5em 0.7em 1em 0.2em;  
-      font-size: 1em;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s linear;
-  }
-  
-  .signout:hover {
-      background-color: blueviolet;
-  }
-    
-    
-  .wrapper {
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 35% 65%;
-    margin: auto auto 2vh;
-    height: 86vh;
-    width: 92%;
-    grid-gap: 0.3em;
-    background-color: whitesmoke;
-  }
-  
-  .inbox button {
-    color: var(--myPurple);
-  }
-  
-  .inbox {
-    display: grid;
-    grid-template-rows: repeat(20, 1fr);
-    grid-gap: 5px;
-    width: 100%;
-    margin: 0 auto;
-      background-color: whitesmoke;
-      padding: 10px;
-      margin: 10px;
-      box-shadow: 2px 2px 2px 2px grey;
-  }
-  
-  .inboxcontent {
-    display: grid;
-    width: 99%;
-    grid-row: 1/3;
-    grid-template-columns: 50% 49.7%;
-    grid-gap: 1px;
-    margin: 0 auto;
-      padding: 1px;
-    background-color: var(--myPurple);
-  }
-  
-  .inboxcontent button:hover {
-    background-color: var(--myPurple);
-    color: white;
-  }
-  
-  .createMessage,
-  .createGroup {
-    text-align: center;
-    padding-left: 20%;
-    background-color: var(--myLightPurpleV);
-    font-size: 0.9em;
-    font-weight: 700;
-      font-family: cambria;
-    height: 100%;
-    position: relative;
-    transition: all 0.2s linear;
-      
-     box-shadow: 2px 2px 2px grey;
-  }
-  
-  .createMessage::after,
-  .createGroup::after {
-    position: absolute;
-    left: 28%;
-    top: 30%;
-  }
-  
-  .createMessage::after {
-    content: "\f14b";
-    font-size: 1.5em;
-  }
-  
-  .createGroup::after {
-    content: "\f0c0";
-    font-size: 1.2em;
-  }
-  
-  .msgbuttons {
-    display: grid;
-    width: 99%;
-    margin: 0 auto;
-    grid-row: 3/5;
-    grid-template-columns: repeat(3, 1fr);
-    
-    grid-column-gap: 2px;
-  
-  }
-  
-  a{
-      text-decoration: none;
-  }
-  
-  .allbutton,
-  .sentbutton,
-  .draftbutton {
-    text-align: center;
-    align-self: center;
-    font-size: 0.9em;
-    font-weight: bold;
-      color: var(--myPurple);
-      align-self: center;
-      padding: 1em;
-    background-color: white;
-    transition: all 0.2s linear;
-    position: relative;
-      border: 1px solid var(--myPurple);
-  }
-  
-  .allbutton::after {
-    content: "\f01c";
-    left: 20%;
-  
-  }
-  
-  .sentbutton::after {
-    content: "\f1d8";
-    left: 20%;
-   
-  }
-  
-  .draftbutton::after {
-    content: "\f044";
-    left: 20%;
-  
-  }
-  
-  
-  .draftbutton::before, .sentbutton::before ,
-  .allbutton::before {
-    content: attr(data-tool-tip);
-    right: 15%;
-    top: 30%;
-      color: var(--myPurple);
-      font-weight: light;
-    border-radius: 5px;
-      position: absolute;
-  }
-  
-  
-  
-  .msgbuttons a:target {
-    outline: none;
-      background-color: var(--myPurple);
-      color: white;
-  }
-  
-  .msgbuttons a:target::before {
-   color: white;
-  }
-  
-  .messages {
-    grid-row: 5/21;
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-  
-  .msgcontain {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    left: 0;
-    grid-template-columns: 100% 100% 100%;
-    position: relative;
-    transition: all 0.4s ease-out;
-  }
-  
-  .all,
-  .sent,
-  .draft {
-    height: 400px;
-    margin: 0 auto;
-    width: 100%;
-    overflow-y: scroll;
-    background-color: var(--myLightPurpleV);
-     
-  }
-  
-  .wrapmsghead {
-    height: 25%;
-    display: grid;
-    grid-template-columns: repeat(19, 1fr);
-    grid-template-rows: 33% 33% 34%;
-    padding: 5px 4px;
-      box-shadow: 2px 2px 2px grey;
-  }
-  
-  .wrapmsghead:hover {
-    background-color: white;
+  width: 1.4em;
+left: 50%;
+ transform: translateX(-50%);
+  object-fit: cover;
+  object-position: center right;
+  align-self: center;
+}
+
+.profilename {
+    grid-row: 3/4;
+  color: white;
+  text-align: center;
+  margin: 0.4em 0.2em 0;
+  font-size: 0.8em;
+   position: relative;
+}
+
+.editprofile {
+  position: relative;
+    padding: 1em;
+    width: 2.5em;
+    margin: 0 .5em;
+    height: 2em;
+}
+
+.editprofile::after {
+  content: "\f4ff";
+  color: white;
+  top: 0;  
+  font-size: 1.2em;
+  cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.editprofile::before {
+  content: attr(data-tool-tip);
+  position: absolute;
+  color: white;
+  font-size: 0.9em;
+  white-space: nowrap;
+  z-index: 2;
+  bottom: -1.2em;
+  left: -1em;
+  opacity: 0;
+  padding: 5px;
+  transition: opacity 0.5s ease;
+  background-color: var(--myPurple);
+}
+
+.editprofile:hover::before {
+  opacity: 1;
+}
+
+.signout {
+  color: white;
+  text-align: center;
+  padding: 0.5em;
+  font-size: 1em;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s linear;
+    white-space: nowrap;
+}
+
+.signout:hover {
+  background-color: blueviolet;
+}
+
+.wrapper {
+  z-index: 2;
+  display: grid;
+  position: relative;
+  grid-template-columns: 35% 65%;
+  margin: 10vh auto 0 auto;
+  max-height: 86vh;
+  min-height: 500px;
+  width: 96%;
+  grid-gap: 0.3em;
+  background-color: whitesmoke;
+}
+
+.inbox button {
+  color: var(--myPurple);
+}
+
+.inbox {
+  display: grid;
+  grid-template-rows: repeat(20, minmax(auto, auto));
+  grid-gap: 0.3em;
+
+  margin: 0 auto;
+  background-color: whitesmoke;
+  padding: 10px;
+  margin:  10px;
+  box-shadow: 2px 2px 2px 2px grey;
+  min-height: 350px;
+    height: 83vh;
+}
+
+.inboxcontent {
+  display: grid;
+  width: 99%;
+  grid-row: 1/3;
+  grid-template-columns: 50% 49.7%;
+  grid-gap: 1px;
+  margin: 0 auto;
+  padding: 1px;
+  background-color: var(--myPurple);
+     max-height: 4em;
+}
+
+.inboxcontent button:hover {
+  background-color: var(--myPurple);
+  color: white;
+}
+
+.createMessage,
+.createGroup {
+  text-align: center;
+  padding: 0.8em;
+  padding-left: 35%;
+  background-color: var(--myLightPurpleV);
+  font-size: 0.9em;
+  font-weight: 700;
+  font-family: cambria;
+  height: 100%;
+  position: relative;
+  transition: all 0.2s linear;
+  box-shadow: 2px 2px 2px grey;
+}
+
+
+
+.createMessage::after,
+.createGroup::after {
+  position: absolute;
+  left: 18%;
+  top: 30%;
+}
+
+.createMessage::after {
+  content: "\f14b";
+  font-size: 1.4em;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.createGroup::after {
+  content: "\f0c0";
+  font-size: 1.2em;
+       top: 50%;
+    transform: translateY(-50%);
+}
+
+.msgbuttons {
+  display: grid;
+  width: 99%;
+  margin: 0 auto;
+  grid-row: 3/5;
+  grid-template-columns: repeat(3, 1fr);
+
+  grid-column-gap: 2px;
+}
+
+.msgbuttons a::after {
+  transform: translate(50%, -50%);
+  top: 50%;    
+}
+
+a {
+  text-decoration: none;
+}
+
+.allbutton,
+.sentbutton,
+.draftbutton {
+  text-align: center;
+  align-self: center;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: var(--myPurple);
+  align-self: center;
+  padding: 1em;
+  height: 3em;
+  background-color: white;
+  transition: all 0.2s linear;
+  position: relative;
+  border: 1px solid var(--myPurple);
+}
+
+.allbutton::after {
+  content: "\f01c";
+  left: 10%;
+}
+
+.sentbutton::after {
+  content: "\f1d8";
+  left: 10%;
+}
+
+.draftbutton::after {
+  content: "\f044";
+  left: 5%;
+}
+
+.draftbutton::before,
+.sentbutton::before,
+.allbutton::before {
+  content: attr(data-tool-tip);
+  right: 50%;
+  transform: translate(50%, -50%);
+  top: 50%;
+  color: var(--myPurple);
+  font-weight: light;
+  border-radius: 5px;
+  position: absolute;
+    font-size: 1em;
+}
+
+.allno,
+.sentno,
+.draftno {
+  position: absolute;
+  right: 1em;
+}
+
+.msgbuttons a:target {
+  outline: none;
+  background-color: var(--myPurple);
+  color: white;
+}
+
+.msgbuttons a:target::before {
+  color: white;
+}
+
+.messages {
+  grid-row: 5/21;
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.msgcontain {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  left: 0;
+  grid-template-columns: 100% 100% 100%;
+  position: relative;
+  transition: all 0.4s ease-out;
+}
+
+.all,
+.sent,
+.draft {
+  margin: 0 auto;
+  width: 100%;
+  overflow-y: scroll;
+  background-color: var(--myLightPurpleV);
+}
+
+.wrapmsghead {
+  display: grid;
+  grid-template-columns: repeat(19, 1fr);
+  grid-template-rows: 33% 33% 34%;
+  padding: 5px 4px;
+  box-shadow: 2px 2px 2px grey;
+}
+
+.wrapmsghead:hover {
+  background-color: white;
   border-left: 2px solid grey;
   padding-left: 2px;
-  }
-  
-  
-  .wrapmsghead p {
-    margin: 0 5px;
-  }
-  
-  
-  .username {
-    grid-row: 1/2;
-    grid-column: 1/14;
-    white-space: nowrap;
-    font-weight: 500;
-    font-size: 0.95em;
-    position: relative;
-    padding: 10px 23px 0;
-    color: rgba(23, 4, 43, 0.856);
-  }
-  
-  .username::after {
-    content: "\f007";
-    left: 0;
-      top: 35%;
-    font-size: 0.9em;
-      color: rgba(70, 70, 70, 0.8);
-  }
-  
-  .msgtitle {
-      grid-row: 2/3;
-    grid-column: 1/20;
-      text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 10px 10px 0;
-    color: rgba(70, 70, 70, 0.8);
+}
+
+.wrapmsghead p {
+  margin: 0 5px;
+}
+
+.username {
+  grid-row: 1/2;
+  grid-column: 1/14;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 0.95em;
+  position: relative;
+  padding: 10px 23px 0;
+  color: rgba(23, 4, 43, 0.856);
+}
+
+.username::after {
+  content: "\f007";
+  left: 0;
+  top: 35%;
+  font-size: 0.9em;
+  color: rgba(70, 70, 70, 0.8);
+}
+
+.msgtitle {
+  grid-row: 2/3;
+  grid-column: 1/20;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 10px 0;
+  color: rgba(70, 70, 70, 0.8);
   font-size: 1.1em;
   font-weight: bold;
-  }
-  
-  .msgcontent {
-    grid-row: 3/4;
-    grid-column: 1/21;
-    text-overflow: ellipsis;
-    overflow: hidden;
+}
+
+.msgcontent {
+  grid-row: 3/4;
+  grid-column: 1/21;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 10px 0;
+  color: grey;
+}
+
+.msgdate {
+  grid-row: 1/2;
+  grid-column: 12/21;
+  text-align: right;
+  padding: 10px 0 0;
+  color: grey;
+  font-size: 0.9em;
+  position: relative;
+}
+
+.delete {
+  grid-row: 1/3;
+  grid-column: 20/21;
+  position: relative;
+}
+
+.delete::after {
+  content: "\f2ed";
+  color: var(--myLightPurple);
+  top: 60%;
+  right: 100%;
+  font-size: 1.1em;
+  opacity: 0;
+}
+
+.delete:hover::after {
+  color: var(--myPurple);
+}
+
+.delete::before {
+  content: attr(data-tool-tip);
+  position: absolute;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8em;
+  bottom: -1.5em;
+  left: -3.5em;
+  white-space: nowrap;
+  z-index: 2;
+  opacity: 0;
+  padding: 5px;
+  transition: opacity 0.5s ease;
+  background-color: var(--myPurple);
+}
+
+.delete:hover::before {
+  opacity: 1;
+}
+
+.wrapmsghead:hover .delete::after {
+  opacity: 1;
+}
+
+.chats {
+  margin: 0;
+    height: 99%;
+  overflow: scroll;
+  position: relative;
+}
+
+.chats p {
+  flex-wrap: wrap;
+}
+
+.chatcontent {
+  width: 100%;
+}
+
+.chatcontent div {
+  margin: 10px 5px;
+  background-color: white;
+  box-shadow: 2px 2px 3px grey;
+}
+
+.thread {
+  height: 85vh;
+  padding: 0 1.45em 10px;
+  display: block;
+}
+
+.threadusers {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  position: sticky;
+  z-index: 2;
+  top: 1.2%;
+  right: 0;
+  width: 100%;
+  border-radius: 0px;
+  background-color: whitesmoke;
+  padding: 10px;
+  width: 98%;
+  margin: auto;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.msgtype {
+  font-size: 1em;
+  color: rgb(95, 95, 95);
+  font-style: italic;
+}
+
+.members {
+  font-size: 1em;
+  color: rgb(51, 51, 51);
+  font-family: cambria;
+  margin: 0;
+}
+
+.messagewrap {
+  display: grid;
+    overflow-x: scroll;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, minmax(auto, auto));
+  grid-column-gap: 0.5em;
+}
+
+.subject {
+  padding: 0.4em 1.2em;
+  grid-row: 1/2;
+  grid-column: 2/11;
+  font-size: 1.2em;
+  color: rgb(51, 51, 51, 0.9);
+  font-weight: 800;
+  font-family: cambria;
+}
+
+.from {
+  grid-row: 2/3;
+  grid-column: 2/3;
+  color: darkgrey;
+  font-weight: lighter;
+  font-size: 1.2em;
+  padding: 0.7em 0em 0.4em 2em;
+  margin: 0;
+  font-family: monospace;
+  font-style: italic;
+}
+
+.to {
+  grid-row: 3/4;
+  grid-column: 2/3;
+  color: darkgrey;
+  font-weight: lighter;
+  font-size: 1.1em;
+  padding: 0.7em 0em 0.4em 2em;
+  margin: 0;
+  font-family: monospace;
+  font-style: italic;
+  position: relative;
+}
+
+.to::after {
+  content: "\f04b";
+  color: grey;
+  font-size: 0.5em;
+  bottom: 25%;
+  right: 5%;
+}
+
+.sender {
+  padding: 0.7em 0.3em;
+  grid-row: 2/3;
+  grid-column: 3/5;
+  color: rgb(51, 51, 51, 0.9);
+  font-weight: 600;
+  margin: 0;
+  font-family: cambria;
+}
+
+.receiver {
+  padding: 0.6em 0em 0.3em;
+  grid-row: 3/4;
+  grid-column: 3/5;
+  font-size: 1em;
+  color: rgb(95, 95, 95);
+  margin: 0;
+}
+
+.msgP {
+  grid-row: 4/10;
+  grid-column: 2/11;
+  color: #404040;
+  margin: 0;
+  padding: 10px;
+  border-top: 1px solid grey;
+  font-family: cambria;
+  font-size: 0.85em;
+    line-height: 1.6em;
+  font-weight: 100;
+  text-align: justify;
+}
+
+.senderimg {
+  grid-row: 2/4;
+  grid-column: 1/2;
+  max-width: 5em;
+  max-height: 5em;
+  object-fit: cover;
+  object-position: center right;
+  border-radius: 100%;
+  position: relative;
+  right: -1.2em;
+  margin: 0;
+}
+
+.replybtn {
+  grid-row: 10/11;
+  grid-column: 9/10;
+  padding: 0.7em 2em 0.7em 2em;
+  position: relative;
+  bottom: 5px;
+  color: rgb(95, 95, 95);
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: 0 0.5em;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.fwdbtn {
+  grid-row: 10/11;
+  grid-column: 10/11;
+  padding: 0.7em 1.7em 0.7em 0.6em;
+  position: relative;
+  bottom: 5px;
+  right: 5px;
+  color: rgb(95, 95, 95);
+  border: 1px solid grey;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 0.9em;
+  margin: 0 0.5em;
+  cursor: pointer;
+}
+
+.fwdbtn::after {
+  content: "\f064";
+  position: absolute;
+  right: 5px;
+}
+
+.messageDate {
+  grid-row: 2/3;
+  grid-column: 6/11;
+  text-align: center;
+  position: relative;
+  font-family: cambria;
+  color: rgb(95, 95, 95);
+  padding: 0.7em 0.5em;
+    padding-right: 2em;
+    text-align: right;
+}
+
+.messageDate::after {
+  content: "\f017";
+  position: absolute;
+  color: rgb(95, 95, 95);
+  right: 0.4em;
+}
+
+.chats::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.chats::-webkit-scrollbar-thumb {
+  background: var(--myPurple);
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+
+.msgcontain div::-webkit-scrollbar {
+  width: 5px;
+}
+
+.composewrapper {
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  padding: 1% 2%;
+  display: none;
+}
+
+.container {
+  display: grid;
+  margin: auto;
+  grid-template-rows: repeat(10, minmax(auto));
+  grid-template-columns: repeat(9, minmax(auto));
+  grid-gap: 4px;
+  background-color: white;
+  box-shadow: 5px 5px 5px grey;
+  padding-bottom: 0.4em;
+    overflow-x: scroll;
+}
+
+.container span {
+  align-self: center;
+  text-align: center;
+  font-weight: 100;
+    font-size: 1em;
+}
+
+.newmsg {
+  grid-column: 1/11;
+  grid-row: 1/2;
+  height: 3em;
+  background-color: var(--myPurple);
+  padding: 1em 0.6em;
+  color: white;
+  font-family: cambria;
+  font-size: 1em;
+  position: relative;
+}
+
+.cutmsg {
+  position: absolute;
+  z-index: 2;
+  color: white;
+  top: 20%;
+  right: 5%;
+}
+
+.cutmsg::after {
+  content: "\f00d";
+  font-size: 1.5em;
+  z-index: 1;
+}
+
+.cutmsg:hover {
+  color: rgb(197, 151, 250);
+}
+
+.newmsgsearch {
+  height: 2.3em;
+  border: 1px solid grey;
+  padding-left: 0.7em;
+  width: 19em;
+  font-family: cambria;
+  font-size: 1em;
+}
+
+.composeto {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  font-size: 1.3em;
+  font-family: monospace;
+  position: relative;
+}
+
+
+.composefrom {
+  grid-column: 1/2;
+  grid-row: 3/4;
+  font-size: 1.2em;
+  font-family: monospace;
+  margin: 0.7em;
+}
+
+.composesender {
+  grid-column: 2/3;
+  grid-row: 3/4;
+  margin: 0.7em;
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: cambria;
+  font-style: oblique;
+}
+
+.addContacts {
+  grid-column: 2/11;
+  grid-row: 2/3;
+  flex-wrap: wrap;
+  margin: 0.6em 0px;
+}
+
+.added {
+  margin: 0 5px;
+  padding: 0.5em;
+  background-color: rgba(2, 2, 2, 0.8);
+  padding-left: 1.5em;
+  color: white;
+  white-space: nowrap;
+  position: relative;
+  font-size: 0.8em;
+}
+
+.added::after {
+  content: "\f00d";
+  left: 5%;
+  top: 25%;
+}
+
+.addContacts select {
+  padding: 0.7em;
+  font-size: 0.9em;
+  margin: 0.7em;
+}
+
+.composesubject {
+  grid-column: 1/10;
+  grid-row: 4/5;
+  padding: 5px 0.7em;
+  font-size: 0.9em;
+  height: 3.2em;;
+  margin: 0.7em;
+  width: 98%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid grey;
+}
+
+input:focus,
+textarea:focus,
+button:focus,
+select:focus {
+  outline: none;
+}
+
+.composemessage {
+  grid-column: 1/10;
+  grid-row: 5/9;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: auto;
+  min-height: 15em;
+  background-color: transparent;
+  border: none;
+  padding: 5px 1.3em;
+  resize: none;
+}
+
+.composesend {
+  grid-column: 8/10;
+  grid-row: 9/10;
+  background-color: var(--myPurple);
+  color: white;
+  font-family: cambria;
+  font-size: 1em;
+  height: 3em;
+  margin: 0 0.4em;
+  padding-right: 20%;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
     white-space: nowrap;
-    padding: 10px 10px 0;
-    color: grey;
+}
+
+.composesend::after {
+  content: "\f1d8";
+  right: 10%;
+  top: 35%;
+  font-size: 0.8em;
+}
+
+
+/**************  ADMIN  **************/
+
+.groupnumbers {
+    font-style: italic;
+}
+
+.groupcontent {
+  width: 99%;
+  grid-row: 1/3;
+  margin: 0 auto;
+  padding: 1px;
+  background-color: var(--myPurple);
+     max-height: 4em;
+}
+
+.groupcontent button:hover {
+  background-color: var(--myPurple);
+  color: white;
+}
+
+.admincreategroup {
+    width: 100%;
+    padding-left: 0.8em
+}
+
+.groupbutton {
+ display: grid;
+  width: 99%;
+  margin: 0 auto;
+  grid-row: 3/5;
+}
+
+.allgroupbutton {
+    width: 100%;
+}
+
+/*
+.allgroupbutton::after {
+    content: '';
+}
+*/
+
+
+@media screen and (max-width: 1000px){
+  .msgbuttons {
+  font-size: 0.8em;
   }
-  
-  .msgdate {
-    grid-row: 1/3;
-    grid-column: 14/21;
-    padding: 10px 20px 0;
-    color: grey;
-    font-size: 0.9em;
-    position: relative;
-  }
-  
-  .msgdate::after {
-    content: "\f073";
-    left: 0;
-  }
-  
-  
-  
-  .delete {
-    grid-row: 1/3;
-    grid-column: 20/21;
-    position: relative;
-  }
-  
-  .delete::after {
-    content: "\f2ed";
-    color: var(--myLightPurple);
-    top: 60%;
-    right: 100%;
-    font-size: 1.1em;
-      opacity: 0;
-  }
-  
-  .delete:hover::after {
-    color: var(--myPurple);
-  }
-  
-  .delete::before {
-    content: attr(data-tool-tip);
-    position: absolute;
-    color: white;
-    border-radius: 4px;
-    font-size: 0.8em;
-    bottom: -1.5em;
-    left: -3.5em;
-    white-space: nowrap;
-    z-index: 2;
-    opacity: 0;
-    padding: 5px;
-    transition: opacity 0.5s ease;
+}
+
+@media screen and (max-width: 900px) {
+    
+    .inbox{
+        font-size: 0.9em;
+    }
+  .msgbuttons a::before {
     background-color: var(--myPurple);
+    color: white;
+    padding: 0.3em 1em;
+    opacity: 0;
+    top: 3.2em;
+    z-index: 2;
   }
-  
-  .delete:hover::before {
+  .msgbuttons a:hover::before {
     opacity: 1;
   }
-  
-  
-  .wrapmsghead:hover .delete::after{
-   opacity: 1;
+
+  .msgbuttons a::after {
+    right: 50%;
+    top: 50%;
+    transform: translateX(50%, -50%);
   }
-  
-  .chats {
-    margin: 0;
-    overflow-y: scroll;
-    position: relative;
+
+  .wrapper {
+    display: block;
+    overflow: hidden;
   }
-  
-  .chats p {
-    flex-wrap: wrap;
-  }
-  
-  .chatcontent {
-    width: 100%;
-  }
-  
-  .chatcontent div {
-       margin: 10px 5px;
-      background-color: white;
-      box-shadow: 2px 2px 3px grey;
-  }
-  
-  
-  .thread {
-    height: 90vh;
-  padding: 0 1.45em 10px;
-      display: block;
-  }
-  
-  .threadusers {
-    display: grid;
-    grid-template-columns: 25% 75%;
-    position: sticky;
-      z-index: 2;
-    top: 1.2%;
-    right: 0;
-    width: 100%;
-    border-radius: 0px;
-    background-color: whitesmoke;
-    padding: 10px;
-      width: 98%;
-      margin: auto;
-      border: 1px solid rgba(128, 128, 128, 0.2);
-  }
-  
-  .msgtype {
-      font-size: 1em;
-      color: rgb(95, 95, 95);
-      font-style: italic;
-  }
-  
-  .members {
-       font-size: 1em;
-       color: rgb(51, 51, 51);
-        font-family: cambria;
-         margin: 0;
-  }
-  
-  
-  .messagewrap {
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      grid-template-rows: repeat(10, minmax(auto,auto));
-      grid-column-gap: 0.5em;
-  }
-  
-  .subject {
-      padding: 0.4em 1.2em;
-      grid-row: 1/2;
-      grid-column: 2/11;
-      font-size: 1.2em;
-      color: rgb(51, 51, 51, 0.9);
-      font-weight: 800;
-      font-family: cambria;
-  }
-  
-  .from {
-      grid-row: 2/3;
-      grid-column: 2/3;
-      color: darkgrey;
-      font-weight: lighter;
-      font-size: 1.2em;
-      padding: 0.7em 0em 0.4em 2em;
-      margin: 0;
-      font-family: monospace;
-      font-style: italic;
-  }
-  
-  .to {
-      grid-row: 3/4;
-      grid-column: 2/3;
-      color: darkgrey;
-      font-weight: lighter;
-      font-size: 1.1em;
-      padding: 0.7em 0em 0.4em 2em;
-      margin: 0;
-      font-family: monospace;
-      font-style: italic;
-      position: relative;
-  }
-  
-  .to::after {
-      content: "\f04b";
-      color: grey;
-      font-size: 0.5em;
-      bottom: 25%;
-      right: 5%;
-  }
-  
-  .sender {
-      padding: 0.7em 0.3em;
-      grid-row: 2/3;
-      grid-column: 3/5;
-      color: rgb(51, 51, 51, 0.9);
-      font-weight: 600;
-      margin: 0;
-      font-family: cambria;
-  }
-  
-  .receiver {
-      padding: 0.6em 0em 0.3em;
-      grid-row: 3/4;
-      grid-column: 3/5;
-      font-size: 1em;
-      color: rgb(95, 95, 95);
-      margin: 0;
-  }
-  
-  .msgP {
-      grid-row:  4/10;
-      grid-column: 2/10;
-      padding-left: 3em;
-      color: #404040;
-      position: relative;
-      left: 20px;
-      margin: 0;
-      padding: 10px;
-      border-top: 1px solid grey;
-      font: small/1.5 cambria;
-      font-size: 0.9em;
-      font-weight: 200;
-      text-align: justify;
-  }
-  
-  .senderimg {
-     grid-row: 2/4;
-      grid-column: 1/2;
-      max-width:  5em;
-      max-height: 5em;
-      object-fit: cover;
-      object-position: center right;
-      border-radius: 100%;
-      position: relative;
-      right: -1.2em;
-      margin: 0;
-  }
-  
-  .replybtn {
-      grid-row: 10/11;
-      grid-column: 9/10;
-      padding: 0.7em 2em 0.7em 2em;
-      position: relative;
-      bottom: 5px;
-      color: rgb(95, 95, 95);
-      border: 1px solid grey;
-      border-radius: 5px;
-      font-weight: bold;
-      margin: 0 0.5em;
-      cursor: pointer;
-      font-size: 0.9em;
-  }
-  
-  .fwdbtn {
-      grid-row: 10/11;
-      grid-column: 10/11;
-      padding: 0.7em 1.7em 0.7em 0.6em;
-      position: relative;
-      bottom: 5px;
-      right: 5px;
-      color: rgb(95, 95, 95);
-      border: 1px solid grey;
-      font-weight: bold;
-      border-radius: 5px;
-      font-size: 0.9em;
-      margin: 0 0.5em;
-      cursor: pointer;
-  }
-  
-  .fwdbtn::after {
-      content: "\f064";
-      position: absolute;
-      right: 5px;
-  }
-  
-  .messageDate {
-      grid-row: 2/3;
-      grid-column: 6/10;
-      text-align: center;
-      position: relative;
-      font-family: cambria;
-      color: rgb(95, 95, 95);
-      padding: 0.7em 0.7em;
-  }
-  
-  .messageDate::after {
-      content: "\f017";
-      position: absolute;
-      color: rgb(95, 95, 95);
-      right: 0;
-  }
-  
-  .chats::-webkit-scrollbar {
-    width: 8px;   
-  }
-  
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-  
-  .chats::-webkit-scrollbar-thumb {
-    background: var(--myPurple);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: grey;
-  }
-  
-  .msgcontain div::-webkit-scrollbar {
-    width: 5px;    
-  }
-  
-  
-  
-  
-  .composewrapper {
+
+  .inbox {
+    position: absolute;
+    width: 50%;
     z-index: 2;
-    position: relative;
-      width: 100%;
-       padding: 1% 2%;
-      display: none;
+    top: 0;
+    left: -52%;
+    transition: left 0.7s ease-out;
+      margin: 0;
+      height: 100%;
   }
-  
-  .container {
-    display: grid;
-    margin: auto;
-    grid-template-rows: repeat(10, minmax(auto));
-    grid-template-columns: repeat(9, 1fr);
-    grid-gap: 4px;
-      background-color: white;
-      box-shadow: 5px 5px 5px grey;
+
+    
+  .show {
+    position: absolute;
+    width: 2em;
+    height: 5%;
+    background-color: whitesmoke;
+    border: 2px solid grey;
+    box-shadow: 3px 2px 2px grey;
+    right: -2em;
   }
-  
-  
-  
-  .container span {
-    align-self: center;
-    text-align: center;
-    font-weight: 100;
+
+  .open {
+    left: 0%;
   }
-  
-  .newmsg{
-      grid-column: 1/11;
-      grid-row: 1/2; 
-      height: 50px;
-      background-color: var(--myPurple);
-      padding: 15px 10%;
-      color: white;
-      font-family: cambria;
-      font-size: 1em;
-      position: relative;
+
+  .show::after {
+    content: "\f1de";
+    color: grey;
+    font-size: 0.7em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-  
-  .cutmsg {
-      position: absolute;
-      z-index: 2;
-      color: white;
-      top: 20%;
-      right: 5%;
+
+  .show:hover {
+    background-color: rgb(222, 222, 222);
   }
-  
-  .cutmsg::after {
-      content: "\f00d";
-      font-size: 1.5em;   
-      z-index: 1;
-  }
-  
-  .cutmsg:hover {
-      color:  rgb(197, 151, 250)
-  }
-  
-  .newmsgsearch{
-      height: 38px;
-      border:1px solid grey;
-      padding-left: 10px;
-      width: 300px;
-      font-family: cambria;
-      font-size: 1em;
-  }
-  
-  .composeto {
-    grid-column: 1/2;
-    grid-row: 2/3;
-      font-size: 1.3em;
-      font-family: monospace;
-      position: relative;
-  }
-  
-  .composeto::after {
-      content: "\f04b";
-      color: grey;
-      font-size: 0.6em;
-      bottom: 0;
-      right: 10%;
-  }
-  
-  .composefrom {
-     grid-column: 1/2;
-     grid-row: 3/4;
-      font-size: 1.2em;
-      font-family: monospace;
-       margin-top: 5px;
-  }
-  
-  .composesender {
-    grid-column: 2/3;
-    grid-row: 3/4;
-      margin-top: 5px;
-    font-size: 1.05em;
-      font-weight: bold;
-      font-family: cambria;
-      font-style: oblique;
-  }
-  
-  .addContacts {
-    grid-column: 2/11;
-    grid-row: 2/3;
-      flex-wrap: wrap;
-      margin: 5px 0px;
-  }
-  
-  .added {
-    margin: 0 5px;
-    padding: 8px;
-    background-color: rgba(2, 2, 2, 0.8);
-    padding-left: 25px;
-    color: white;
-      white-space: nowrap;
-      position: relative;
-      font-size: 0.8em;
-  }
-  
-  .added::after {
-      content: "\f00d";
-      left: 5%;
-      top: 25%;
-  }
-  
-  .addContacts select {
-    padding: 10px;
-    font-size: 0.9em;
-    margin: 10px;
-  }
-  
-  .composesubject {
-    grid-column: 1/10;
-    grid-row: 4/5;
-    padding: 5px 10px;
-    font-size: 0.9em;
-    height: 50px;
-      margin: 10px;
-      width: 98%;
-    background-color: transparent;
-      border: none;
-      border-bottom: 1px solid grey;
-  }
-  
-  input:focus, textarea:focus, button:focus, select:focus {
-      outline: none;
-  }
-  
-  .composemessage {
-    grid-column: 1/10;
-    grid-row: 5/9;
-      max-width: 100%;
-      min-width: 100%;
-      max-height: auto;
-      min-height: 15em;
-      background-color: transparent;
-      border: none;
-      padding: 5px 20px;
-      resize: none;
-  }
-  
-  .composesend {
-    grid-column: 8/10;
-    grid-row: 9/10;
-     background-color: var(--myPurple);
-      color: white;
-      font-family: cambria;
-      font-size: 1em;
-     height: 50px;
-      margin: 10px 0;
-      padding-right: 20%;
-      border-radius: 5px;
-      position: relative;
-      cursor: pointer;
-  }
-  
-  .composesend::after {
-      content: "\f1d8";
-      right: 10%;
-      top: 35%;
-      font-size: 0.8em;
+    .search {
+        width: 50%;
+        min-width: 10em;
+    }
+    
+    .menulist ul{
+       display: block;
+        position: absolute;
+        padding: 0;
+        top: 1.5em;
+        right: 20%;
+        background-color: rgba(0, 0, 0, 0.8);
+        transform: scale(0);
+        transition: transform 0.5s ease-out;
+    }
+    
+    .menulist li {
+        margin: 1em;
+        padding-bottom: 0.5em;
+    }
+    
+    .profile{
+        display: none;
+    }
+    
+    .menu {
+        float: right;
+        background-color: red;
+    }
+    
+    .menu::after {
+        color: white;
+        content: "\f0c9";
+        right: 1em;
+        font-size: 1.7em;
+         top: 50%;
+    transform: translateY(-50%);
+    }
+}
+
+@media screen and (max-width: 550px){
+    .inbox {
+        font-size: 0.8em;
+        width: 70%;
+        left: -70%;
+    }
+    
+    .senderimg{
+        font-size: 0.8em;
+    }
+    
+    .wrapmsghead {
+        font-size: 1em;
+    }
+
+    .open {
+    left: 0%;
   }
     
+    .navbar {
+        font-size: 0.8em;
+    }
+    
+     .thread {
+        padding: 1em 0.2em;
+    }
+}
+
+@media screen and (max-width: 350px){
+   
+     .navbar {
+        font-size: 0.7em;
+    }
+    
+    .search {
+       display: none;
+    }
+    
+      .inbox {
+          font-size: 0.9em;
+    }
+    
+    .inboxcontent {
+        grid-template-columns: auto;
+    }
+    
+    .inboxcontent button {
+        padding: 0.4em;
+    }
+    
+    .inboxcontent button::after {
+        content: '';
+    }
+    
+    .groupcontent button::after {
+      content: '';
+  }
+  
+
+    .wrapmsghead {
+        grid-template-rows: 25% 25% 30% 20%;
+    }
+    
+    .msgbuttons {
+        grid-template-columns: auto;
+    }
+    
+    .msgdate {
+        grid-row: 4/5;
+        grid-column: 1/20;
+        text-align: left;
+    }
+    
+    .open {
+    left: 0%;
+  }
+}

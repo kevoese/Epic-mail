@@ -5,6 +5,12 @@
   --myLightPurpleV: whitesmoke;
 }
 
+.vcenter {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 @font-face {
   font-family: myfont;
   src: url("fonts/Darleston.otf");
@@ -34,7 +40,9 @@ body {
   display: flex;
   margin: 0;
   min-height: 100vh;
+  height: 100%;
   background-color: rgb(130, 130, 130);
+  position: relative;
 }
 
 body::before {
@@ -64,15 +72,20 @@ nav {
   background: url(../images/elogo.png) no-repeat;
   background-size: 4%;
   background-position: 1% 50%;
-  background-color: var(--myPurple);
-  width: 92.4%;
+  background-color: rgb(71, 27, 112);
+  width: 96.4%;
   position: fixed;
-  height: 10vh;
-  margin-top: 2vh;
-  right: 3.7%;
+  height: 10%;
+    min-height: 3em;
+  margin-top: 0;
+  right: 1.7%;
   z-index: 4;
-  display: grid;
-  grid-template-columns: 20% 50% 5% 10% 10%;
+  
+}
+.menulist ul{
+    list-style: none;
+    display: inline-flex;
+    margin: 0;
 }
 
 .logo {
@@ -80,72 +93,57 @@ nav {
   font-family: myfont;
   font-weight: 100;
   font-size: 1.8em;
-  margin: 0.1em 2em;
+  margin: 0 1em;
+    margin-right: 0;
   align-self: center;
   letter-spacing: 0.05em;
-  cursor: pointer;
+  float: left;
 }
 
-.search {
-  align-self: center;
-  position: relative;
+
+.menulist {
+  float: right;
 }
 
-.searchbar {
-  background-color: whitesmoke;
-  height: 2.5em;
-  width: 80%;
-  font-size: 0.9em;
-  font-family: cambria;
-  padding: 5px 8%;
-  color: var(--myPurple);
-  transition: all 0.2s linear;
+.menulist li{
+    margin: 0 0.5em;
 }
-
-.searchbar:focus {
-  background-color: white;
-}
-
-.search:hover::after {
-  font-size: 1.7em;
-}
-
-.search::after {
-  content: "\f002";
-  left: 1%;
-  top: 15%;
-  font-size: 1.5em;
-  position: absolute;
-  color: var(--myPurple);
-  transition: all 0.2s linear;
+.profile {
+    display: grid;
+    grid-template-rows: 10% 50% 40%;  
 }
 
 .profileimg {
+    grid-row: 2/3;
   border-radius: 100%;
-  width: 2.4em;
+    position: relative;
+  width: 1.4em;
+   left: 50%;
+ transform: translateX(-50%);
   object-fit: cover;
   object-position: center right;
   align-self: center;
-  margin-left: 0.3em;
 }
 
 .profilename {
+    grid-row: 3/4;
   color: white;
-  padding: 0.4em 2px;
   text-align: center;
-  margin: 0.8em 0.4em 1em 0.2em;
-  font-size: 1em;
+  margin: 0.4em 0.2em 0;
+  font-size: 0.8em;
+   position: relative;
 }
+
 
 .signout {
   color: white;
-  padding: 10px 2px;
   text-align: center;
-  margin: 0.5em 0.7em 1em 0.2em;
+  padding: 0.5em;
   font-size: 1em;
   position: relative;
   cursor: pointer;
   transition: all 0.3s linear;
+    white-space: nowrap;
 }
 
 .signout:hover {
@@ -154,10 +152,12 @@ nav {
 
 .wrapper {
   z-index: 2;
-  margin: auto auto 2vh;
-  height: 86vh;
-  width: 92%;
-  padding: 3% 15%;
+  position: relative;
+  grid-template-columns: 35% 65%;
+  margin: 10vh auto 0 auto;
+  max-height: 86vh;
+  min-height: 500px;
+    width: 96%;
   background-color: whitesmoke;
 }
 
@@ -169,7 +169,7 @@ nav {
   position: relative;
   height: 100%;
   width: 100%;
-  grid-column-gap: 20px;
+  grid-column-gap: 1.2em;
   background-color: white;
   box-shadow: 5px 5px 5px grey;
   border: 1px solid grey;
@@ -180,8 +180,8 @@ nav {
   grid-row: 1/2;
   grid-column: 1/3;
   background-color: var(--myPurple);
-  height: 50px;
-  padding: 15px 10%;
+  height: 3.1em;
+  padding: 1em 10%;
   color: white;
   font-family: cambria;
   font-size: 1.1em;
@@ -191,11 +191,12 @@ nav {
 .name {
   grid-row: 2/3;
   grid-column: 2/3;
-
+  text-align: center;
   font-weight: 100;
   font-size: 3em;
   padding: 0;
-  margin: 0;
+  margin:0.4em 0;
+  padding-bottom: 0.4em;
   color: rgba(10, 10, 10, 0.9);
   border-bottom: 1px solid grey;
 }
@@ -204,19 +205,12 @@ nav {
   grid-row: 3/5;
   grid-column: 2/3;
   font-family: cambria;
-
-  width: 70%;
+  width: 100%;
   align-self: center;
   font-size: 1.3em;
   color: rgba(10, 10, 10, 0.9);
   position: relative;
   text-align: center;
-}
-
-.email::after {
-  content: "\f0e0";
-  position: absolute;
-  left: 0;
 }
 
 .profilepic {
@@ -225,26 +219,26 @@ nav {
   display: inline-block;
   max-width: 60%;
   max-height: 90%;
-  align-self: center;
   object-fit: contain;
   box-shadow: 5px 5px 5px grey;
-  margin-left: 10%;
+   position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .changepic {
-  width: 70%;
-  margin: 4%;
-  margin-left: 10%;
+    margin: 4% auto;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  grid-column: 1/2;
+  grid-column: 1/3;
   grid-row: 9/11;
+    text-align: center;
 }
 
 .changepic input {
   position: absolute;
-  height: 59px;
+  height: 3.8em;
   cursor: pointer;
   top: 0;
   right: 0;
@@ -252,22 +246,60 @@ nav {
 }
 
 .addphoto {
-  width: 100%;
-  height: 100%;
+  width: 15em;
+  height: 3em;
+    white-space: nowrap;
   font-size: 1.1em;
   font-family: cambria;
   border-radius: 10px;
   color: white;
   background-color: rgba(71, 27, 112, 1);
-  padding-right: 15%;
   position: relative;
 }
 
 .addphoto::after {
   content: "\f030";
-  right: 10%;
+  right: 12em;
 }
 
 .changepic:hover .addphoto {
   background-color: rgba(71, 27, 112, 0.9);
+}
+
+
+@media screen and (max-width: 700px) {
+    body{
+        font-size: 0.9em;
+    }
+    
+}
+
+@media screen and (max-width: 550px) {
+    body {
+        font-size: 0.8em;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .container {
+        display: block;
+        font-size: 0.9em;
+        overflow-x: scroll;
+    }
+    
+      .profile{
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 200px) {
+    .navbar {
+        display: inline-flex;
+    }
+    .container {
+        font-size: 0.7em;
+    }
+    
 }

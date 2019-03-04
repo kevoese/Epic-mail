@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>sign up epic mail</title>
+    <title>User profile epic mail</title>
     <link rel="stylesheet" href="CSS/profile-edit.css" />
     <link
       href="CSS/fonts/fontawesome-free-5.7.2-web/css/all.css"
@@ -12,16 +12,23 @@
     />
   </head>
   <body>
-    <div class="backgnd"></div>
-    <nav class="navbar">
-      <h4 class="logo">Epic mail</h4>
-      <div class="search icon">
-        <input type="text" placeholder="Search Messages..." class="searchbar" />
-      </div>
-      <img src="images/dummy2.png" alt="" class="profileimg" />
-      <span class="profilename">John Doe</span>
-      <span class="signout icon">Sign out</span>
-    </nav>
+      <div class="backgnd"></div>
+      <nav class="navbar">
+          <h4 class="vcenter logo">Epic mail</h4> 
+          <div class="vcenter menulist">
+             <ul class="navmenu">
+             <li>
+                 <div class="profile vcenter">
+                     <img src="images/dummy2.png" alt="" class="profileimg">
+                     <span class="profilename">John Doe</span>
+                 </div>  
+             </li> 
+                 <li> <span class="vcenter signout icon">Sign out</span></li> 
+              </ul>
+                 
+          </div>
+          
+      </nav>
     <div class="wrapper">
       <div class="container">
         <div class="header">Change Profile Photo</div>
@@ -29,7 +36,7 @@
         <div class="name">John Doe</div>
         <div class="email icon">JohnDoe@epicmail.com</div>
         <div class="changepic">
-          <button class="addphoto icon">Change Profile photo</button>
+          <button class="addphoto icon">Change photo</button>
           <input
             type="file"
             name="file"
@@ -40,5 +47,6 @@
         </div>
       </div>
     </div>
+    <script src=""></script>
   </body>
 </html>
