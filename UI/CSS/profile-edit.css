@@ -205,7 +205,7 @@ nav {
   grid-row: 3/5;
   grid-column: 2/3;
   font-family: cambria;
-  width: 100s%;
+  width: 100%;
   align-self: center;
   font-size: 1.3em;
   color: rgba(10, 10, 10, 0.9);
