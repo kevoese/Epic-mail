@@ -14,25 +14,37 @@
   <body>
     <div class="backgnd"></div>
      <nav class="navbar">
-         <h4 class="logo">Epic mail</h4>
-         <div class="search icon">
+         <div id="navhide" class="menu icon"></div>
+         <h4 class="vcenter logo">Epic mail</h4>
+         <div class="vcenter search icon">
              <input type="text" placeholder="Search Messages..." class="searchbar">
          </div> 
-         <img src="images/dummy2.png" alt="" class="profileimg">
-         <span class="profilename">John Doe</span>
-         <span data-tool-tip="Edit Profile" class="editprofile icon"></span>
-         <span class="signout icon">Sign out</span>
+         <div class="vcenter menulist">
+            <ul class="navmenu">
+            <li>
+                <div class="profile vcenter">
+                    <img src="images/dummy2.png" alt="" class="profileimg">
+                    <span class="profilename">John Doe</span>
+                </div>  
+            </li> 
+                <li ><a data-tool-tip="Edit Profile" class=" vcenter editprofile icon"></a></li> 
+                <li> <span class="vcenter signout icon">Sign out</span></li> 
+             </ul>
+                
+         </div>
+         
      </nav>
     <div class="wrapper">
         <div class="inbox">
+            <div id= "close" class="show icon"></div>
             <div class="inboxcontent">
                 <button class="createMessage icon">Compose</button>
-                <button class="createGroup icon"> Add Group</button>
+                <button class="createGroup icon"> Groups</button>
             </div>
             <div class="msgbuttons">
-                    <a id="allbutton" href="#allbutton" data-tool-tip="5" class="allbutton icon">All</a>
-                    <a id="sentbutton" href="#sentbutton" data-tool-tip="3" class="sentbutton icon">Sent</a>
-                    <a id="draftbutton" href="#draftbutton" data-tool-tip="7" class="draftbutton icon">Draft</a>
+                    <a id="allbutton" href="#allbutton" data-tool-tip="All" class="allbutton icon"><span class=" vcenter allno">3</span></a>
+                    <a id="sentbutton" href="#sentbutton" data-tool-tip="Sent" class="sentbutton icon"><span class="vcenter sentno">3</span></a>
+                    <a id="draftbutton" href="#draftbutton" data-tool-tip="Draft" class="draftbutton icon"><span class="vcenter draftno">3</span></a>
             </div>
             <div class="messages">
                <div class="msgcontain">
@@ -180,11 +192,6 @@
                     </div>
                 </div>
             <div class="thread">
-                <div class="threadusers"> 
-                    <span class="msgtype">Group members (5):</span>
-                    <p class="members">John Doe; Amos Lee; Justin Igugu; Karo Bobino; Tega Doe;</p>
-                </div>
-            
                <div class="chatcontent">
                 <div class="messagewrap">
                     <span class="subject"> Money</span>
@@ -225,7 +232,7 @@ Also, we invite you to dive into our recen
                     <span class="to icon">to</span>
                     <span class="receiver">You</span>
                     <span class="reply icon"></span>
-                    <img src="images/dummy4.png" class="senderimg">
+                    <img src="images/dummy2.png" class="senderimg">
                     <span class="replybtn icon">Reply</span>
                     <span class="fwdbtn icon">Forward</span>
                     <p class = "msgP">Lorem ipsum dolor sit amet 
@@ -240,7 +247,7 @@ Also, we invite you to dive into our recen
                 
                 <div class="messagewrap">
                     <span class="subject"> Life</span>
-                    <span class="sender">Andela</span>
+                    <span class="sender">Nonso Joe</span>
                     <span class="from">From:</span>
                     <span class="to icon">to</span>
                     <span class="receiver">You</span>
@@ -256,12 +263,12 @@ Also, we invite you to dive into our recen
                 </div> 
                 <div class="messagewrap">
                     <span class="subject">Programming</span>
-                    <span class="sender">Bill</span>
+                    <span class="sender">Nonso joe</span>
                     <span class="from">From:</span>
                     <span class="to icon">to</span>
                     <span class="receiver">You</span>
                     <span class="reply icon"></span>
-                    <img src="images/dummy5.png" class="senderimg">
+                    <img src="images/dummy2.png" class="senderimg">
                     <span class="replybtn icon">Reply</span>
                     <span class="fwdbtn icon">Forward</span>             
                     <p class = "msgP">
@@ -273,7 +280,7 @@ Also, we invite you to dive into our recen
                 
                 <div class="messagewrap">
                     <span class="subject">Engineering</span>
-                    <span class="sender">Tega</span>
+                    <span class="sender">Nonso Joe</span>
                     <span class="from">From:</span>
                     <span class="to icon icon">to</span>
                     <span class="receiver">You</span>
