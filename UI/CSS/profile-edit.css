@@ -126,6 +126,7 @@ nav {
   position: relative;
   margin:  auto;
   width: 76%;
+    min-width: 300px;
 }
 
 .editprofilebar {
@@ -254,7 +255,7 @@ nav {
     border-radius: 5px;
      background-color: rgb(230, 230, 252); 
     height: 2.8em;
-    width: 40%;
+     width: 20em;
     padding: 0.5em;
     font-family: cambria;
     font-size: 0.9em;
@@ -266,7 +267,7 @@ nav {
 }
 
 .changePassword input{
-    width: 20%;
+    width: 10em;
 }
 
 .updatewrap {
@@ -276,7 +277,7 @@ nav {
 }
 
 .profilebuttons {
-  background-color: rgb(240, 240, 252, 0.5);
+  background-color: rgb(240, 240, 252, 0.2);
   height: 3em;
     border-radius: 5px;
     width: 5em;
@@ -296,25 +297,25 @@ nav {
         width: 7em;
     }
     
-    input::placeholder{
-        font-size: 0.9em;
-    }
 
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 610px) {
   body {
     font-size: 0.8em;
   }
+    
+     .updateuser input{
+       height: 4em;
+        width: 100%;
+         margin: 0.5em auto;
+         display: block;
+  }
+    .updateuser button {
+        font-size: 0.8em;
+        margin: 0.5em;
+        width: 40%;
+    }
 }
 
-@media screen and (max-width: 400px) {
-  
-    .container {
-    display: block;
-    font-size: 0.9em;
-    overflow-x: scroll;
-  }
-  
-}
 
