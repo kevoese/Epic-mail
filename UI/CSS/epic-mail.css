@@ -26,6 +26,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   display: flex;
   margin: 0;
@@ -166,10 +170,11 @@ button:focus {
   top: 50%;
   transform: translateY(-50%);
   right: 1%;
-    font-size: 1.3em;
+  font-size: 1em;
 }
 
-.loginlink {
+.loginlink,
+.signuplink {
   margin: 0.31em;
   letter-spacing: 0.1em;
   font-size: 0.9em;
@@ -333,8 +338,7 @@ input:focus {
   font-size: 1em;
   border: 1px solid rgb(131, 131, 131);
   border-radius: 0.31em;
-  height: 3em;
-  width: 80%;
+  padding: 1em 30%;
   background-color: var(--myPurple);
   cursor: pointer;
   color: rgba(219, 219, 219, 0.8);
@@ -354,11 +358,11 @@ input:focus {
   grid-template-columns: 45% 55%;
   position: relative;
   min-width: 350px;
-    width: 90%;
-  max-width: 1000px;
+  width: 90%;
+  max-width: 800px;
   left: 50%;
   transform: scale(0) translateX(-50%);
-    font-size: 1.3em;
+  font-size: 1sem;
 }
 
 .showsignup {
@@ -398,12 +402,11 @@ input:focus {
     margin: 0 auto;
     font-size: 5em;
   }
-    
-     .pageContent p{
-        font-size: 1.5em;
-        font-family: cambria;
-    }
-  
+
+  .pageContent p {
+    font-size: 1.5em;
+    font-family: cambria;
+  }
 
   .Login {
     margin: 0 auto;
@@ -420,7 +423,7 @@ input:focus {
   .SignUp {
     display: block;
     max-width: 400px;
-      font-size: 0.9em;
+    font-size: 1em;
   }
 }
 
@@ -429,18 +432,18 @@ input:focus {
     font-size: 0.6em;
     margin: 10px auto;
     top: 1%;
-      font-weight: 100;
+    font-weight: 100;
   }
-    
-    .pageContent p{
-        margin-bottom: 0.3em;
-    }
-  
-    .register {
-        font-size: 1.5em;
-        margin-top: 0.3em;
-    }
-    
+
+  .pageContent p {
+    margin-bottom: 0.3em;
+  }
+
+  .register {
+    font-size: 1.5em;
+    margin-top: 0.3em;
+  }
+
   .Login {
     margin: 0 auto;
     top: 70%;

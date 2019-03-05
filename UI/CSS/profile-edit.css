@@ -5,10 +5,14 @@
   --myLightPurpleV: whitesmoke;
 }
 
+a {
+  text-decoration: none;
+}
+
 .vcenter {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 @font-face {
@@ -69,23 +73,20 @@ body::before {
 }
 
 nav {
-  background: url(../images/elogo.png) no-repeat;
-  background-size: 4%;
-  background-position: 1% 50%;
+
   background-color: rgb(71, 27, 112);
   width: 96.4%;
   position: fixed;
   height: 10%;
-    min-height: 3em;
+  min-height: 3em;
   margin-top: 0;
   right: 1.7%;
   z-index: 4;
-  
 }
-.menulist ul{
-    list-style: none;
-    display: inline-flex;
-    margin: 0;
+.menulist ul {
+  list-style: none;
+  display: inline-flex;
+  margin: 0;
 }
 
 .logo {
@@ -94,46 +95,45 @@ nav {
   font-weight: 100;
   font-size: 1.8em;
   margin: 0 1em;
-    margin-right: 0;
+  margin-right: 0;
   align-self: center;
   letter-spacing: 0.05em;
   float: left;
+  cursor: pointer;
 }
-
 
 .menulist {
   float: right;
 }
 
-.menulist li{
-    margin: 0 0.5em;
+.menulist li {
+  margin: 0 0.5em;
 }
 .profile {
-    display: grid;
-    grid-template-rows: 10% 50% 40%;  
+  display: grid;
+  grid-template-rows: 10% 50% 40%;
 }
 
 .profileimg {
-    grid-row: 2/3;
+  grid-row: 2/3;
   border-radius: 100%;
-    position: relative;
+  position: relative;
   width: 1.4em;
-   left: 50%;
- transform: translateX(-50%);
+  left: 50%;
+  transform: translateX(-50%);
   object-fit: cover;
   object-position: center right;
   align-self: center;
 }
 
 .profilename {
-    grid-row: 3/4;
+  grid-row: 3/4;
   color: white;
   text-align: center;
   margin: 0.4em 0.2em 0;
   font-size: 0.8em;
-   position: relative;
+  position: relative;
 }
-
 
 .signout {
   color: white;
@@ -143,7 +143,7 @@ nav {
   position: relative;
   cursor: pointer;
   transition: all 0.3s linear;
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .signout:hover {
@@ -157,7 +157,7 @@ nav {
   margin: 10vh auto 0 auto;
   max-height: 86vh;
   min-height: 500px;
-    width: 96%;
+  width: 96%;
   background-color: whitesmoke;
 }
 
@@ -195,7 +195,7 @@ nav {
   font-weight: 100;
   font-size: 3em;
   padding: 0;
-  margin:0.4em 0;
+  margin: 0.4em 0;
   padding-bottom: 0.4em;
   color: rgba(10, 10, 10, 0.9);
   border-bottom: 1px solid grey;
@@ -221,19 +221,19 @@ nav {
   max-height: 90%;
   object-fit: contain;
   box-shadow: 5px 5px 5px grey;
-   position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .changepic {
-    margin: 4% auto;
+  margin: 4% auto;
   overflow: hidden;
   position: relative;
   cursor: pointer;
   grid-column: 1/3;
   grid-row: 9/11;
-    text-align: center;
+  text-align: center;
 }
 
 .changepic input {
@@ -248,7 +248,7 @@ nav {
 .addphoto {
   width: 15em;
   height: 3em;
-    white-space: nowrap;
+  white-space: nowrap;
   font-size: 1.1em;
   font-family: cambria;
   border-radius: 10px;
@@ -266,40 +266,35 @@ nav {
   background-color: rgba(71, 27, 112, 0.9);
 }
 
-
 @media screen and (max-width: 700px) {
-    body{
-        font-size: 0.9em;
-    }
-    
+  body {
+    font-size: 0.9em;
+  }
 }
 
 @media screen and (max-width: 550px) {
-    body {
-        font-size: 0.8em;
-    }
-
+  body {
+    font-size: 0.8em;
+  }
 }
 
 @media screen and (max-width: 400px) {
-    .container {
-        display: block;
-        font-size: 0.9em;
-        overflow-x: scroll;
-    }
-    
-      .profile{
-        display: none;
-    }
+  .container {
+    display: block;
+    font-size: 0.9em;
+    overflow-x: scroll;
+  }
 
+  .profile {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 200px) {
-    .navbar {
-        display: inline-flex;
-    }
-    .container {
-        font-size: 0.7em;
-    }
-    
+  .navbar {
+    display: inline-flex;
+  }
+  .container {
+    font-size: 0.7em;
+  }
 }

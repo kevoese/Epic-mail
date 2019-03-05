@@ -95,6 +95,7 @@ nav {
   align-self: center;
   letter-spacing: 0.05em;
   float: left;
+  cursor: pointer;
 }
 
 .search {

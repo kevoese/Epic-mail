@@ -21,23 +21,23 @@ inputs.forEach(input => {
   });
 });
 
-const registerBtn = document.querySelector(".register");
 const backgroundStyle = document.querySelector(".back").style;
 const loginStyle = document.querySelector(".Login").style;
 const signUp = document.querySelector(".SignUp");
 const content = document.querySelector(".pageContent").style;
-const close = document.querySelector(".close");
 
-registerBtn.addEventListener("click", event => {
-  loginStyle.display = "none";
-  signUp.classList.add("showsignup");
-  backgroundStyle.filter = "blur(10px)";
-  content.display = "none";
-});
 
-close.addEventListener("click", event => {
-  loginStyle.display = "initial";
-  signUp.classList.remove("showsignup");
-  backgroundStyle.filter = "blur(0px)";
-  content.display = "initial";
+document.addEventListener("click", event => {
+  linkId = event.target.id;
+  if (linkId === "signuplink" || linkId === "register") {
+    loginStyle.display = "none";
+    signUp.classList.add("showsignup");
+    backgroundStyle.filter = "blur(10px)";
+    content.display = "none";
+  } else if (linkId == "loginlink" || linkId == "close") {
+    loginStyle.display = "initial";
+    signUp.classList.remove("showsignup");
+    backgroundStyle.filter = "blur(0px)";
+    content.display = "initial";
+  }
 });
