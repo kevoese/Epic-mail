@@ -13,33 +13,17 @@
   </head>
   <body>
     <div class="backgnd"></div>
-    <nav class="navbar">
-      <a
-        href="https://kevoese.github.io/Epic-mail/UI/main.html"
-        class="vcenter logo"
-        >Epic mail</a
-      >
-      <div class="vcenter menulist">
-        <ul class="navmenu">
-          <li>
-            <div class="profile vcenter">
-              <img src="images/dummy2.png" alt="" class="profileimg" />
-              <span class="profilename">John Doe</span>
-            </div>
-          </li>
-          <li>
-            <a
-              href="https://kevoese.github.io/Epic-mail/UI/epic-mail.html"
-              class="vcenter signout icon"
-              >Sign out</a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
+    
     <div class="wrapper">
       <div class="container">
-        <div class="header">Change Profile Photo</div>
+          <a
+          href="https://kevoese.github.io/Epic-mail/UI/main.html"
+          class="vcenter logo"
+          >Epic mail</a>
+          <a
+          href="https://kevoese.github.io/Epic-mail/UI/epic-mail.html"
+          class="vcenter signout icon"
+          >Sign out</a>
         <img src="images/dummy2.png" class="profilepic" />
         <div class="name">John Doe</div>
         <div class="email icon">JohnDoe@epicmail.com</div>
@@ -54,6 +38,24 @@
           />
         </div>
       </div>
+      <!-- <button class="editprofilebar">EDIT PROFILE</button> -->
+        <div class="updateuser">
+            <div class="updatewrap changeFirstName">
+                    <input type="text" placeholder="Enter New First Name" class="fnameIn">
+                    <button class="profilebuttons">Update</button>
+              </div>
+              <div class="updatewrap changeLastName">
+                      <input type="text" placeholder="Enter New Last Name" class="lnameIn">
+                      <button class="profilebuttons">Update</button>
+              </div>
+              <div class="updatewrap changePassword">
+                      <input type="password" placeholder="New password" class="newpaswrd">
+                      <input type="password" placeholder="Confirm password" class="oldpaswrd">
+                      <button class="profilebuttons">Update</button>
+              </div>
+        </div>
+        
+        
     </div>
     <script src=""></script>
   </body>
