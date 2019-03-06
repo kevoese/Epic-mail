@@ -151,6 +151,7 @@ nav {
   border-radius: 100%;
     position: relative;
   width: 2em;
+  height: 2em;
 left: 50%;
  transform: translateX(-50%);
   object-fit: cover;
@@ -631,14 +632,14 @@ a {
 .senderimg {
   grid-row: 2/4;
   grid-column: 1/2;
-  max-width: 5em;
-  max-height: 5em;
+  width: 5em;
+  height: 5em;
   object-fit: cover;
   object-position: center right;
   border-radius: 100%;
   position: relative;
   right: -1.2em;
-  margin: 0;
+  margin: 1em 0;
 }
 
 .messagewrap button {

@@ -193,9 +193,9 @@ nav {
 }
 
 .profilepic {
-  max-width: 70%;
-  max-height: 90%;
-  object-fit: contain;
+  width: 16em;
+  height: 16em;
+  object-fit: cover;
     border-radius: 100%;
   position: relative;
   left: 50%;
@@ -295,6 +295,7 @@ nav {
   }
     .profilepic {
         width: 7em;
+        height: 7em;
     }
     
 
