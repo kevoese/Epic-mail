@@ -1,4 +1,4 @@
-# Epic-mail web application design by Kelvin Esegbona
+# Epic-mail application design by Kelvin Esegbona
 
 [![Build Status](https://travis-ci.org/kevoese/Epic-mail.svg?branch=develop)](https://travis-ci.org/kevoese/Epic-mail)
 [![Coverage Status](https://coveralls.io/repos/github/kevoese/Epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/kevoese/Epic-mail?branch=develop)
