@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaihttp from 'chai-http';
 import app from '../app';
-import users from './datas/user';
+import users from './datas/testuser';
 
 const { expect } = chai;
 chai.use(chaihttp);
@@ -34,6 +34,36 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(users[1])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('POST/auth/login', () => {
+    it('should not login a user with invalid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send(users[2])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        });
+    });
+    it('should not login a user that does not exist', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send(users[3])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        });
+    });
+    it('should login a user that exists with valid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send(users[4])
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           done();

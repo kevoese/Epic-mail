@@ -22,6 +22,30 @@ class Epic {
       data: { Token: token({ id: userObj.id }) },
     });
   }
+
+  static login(req, res) {
+    const {
+      email, password,
+    } = req.body;
+    let isUser = false;
+    let id;
+    users.forEach((user) => {
+      if (user.email === email && user.password === password) {
+        isUser = true;
+        ({ id } = user);
+      }
+    });
+    if (isUser) {
+      return res.status(200).json({
+        status: 200,
+        data: { Token: token({ id }) },
+      });
+    }
+    return res.status(400).json({
+      status: 400,
+      error: 'user does not exixt',
+    });
+  }
 }
 
 export default Epic;

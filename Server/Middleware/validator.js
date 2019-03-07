@@ -21,6 +21,26 @@ class Validate {
       return next();
     });
   }
+
+  static validateLogin(req, res, next) {
+    const {
+      email, password,
+    } = req.body;
+
+    const user = {
+      email, password,
+    };
+
+    joi.validate(user, schema.loginschema, (err) => {
+      if (err) {
+        return res.status(400).json({
+          status: 400,
+          error: err,
+        });
+      }
+      return next();
+    });
+  }
 }
 
 export default Validate;

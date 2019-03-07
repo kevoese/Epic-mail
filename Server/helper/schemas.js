@@ -8,6 +8,12 @@ const schemas = {
       email: Joi.string().email().lowercase().required(),
       password: Joi.required(),
     }),
+
+  loginschema:
+    Joi.object().keys({
+      email: Joi.string().email().lowercase().required(),
+      password: Joi.required(),
+    }),
 };
 
 export default schemas;
