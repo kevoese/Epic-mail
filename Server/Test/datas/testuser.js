@@ -7,10 +7,10 @@ const users = [
   },
   {
     'id': 1,
-    'email': 'jjchinosoviolet@gmail.com',
-    'firstname': 'Jude',
-    'lastname': 'violet',
-    "password": 'letmebe',
+    'email': 'kevoese@epicmail.com',
+    'firstname': 'Kelvin',
+    'lastname': 'Esegbona',
+    "password": 'kevo',
   },
   {
     "email": "kevoeseepicmail.com",
