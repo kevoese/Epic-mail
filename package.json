@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/app.js",
-    "startdev": "nodemon --exec babel-node Server/app.js",
+    "startdev": "nodemon Server/app.js  --exec babel-node",
     "test": "cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "rimraf dist/ && babel ./Server -d dist"
