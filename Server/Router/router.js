@@ -13,5 +13,6 @@ router.post('/messages', Validator.validateMessage, messageController.newMessage
 router.get('/messages', messageController.receivedMessage);
 router.get('/messages/unread', messageController.unreadMessage);
 router.get('/messages/sent', messageController.sentMessage);
+router.get('/messages/:id', messageController.specificMessage);
 
 export default router;

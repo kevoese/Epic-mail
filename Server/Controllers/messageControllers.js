@@ -1,4 +1,5 @@
 import messages from '../Models/messages';
+import errorResponse from '../helper/errorResponse';
 
 class EpicMessage {
   static newMessage(req, res) {
@@ -21,7 +22,7 @@ class EpicMessage {
 
   static receivedMessage(req, res) {
     const receivedMessages = messages.filter(message => (message.status === 'read' || message.status === 'unread'));
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       data: receivedMessages,
     });
@@ -29,7 +30,7 @@ class EpicMessage {
 
   static unreadMessage(req, res) {
     const unreadMessages = messages.filter(message => (message.status === 'unread'));
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       data: unreadMessages,
     });
@@ -37,9 +38,21 @@ class EpicMessage {
 
   static sentMessage(req, res) {
     const sentMessages = messages.filter(message => (message.status === 'sent'));
-    res.status(200).json({
+    return res.status(200).json({
       status: 200,
       data: sentMessages,
+    });
+  }
+
+  static specificMessage(req, res) {
+    const messageId = req.params.id;
+    const message = messages[messageId - 1];
+    if (!message) {
+      return errorResponse(400, 'message does not exist', res);
+    }
+    return res.status(200).json({
+      status: 200,
+      data: message,
     });
   }
 }
