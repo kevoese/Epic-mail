@@ -102,9 +102,22 @@ describe('Epic Test', () => {
   });
 
   describe('GET/messages', () => {
-    it('should send all messages', (done) => {
+    it('should respond with all received messages', (done) => {
       chai.request(app)
         .get('/api/v1/messages')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+  });
+
+  describe('GET/messages/unread', () => {
+    it('should respond with all unread received messages', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/unread')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
