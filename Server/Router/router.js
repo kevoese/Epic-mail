@@ -12,5 +12,6 @@ router.post('/auth/login', Validator.validateLogin, Controller.login);
 router.post('/messages', Validator.validateMessage, messageController.newMessage);
 router.get('/messages', messageController.receivedMessage);
 router.get('/messages/unread', messageController.unreadMessage);
+router.get('/messages/sent', messageController.sentMessage);
 
 export default router;

@@ -126,4 +126,17 @@ describe('Epic Test', () => {
         });
     });
   });
+
+  describe('GET/messages/sent', () => {
+    it('should respond with all sent messages', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/sent')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+  });
 });
