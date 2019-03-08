@@ -179,7 +179,7 @@ describe('Epic Test', () => {
 
     it('should respond with an error on invalid message id', (done) => {
       chai.request(app)
-        .get('/api/v1/messages/tbvryr4')
+        .delete('/api/v1/messages/tbvryr4')
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
