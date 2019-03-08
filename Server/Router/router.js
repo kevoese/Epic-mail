@@ -14,5 +14,6 @@ router.get('/messages', messageController.receivedMessage);
 router.get('/messages/unread', messageController.unreadMessage);
 router.get('/messages/sent', messageController.sentMessage);
 router.get('/messages/:id', messageController.specificMessage);
+router.delete('/messages/:id', messageController.deleteMessage);
 
 export default router;

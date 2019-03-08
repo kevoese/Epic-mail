@@ -55,6 +55,19 @@ class EpicMessage {
       data: message,
     });
   }
+
+  static deleteMessage(req, res) {
+    const messageId = req.params.id;
+    const messageObj = messages[messageId - 1];
+    if (!messageObj) {
+      return errorResponse(400, 'message does not exist', res);
+    }
+    delete messages[messageId];
+    return res.status(200).json({
+      status: 200,
+      data: { message: messageObj.message },
+    });
+  }
 }
 
 export default EpicMessage;
