@@ -50,7 +50,7 @@ class userControllers {
       });
     }
 
-    return errorResponse(401, 'Unauthorised user', res);
+    return errorResponse(400, 'Unauthorised user', res);
   }
 }
 export default userControllers;

@@ -37,6 +37,7 @@ describe('Epic Test', () => {
         .send(users[1])
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
           done();
         });
     });
@@ -49,6 +50,7 @@ describe('Epic Test', () => {
         .send(users[2])
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
           done();
         });
     });
@@ -57,7 +59,8 @@ describe('Epic Test', () => {
         .post('/api/v1/auth/login')
         .send(users[3])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
           done();
         });
     });
@@ -67,6 +70,7 @@ describe('Epic Test', () => {
         .send(users[4])
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
           done();
         });
     });
@@ -79,6 +83,8 @@ describe('Epic Test', () => {
         .send(testmessages[0])
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('object');
           done();
         });
     });
@@ -89,6 +95,20 @@ describe('Epic Test', () => {
         .send(testmessages[4])
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('GET/messages', () => {
+    it('should send all messages', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('array');
           done();
         });
     });
