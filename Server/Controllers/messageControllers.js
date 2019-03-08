@@ -18,6 +18,13 @@ class EpicMessage {
       },
     });
   }
+
+  static allMessage(req, res) {
+    res.status(200).json({
+      status: 200,
+      data: messages,
+    });
+  }
 }
 
 export default EpicMessage;
