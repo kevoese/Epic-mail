@@ -34,6 +34,14 @@ class EpicMessage {
       data: unreadMessages,
     });
   }
+
+  static sentMessage(req, res) {
+    const sentMessages = messages.filter(message => (message.status === 'sent'));
+    res.status(200).json({
+      status: 200,
+      data: sentMessages,
+    });
+  }
 }
 
 export default EpicMessage;
