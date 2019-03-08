@@ -19,11 +19,19 @@ class EpicMessage {
     });
   }
 
-  static allMessage(req, res) {
+  static receivedMessage(req, res) {
     const receivedMessages = messages.filter(message => (message.status === 'read' || message.status === 'unread'));
     res.status(200).json({
       status: 200,
       data: receivedMessages,
+    });
+  }
+
+  static unreadMessage(req, res) {
+    const unreadMessages = messages.filter(message => (message.status === 'unread'));
+    res.status(200).json({
+      status: 200,
+      data: unreadMessages,
     });
   }
 }
