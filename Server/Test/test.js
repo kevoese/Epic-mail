@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaihttp from 'chai-http';
 import app from '../app';
 import users from './datas/testuser';
+import testmessages from './datas/testmessages';
 
 const { expect } = chai;
 chai.use(chaihttp);
@@ -56,7 +57,7 @@ describe('Epic Test', () => {
         .post('/api/v1/auth/login')
         .send(users[3])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           done();
         });
     });
@@ -66,6 +67,28 @@ describe('Epic Test', () => {
         .send(users[4])
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('POST/messages', () => {
+    it('should submit a message with valid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v1/messages')
+        .send(testmessages[0])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          done();
+        });
+    });
+
+    it('should not submit a message with invalid data', (done) => {
+      chai.request(app)
+        .post('/api/v1/messages')
+        .send(testmessages[4])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
           done();
         });
     });
