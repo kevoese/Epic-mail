@@ -1,9 +1,10 @@
 import secure from '../helper/encrypt';
 import token from '../helper/token';
 import users from '../Models/users';
+import errorResponse from '../helper/errorResponse';
 
 
-class Epic {
+class userControllers {
   static welcome(req, res) {
     return res.status(200).json({
       message: 'Welcome to EPic mail',
@@ -49,11 +50,7 @@ class Epic {
       });
     }
 
-    return res.status(400).json({
-      status: 400,
-      error: 'user does not exist',
-    });
+    return errorResponse(401, 'Unauthorised user', res);
   }
 }
-
-export default Epic;
+export default userControllers;
