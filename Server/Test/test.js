@@ -3,6 +3,7 @@ import chaihttp from 'chai-http';
 import app from '../app';
 import users from './datas/testuser';
 import testmessages from './datas/testmessages';
+import messages from '../Models/messages';
 
 const { expect } = chai;
 chai.use(chaihttp);
@@ -135,6 +136,30 @@ describe('Epic Test', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
           expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+  });
+
+  describe('GET/messages/:id', () => {
+    it('should respond with a specific message on valid message id', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/5')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('object');
+          expect(res.body.data.id).to.equal(messages[4].id);
+          done();
+        });
+    });
+
+    it('should respond with an error on invalid message id', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/tbvryr4')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
           done();
         });
     });
