@@ -18,6 +18,14 @@ class EpicMessage {
       },
     });
   }
+
+  static allMessage(req, res) {
+    const receivedMessages = messages.filter(message => (message.status === 'read' || message.status === 'unread'));
+    res.status(200).json({
+      status: 200,
+      data: receivedMessages,
+    });
+  }
 }
 
 export default EpicMessage;
