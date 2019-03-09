@@ -3,7 +3,7 @@ import chaihttp from 'chai-http';
 import app from '../app';
 import users from './datas/testuser';
 import testmessages from './datas/testmessages';
-import messages from '../Models/messages';
+import itFxn from './describefunctions';
 
 const { expect } = chai;
 chai.use(chaihttp);
@@ -22,169 +22,87 @@ describe('Epic Test', () => {
   });
 
   describe('POST/auth/signup', () => {
-    it('should return an error on bad input', (done) => {
-      chai.request(app)
-        .post('/api/v1/auth/signup')
-        .send(users[0])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          done();
-        });
-    });
+    itFxn.post('should return an error on bad input',
+      '/api/v1/auth/signup',
+      users[0],
+      400);
 
-    it('should signup a user on correct input', (done) => {
-      chai.request(app)
-        .post('/api/v1/auth/signup')
-        .send(users[1])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          done();
-        });
-    });
+    itFxn.post('should signup a user on correct input',
+      '/api/v1/auth/signup',
+      users[1],
+      200);
   });
 
   describe('POST/auth/login', () => {
-    it('should not login a user with invalid format of data', (done) => {
-      chai.request(app)
-        .post('/api/v1/auth/login')
-        .send(users[2])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-    it('should not login a user that does not exist', (done) => {
-      chai.request(app)
-        .post('/api/v1/auth/login')
-        .send(users[3])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
-    it('should login a user that exists with valid format of data', (done) => {
-      chai.request(app)
-        .post('/api/v1/auth/login')
-        .send(users[4])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          done();
-        });
-    });
+    itFxn.post('should not login a user with invalid format of data',
+      '/api/v1/auth/login',
+      users[2],
+      400);
+
+    itFxn.post('should not login a user that does not exist',
+      '/api/v1/auth/login',
+      users[3],
+      400);
+
+    itFxn.post('should login a user that exists with valid format of data',
+      '/api/v1/auth/login',
+      users[4],
+      200);
   });
 
   describe('POST/messages', () => {
-    it('should submit a message with valid format of data', (done) => {
-      chai.request(app)
-        .post('/api/v1/messages')
-        .send(testmessages[0])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          expect(res.body.data).to.be.an('object');
-          done();
-        });
-    });
+    itFxn.post('should submit a message with valid format of data',
+      '/api/v1/messages',
+      testmessages[0],
+      200,
+      'object');
 
-    it('should not submit a message with invalid data', (done) => {
-      chai.request(app)
-        .post('/api/v1/messages')
-        .send(testmessages[4])
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
+    itFxn.post('should not submit a message with invalid data',
+      '/api/v1/messages',
+      testmessages[4],
+      400);
   });
 
   describe('GET/messages', () => {
-    it('should respond with all received messages', (done) => {
-      chai.request(app)
-        .get('/api/v1/messages')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          expect(res.body.data).to.be.an('array');
-          done();
-        });
-    });
+    itFxn.get('should respond with all received messages',
+      '/api/v1/messages',
+      200,
+      'array');
   });
 
   describe('GET/messages/unread', () => {
-    it('should respond with all unread received messages', (done) => {
-      chai.request(app)
-        .get('/api/v1/messages/unread')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          expect(res.body.data).to.be.an('array');
-          done();
-        });
-    });
+    itFxn.get('should respond with all unread received messages',
+      '/api/v1/messages/unread',
+      200,
+      'array');
   });
 
   describe('GET/messages/sent', () => {
-    it('should respond with all sent messages', (done) => {
-      chai.request(app)
-        .get('/api/v1/messages/sent')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          expect(res.body.data).to.be.an('array');
-          done();
-        });
-    });
+    itFxn.get('should respond with all sent messages',
+      '/api/v1/messages/sent',
+      200,
+      'array');
   });
 
   describe('GET/messages/:id', () => {
-    it('should respond with a specific message on valid message id', (done) => {
-      chai.request(app)
-        .get('/api/v1/messages/5')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          expect(res.body.data).to.be.an('object');
-          expect(res.body.data.id).to.equal(messages[4].id);
-          done();
-        });
-    });
+    itFxn.get('should respond with a specific message on valid message id',
+      '/api/v1/messages/5',
+      200,
+      'object');
 
-    it('should respond with an error on invalid message id', (done) => {
-      chai.request(app)
-        .get('/api/v1/messages/tbvryr4')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
+    itFxn.get('should respond with an error on invalid message id',
+      '/api/v1/messages/tbvryr4',
+      400);
   });
 
   describe('DELETE/messages/:id', () => {
-    it('should delete an email on valid message id', (done) => {
-      chai.request(app)
-        .delete('/api/v1/messages/5')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal(200);
-          expect(res.body.data).to.be.an('object');
-          done();
-        });
-    });
+    itFxn.delete('should delete an email on valid message id',
+      '/api/v1/messages/5',
+      200,
+      'object');
 
-    it('should respond with an error on invalid message id', (done) => {
-      chai.request(app)
-        .delete('/api/v1/messages/tbvryr4')
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
-          expect(res.body.status).to.equal(400);
-          done();
-        });
-    });
+    itFxn.delete('should respond with an error on invalid message id',
+      '/api/v1/messages/tbvryr4',
+      400);
   });
 });
