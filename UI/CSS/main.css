@@ -991,6 +991,11 @@ select:focus {
     width: 100%;
 }
 
+.allgroupbutton::after{
+  content: '';
+  left: 18%;
+}
+
 @media screen and (max-width: 950px) { 
 
   .wrapper {
