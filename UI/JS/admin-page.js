@@ -1,6 +1,5 @@
 const messageContainer = document.querySelector(".msgcontain");
 const hideCompose = document.querySelector(".cutmsg");
-const composeBtns = document.querySelector(".groupcontent");
 const newMsg = document.querySelector(".composewrapper");
 const inboxes = document.querySelector(".thread");
 const inboxList = document.querySelector(".inbox");
@@ -8,12 +7,24 @@ const slider = document.querySelector(".openinbox");
 const navIcon = document.querySelector(".menu");
 const menuList = document.querySelector(".navmenu");
 const modal = document.querySelector(".wrapper");
+const composeBtns = document.querySelector("#createbtn");
+
+const inboxCard = (status) => {
+ if(status === 'hide'){
+   inboxList.classList.remove("open");
+   modal.classList.remove("modal");
+ }
+ else {
+   inboxList.classList.add("open");
+   modal.classList.add("modal");
+ }
+
+}
 
 composeBtns.addEventListener("click", event => {
   newMsg.style.display = "block";
   inboxes.style.display = "none";
-  inboxList.classList.remove("open");
-  modal.classList.remove("modal");
+  inboxCard('hide');
 });
 
 hideCompose.addEventListener("click", event => {
@@ -25,12 +36,10 @@ slider.addEventListener("click", event => {
   let status = event.target.id;
 
   if (status == "close") {
-    inboxList.classList.add("open");
-    modal.classList.add("modal");
+    inboxCard('show');
     event.target.id = "open";
   } else {
-    inboxList.classList.remove("open");
-    modal.classList.remove("modal");
+    inboxCard('hide');
     event.target.id = "close";
   }
 });
@@ -41,9 +50,7 @@ modal.addEventListener("click", event => {
     if (target.id == "inbox") return;
     target = target.parentNode;
   } while (target);
-
-  inboxList.classList.remove("open");
-  modal.classList.remove("modal");
+  inboxCard('hide');
 });
 
 navIcon.addEventListener("click", event => {
