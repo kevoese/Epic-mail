@@ -1,9 +1,9 @@
-const validClr = "var(--myPurple)";
-const invalidClr = "rgba(21, 11, 90, 0.4)";
+const validClr = "green";
+const invalidClr = "rgba(21, 21, 21, 0.4)";
 const inputs = document.querySelectorAll("input");
 
 let required = {
-  name: /^\w+$/,
+  name: /^[\w]{3,20}$/,
   email: /^\w+@epicmail.com$/i,
   password: /^[\w@.]{7,20}$/
 };
