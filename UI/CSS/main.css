@@ -1,7 +1,7 @@
 :root {
-  --myPurple: rgba(71, 27, 112, 0.9);
+  --myPurple:  rgb(4, 16, 43);
   --myTransPurple: rgba(39, 10, 56, 0.7);
-  --myLightPurple: rgba(106, 66, 143, 0.7);
+  --myLightPurple: rgba(4, 16, 43, 0.7);
   --myLightPurpleV: whitesmoke;
 }
 
@@ -52,8 +52,7 @@ body::before {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(15, 11, 34, 0.7);
-  background-color: var(--myTransPurple);
+  background-color: rgba(4, 16, 43, 0.5);
   z-index: 1;
 }
 
@@ -63,13 +62,13 @@ body::before {
   bottom: 0;
   left: 0;
   right: 0;
-  background: url(../images/emailbng.jpg) center no-repeat fixed;
+  background: url(../images/slide04.jpg) center no-repeat fixed;
   background-size: cover;
   filter: blur(10px);
 }
 
 nav {
-  background-color: rgb(71, 27, 112);
+  background-color: var(--myPurple);
   width: 96.4%;
   position: fixed;
   height: 10%;
@@ -157,6 +156,7 @@ left: 50%;
   object-fit: cover;
   object-position: center right;
   align-self: center;
+  margin-bottom: 0.2em;
 }
 
 .profilename {
@@ -174,19 +174,13 @@ left: 50%;
     width: 2.5em;
     margin: 0 .5em;
     height: 2em;
+    display: none;
+    color: rgba(220, 220, 220)
 }
 
-.editprofile::after {
-  content: "\f4ff";
-  color: white;
-  top: 0;  
-  font-size: 1.2em;
-  cursor: pointer;
-    top: 50%;
-    transform: translateY(-50%);
-}
 
-.editprofile::before {
+
+/* .editprofile::before {
   content: attr(data-tool-tip);
   position: absolute;
   color: white;
@@ -199,7 +193,7 @@ left: 50%;
   padding: 5px;
   transition: opacity 0.5s ease;
   background-color: var(--myPurple);
-}
+} */
 
 .editprofile:hover::before {
   opacity: 1;
@@ -337,7 +331,7 @@ a {
   padding: 1em;
   height: 3em;
   background-color: white;
-  transition: all 0.2s linear;
+  transition: color 0.3s;
   position: relative;
   border: 1px solid var(--myPurple);
 }
@@ -364,7 +358,6 @@ a {
   right: 50%;
   transform: translate(50%, -50%);
   top: 50%;
-  color: var(--myPurple);
   font-weight: light;
   border-radius: 5px;
   position: absolute;
@@ -442,7 +435,7 @@ a {
 }
 
 .checkbox label:hover {
-    color: rgb(92, 41, 139);
+    color: var(--myLightPurple);
 }
 
 
@@ -468,7 +461,7 @@ a {
 
  .read label:hover::before,
  .unread label:hover::before{
-    border-color: rgb(92, 41, 139);
+    border-color: var(--myPurple);
 }
 
 .read label::before,
@@ -490,8 +483,8 @@ a {
 }
 
 .incheckbox:checked + label::before{
-    background-color: rgb(92, 41, 139);
-    border-color: rgb(92, 41, 139);
+    background-color: var(--myPurple);
+    border-color: var(--myPurple);
 }
 
 .incheckbox:checked + label{
@@ -1044,6 +1037,9 @@ select:focus {
         display: none;
     }
     
+    .editprofile{
+      display: initial;
+    }
     .editprofile::before{
       display: none;
     }
