@@ -24,6 +24,13 @@ const schemas = {
     senderId: Joi.number().integer().required(),
     status: Joi.string().min(3).max(7).required(),
   }),
+
+  profileschema:
+  Joi.object().keys({
+    firstname: Joi.string().trim().min(3).optional(),
+    lastname: Joi.string().trim().min(3).optional(),
+  }),
+
 };
 
 export default schemas;

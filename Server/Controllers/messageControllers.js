@@ -44,6 +44,14 @@ class EpicMessage {
     });
   }
 
+  static draftMessage(req, res) {
+    const draftMessages = messages.filter(message => (message.status === 'draft'));
+    return res.status(200).json({
+      status: 200,
+      data: draftMessages,
+    });
+  }
+
   static specificMessage(req, res) {
     const messageId = req.params.id;
     const message = messages[messageId - 1];
@@ -60,7 +68,7 @@ class EpicMessage {
     const messageId = req.params.id;
     const messageObj = messages[messageId - 1];
     if (!messageObj) {
-      return errorResponse(400, 'message does not exist', res);
+      return errorResponse(400, 'Invalid! message does not exist', res);
     }
     delete messages[messageId];
     return res.status(200).json({
