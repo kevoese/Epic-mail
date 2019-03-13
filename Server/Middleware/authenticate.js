@@ -1,6 +1,8 @@
 import tokenFxn from '../helper/token';
-import users from '../Models/users';
+import database from '../helper/crud';
 import errorResponse from '../helper/errorResponse';
+
+const users = database.getStorage('users');
 
 const Auth = (req, res, next) => {
   const { token } = req.headers;

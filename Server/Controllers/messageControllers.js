@@ -1,17 +1,27 @@
-import messages from '../Models/messages';
 import errorResponse from '../helper/errorResponse';
+import database from '../helper/crud';
 
 class EpicMessage {
   static newMessage(req, res) {
     const {
       subject, message, parentMessageId, status, senderId, receiverId,
     } = req.body;
-    const id = messages.length + 1;
     const createdOn = new Date();
+    const senderDelete = false;
+    const receiverDelete = false;
     const msgObj = {
-      id, subject, message, parentMessageId, status, createdOn, senderId, receiverId,
+      subject,
+      message,
+      parentMessageId,
+      createdOn,
+      senderId,
+      receiverId,
+      senderDelete,
+      receiverDelete,
+      status,
     };
-    messages.push(msgObj);
+    const newData = database.add('messages', msgObj);
+    const { id } = newData;
     return res.status(200).json({
       status: 200,
       data: {
@@ -21,7 +31,8 @@ class EpicMessage {
   }
 
   static receivedMessage(req, res) {
-    const receivedMessages = messages.filter(message => (message.status === 'read' || message.status === 'unread'));
+    const userId = req.decoded;
+    const receivedMessages = database.sortItem('messages', 'receiverId', userId);
     return res.status(200).json({
       status: 200,
       data: receivedMessages,
@@ -29,15 +40,25 @@ class EpicMessage {
   }
 
   static unreadMessage(req, res) {
-    const unreadMessages = messages.filter(message => (message.status === 'unread'));
+    const userId = req.decoded;
+    const receivedMessages = database.sortItem('messages', 'receiverId', userId);
+    let unread = [...receivedMessages];
+    const readData = database.sortItem('read', 'userId', userId);
+    readData.forEach((read) => {
+      unread = unread.filter(unreadData => unreadData.id !== read.messageId);
+    });
+
     return res.status(200).json({
       status: 200,
-      data: unreadMessages,
+      data: unread,
+
     });
   }
 
   static sentMessage(req, res) {
-    const sentMessages = messages.filter(message => (message.status === 'sent'));
+    const userId = req.decoded;
+    const sortMessage = database.sortItem('messages', 'senderId', userId);
+    const sentMessages = sortMessage.filter(element => element.status === 'sent');
     return res.status(200).json({
       status: 200,
       data: sentMessages,
@@ -45,7 +66,9 @@ class EpicMessage {
   }
 
   static draftMessage(req, res) {
-    const draftMessages = messages.filter(message => (message.status === 'draft'));
+    const userId = req.decoded;
+    const sentMessages = database.sortItem('messages', 'senderId', userId);
+    const draftMessages = sentMessages.filter(element => element.status === 'draft');
     return res.status(200).json({
       status: 200,
       data: draftMessages,
@@ -53,11 +76,16 @@ class EpicMessage {
   }
 
   static specificMessage(req, res) {
-    const messageId = req.params.id;
-    const message = messages[messageId - 1];
+    let messageId = req.params.id;
+    const userId = req.decoded;
+    const message = database.getById('messages', messageId, userId);
     if (!message) {
       return errorResponse(400, 'message does not exist', res);
     }
+    messageId = Number(messageId);
+    const read = { userId, messageId };
+    database.add('read', read);
+    message.isRead = true;
     return res.status(200).json({
       status: 200,
       data: message,
@@ -66,14 +94,15 @@ class EpicMessage {
 
   static deleteMessage(req, res) {
     const messageId = req.params.id;
-    const messageObj = messages[messageId - 1];
-    if (!messageObj) {
+    const userId = req.decoded;
+    const message = database.deletemsg('messages', messageId, userId);
+    if (!message) {
       return errorResponse(400, 'Invalid! message does not exist', res);
     }
-    delete messages[messageId];
+
     return res.status(200).json({
       status: 200,
-      data: { message: messageObj.message },
+      data: { message },
     });
   }
 }
