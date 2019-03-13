@@ -6,6 +6,7 @@ import testmessages from './datas/testmessages';
 
 const { expect } = chai;
 chai.use(chaihttp);
+let userToken;
 
 describe('Epic Test', () => {
   describe('/display welcome message', () => {
@@ -38,6 +39,7 @@ describe('Epic Test', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
+          userToken = res.body.data.Token;
           done();
         });
     });
@@ -71,16 +73,29 @@ describe('Epic Test', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
+          userToken = res.body.data.Token;
           done();
         });
     });
   });
 
   describe('POST/messages', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .post('/api/v1/messages')
+        .send(testmessages[0])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should submit a message with valid format of data', (done) => {
       chai.request(app)
         .post('/api/v1/messages')
         .send(testmessages[0])
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -93,6 +108,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v1/messages')
         .send(testmessages[4])
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
@@ -102,9 +118,20 @@ describe('Epic Test', () => {
   });
 
   describe('GET/messages', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should respond with all received messages', (done) => {
       chai.request(app)
         .get('/api/v1/messages')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -115,9 +142,19 @@ describe('Epic Test', () => {
   });
 
   describe('GET/messages/unread', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/unread')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
     it('should respond with all unread received messages', (done) => {
       chai.request(app)
         .get('/api/v1/messages/unread')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -131,6 +168,7 @@ describe('Epic Test', () => {
     it('should respond with all sent messages', (done) => {
       chai.request(app)
         .get('/api/v1/messages/sent')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -141,9 +179,20 @@ describe('Epic Test', () => {
   });
 
   describe('GET/messages/draft', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/draft')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should respond with all draft messages', (done) => {
       chai.request(app)
         .get('/api/v1/messages/draft')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -154,9 +203,20 @@ describe('Epic Test', () => {
   });
 
   describe('GET/messages/:id', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/:id')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should respond with a specific message on valid message id', (done) => {
       chai.request(app)
         .get('/api/v1/messages/5')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -168,6 +228,7 @@ describe('Epic Test', () => {
     it('should respond with an error on invalid message id', (done) => {
       chai.request(app)
         .get('/api/v1/messages/tbvryr4')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
@@ -177,9 +238,20 @@ describe('Epic Test', () => {
   });
 
   describe('DELETE/messages/:id', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .delete('/api/v1/messages/:id')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should delete an email on valid message id', (done) => {
       chai.request(app)
         .delete('/api/v1/messages/5')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -191,6 +263,7 @@ describe('Epic Test', () => {
     it('should respond with an error on invalid message id', (done) => {
       chai.request(app)
         .delete('/api/v1/messages/tbvryr4')
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
@@ -200,10 +273,22 @@ describe('Epic Test', () => {
   });
 
   describe('PUT/update', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .put('/api/v1/update')
+        .send(users[5])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should update user details on valid format of data', (done) => {
       chai.request(app)
         .put('/api/v1/update')
         .send(users[5])
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -216,6 +301,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .put('/api/v1/update')
         .send(users[6])
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
@@ -227,6 +313,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .put('/api/v1/update')
         .send(users[7])
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
@@ -238,6 +325,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .put('/api/v1/update')
         .send(users[8])
+        .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);

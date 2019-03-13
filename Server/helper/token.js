@@ -8,11 +8,11 @@ const token = {
     expiresIn: '1d',
   }),
 
-  // decodetoken: tokenStr => jwt.verify(tokenStr, process.env.token_key, (err, data) => {
-  //   if (err) { return 'invalid'; }
-  //   return data;
-  // })
-  // ,
+  decodetoken: tokenStr => jwt.verify(tokenStr, process.env.token_key, (err, data) => {
+    if (err) return { id: false };
+    return data;
+  })
+  ,
 
 };
 
