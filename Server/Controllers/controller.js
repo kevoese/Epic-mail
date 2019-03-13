@@ -1,8 +1,9 @@
 import secure from '../helper/encrypt';
 import token from '../helper/token';
-import users from '../Models/users';
+import database from '../helper/crud';
 import errorResponse from '../helper/errorResponse';
 
+const users = database.getStorage('users');
 
 class userControllers {
   static welcome(req, res) {
@@ -54,13 +55,12 @@ class userControllers {
   }
 
   static updateProfile(req, res) {
-    const {
+    let {
       firstname, lastname,
     } = req.body;
-    const id = 1;
-    const user = users[id - 1];
-    if (firstname) user.firstname = firstname;
-    if (lastname) user.lastname = lastname;
+    const id = req.decoded;
+    if (firstname) firstname = database.updateOne('users', id, 'firstname', firstname);
+    if (lastname) lastname = database.updateOne('users', id, 'lastname', lastname);
 
     return res.status(200).json({
       status: 200,

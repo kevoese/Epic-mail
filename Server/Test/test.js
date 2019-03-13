@@ -56,10 +56,20 @@ describe('Epic Test', () => {
           done();
         });
     });
-    it('should not login a user that does not exist', (done) => {
+    it('should not login a user with wrong password', (done) => {
       chai.request(app)
         .post('/api/v1/auth/login')
         .send(users[3])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+    it('should not login a user with wrong email', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send(users[9])
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
@@ -213,7 +223,7 @@ describe('Epic Test', () => {
         });
     });
 
-    it('should respond with a specific message on valid message id', (done) => {
+    it('should respond with a specific message on valid message id as a sender', (done) => {
       chai.request(app)
         .get('/api/v1/messages/5')
         .set('token', userToken)
@@ -221,6 +231,40 @@ describe('Epic Test', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
           expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should respond with a specific message on valid message id as a receiver', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/1')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should respond with an error on a message he has no access to', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/12')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('should respond with an on message id that does not exist', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/50')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
           done();
         });
     });
@@ -267,6 +311,17 @@ describe('Epic Test', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('should not delete a message from the database when user is a receiver', (done) => {
+      chai.request(app)
+        .delete('/api/v1/messages/1')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
           done();
         });
     });

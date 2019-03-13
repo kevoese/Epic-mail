@@ -38,7 +38,10 @@ const users = [
   {
     "lastname" : "Tommy",
   },
-  
+  {
+    "email": "kevoeseg@epicmail.com",
+    "password" : "kevos"
+  },
 ];
 
 export default users;
