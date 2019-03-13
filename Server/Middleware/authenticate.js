@@ -5,7 +5,8 @@ import errorResponse from '../helper/errorResponse';
 const Auth = (req, res, next) => {
   const { token } = req.headers;
   const { id } = tokenFxn.decodetoken(token);
-  if (id === 'invalid') {
+  const isUser = users.find(user => user.id === id);
+  if (isUser === undefined) {
     return errorResponse(400, 'Unauthorized user', res);
   }
   req.decoded = id;
