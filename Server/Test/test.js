@@ -3,7 +3,6 @@ import chaihttp from 'chai-http';
 import app from '../app';
 import users from './datas/testuser';
 import testmessages from './datas/testmessages';
-import messages from '../Models/messages';
 
 const { expect } = chai;
 chai.use(chaihttp);
@@ -141,6 +140,19 @@ describe('Epic Test', () => {
     });
   });
 
+  describe('GET/messages/draft', () => {
+    it('should respond with all draft messages', (done) => {
+      chai.request(app)
+        .get('/api/v1/messages/draft')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+  });
+
   describe('GET/messages/:id', () => {
     it('should respond with a specific message on valid message id', (done) => {
       chai.request(app)
@@ -149,7 +161,6 @@ describe('Epic Test', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
           expect(res.body.data).to.be.an('object');
-          expect(res.body.data.id).to.equal(messages[4].id);
           done();
         });
     });
@@ -183,6 +194,53 @@ describe('Epic Test', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('PUT/update', () => {
+    it('should update user details on valid format of data', (done) => {
+      chai.request(app)
+        .put('/api/v1/update')
+        .send(users[5])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should respond with an error on invalid format of data', (done) => {
+      chai.request(app)
+        .put('/api/v1/update')
+        .send(users[6])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('should not respond with an error if lastname is not given', (done) => {
+      chai.request(app)
+        .put('/api/v1/update')
+        .send(users[7])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          done();
+        });
+    });
+
+    it('should not respond with an error if firstname is not given', (done) => {
+      chai.request(app)
+        .put('/api/v1/update')
+        .send(users[8])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
           done();
         });
     });

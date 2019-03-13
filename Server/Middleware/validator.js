@@ -7,7 +7,6 @@ class Validate {
     const {
       firstname, lastname, email, password,
     } = req.body;
-
     const user = {
       firstname, lastname, email, password,
     };
@@ -47,6 +46,22 @@ class Validate {
     };
 
     joi.validate(newMessage, schema.messageschema, (err) => {
+      if (err) {
+        return errorResponse(400, err, res);
+      }
+      return next();
+    });
+  }
+
+  static validateProfile(req, res, next) {
+    const {
+      firstname, lastname,
+    } = req.body;
+    const updateuser = {
+      firstname, lastname,
+    };
+
+    joi.validate(updateuser, schema.profileschema, (err) => {
       if (err) {
         return errorResponse(400, err, res);
       }

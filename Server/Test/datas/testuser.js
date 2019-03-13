@@ -22,7 +22,22 @@ const users = [
   {
     "email": "kevoese@epicmail.com",
     "password" : "kevo"
-  }
+  },
+  {
+    "firstname": "Kelvin",
+    "lastname" : "Esegbona"
+  },
+  {
+    "firstname": 3,
+    "lastname" : 145
+  },
+  {
+    "firstname": "Paul",
+    
+  },
+  {
+    "lastname" : "Tommy",
+  },
   
 ];
 

@@ -23,7 +23,7 @@ class userControllers {
     users.push(userObj);
     return res.status(200).json({
       status: 200,
-      data: { Token: token({ id: userObj.id }) },
+      data: { Token: token.createtoken({ id: userObj.id }) },
     });
   }
 
@@ -46,11 +46,26 @@ class userControllers {
     if (isUser) {
       return res.status(200).json({
         status: 200,
-        data: { Token: token({ id }) },
+        data: { Token: token.createtoken({ id }) },
       });
     }
 
     return errorResponse(400, 'Unauthorised user', res);
+  }
+
+  static updateProfile(req, res) {
+    const {
+      firstname, lastname,
+    } = req.body;
+    const id = 1;
+    const user = users[id - 1];
+    if (firstname) user.firstname = firstname;
+    if (lastname) user.lastname = lastname;
+
+    return res.status(200).json({
+      status: 200,
+      data: { firstname, lastname },
+    });
   }
 }
 export default userControllers;
