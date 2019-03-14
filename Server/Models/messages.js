@@ -35,7 +35,7 @@ const Messages = [
     parentMessageId: 2,
     senderDelete: false,
     receiverDelete: false,
-    status: 'unread',
+    status: 'draft',
   },
 
   {
@@ -48,7 +48,7 @@ const Messages = [
     parentMessageId: 2,
     senderDelete: false,
     receiverDelete: false,
-    status: 'ununread',
+    status: 'draft',
   },
 
   {
@@ -87,7 +87,7 @@ const Messages = [
     parentMessageId: 7,
     senderDelete: false,
     receiverDelete: false,
-    status: 'unread',
+    status: 'draft',
   },
 
   {
@@ -100,7 +100,7 @@ const Messages = [
     parentMessageId: 7,
     senderDelete: false,
     receiverDelete: false,
-    status: 'ununread',
+    status: 'draft',
   },
 
   {
@@ -139,7 +139,7 @@ const Messages = [
     parentMessageId: 1,
     senderDelete: false,
     receiverDelete: false,
-    status: 'unread',
+    status: 'draft',
   },
 
   {
@@ -152,7 +152,7 @@ const Messages = [
     parentMessageId: 1,
     senderDelete: false,
     receiverDelete: false,
-    status: 'ununread',
+    status: 'draft',
   },
 ];
 

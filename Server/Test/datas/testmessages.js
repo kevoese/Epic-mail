@@ -2,8 +2,7 @@ const testmessages = [
   {
     subject: 'embedded c',
     message: 'embedded c are very complex to test',
-    senderId: 1,
-    receiverId: 2,
+    receiverEmail: 'joe@epicmail.com',
     parentMessageId: 1,
     status: 'draft',
   },
@@ -11,8 +10,7 @@ const testmessages = [
   {
     subject: 'PWM',
     message: 'pulse width modulation can help control digital switches',
-    senderId: 1,
-    receiverId: 2,
+    receiverEmail: 'joe@epicmail.com',
     parentMessageId: 1,
     status: 'sent',
   },
@@ -20,28 +18,25 @@ const testmessages = [
   {
     subject: 'CSS transitions',
     message: 'making UI pages cooler',
-    senderId: 2,
-    receiverId: 1,
+    receiverEmail: 'joe@epicmail.com',
     parentMessageId: 2,
-    status: 'read',
+    status: 'draft',
   },
 
   {
     subject: 'ES6',
     message: 'for effective coding',
-    senderId: 1,
-    receiverId: 2,
+    receiverEmail: 'joe@epicmail.com',
     parentMessageId: 2,
-    status: 'unread',
+    status: 'sent',
   },
 
   {
     subject: 'incorrect data',
     message: 'for effective texting',
-    senderId: 3,
-    receiverId: 'user',
+    receiverEmail: 'joe',
     parentMessageId: 2,
-    status: 'unreaddgdy',
+    status: 'sentdgdy',
   },
 ];
 

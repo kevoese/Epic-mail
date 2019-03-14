@@ -9,7 +9,7 @@ const users = [
     'email': 'kevoese@epicmail.com',
     'firstname': 'Kelvin',
     'lastname': 'Esegbona',
-    "password": 'kevo',
+    "password": 'kevoese',
   },
   {
     "email": "kevoeseepicmail.com",
@@ -21,7 +21,7 @@ const users = [
   },
   {
     "email": "kevoese@epicmail.com",
-    "password" : "kevo"
+    "password" : "kevoese"
   },
   {
     "firstname": "Kelvin",
@@ -39,7 +39,7 @@ const users = [
     "lastname" : "Tommy",
   },
   {
-    "email": "kevoeseg@epicmail.com",
+    "email": "kevoesegs@epicmail.com",
     "password" : "kevos"
   },
 ];

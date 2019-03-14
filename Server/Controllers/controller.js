@@ -3,7 +3,6 @@ import token from '../helper/token';
 import database from '../helper/crud';
 import errorResponse from '../helper/errorResponse';
 
-const users = database.getStorage('users');
 
 class userControllers {
   static welcome(req, res) {
@@ -16,15 +15,16 @@ class userControllers {
     const {
       firstname, lastname, email, password,
     } = req.body;
-    const id = users.length + 1;
+    if (database.findItem('users', 'email', email)) errorResponse(400, 'Email already exist', res);
+
     const passwordhash = secure.encrypt(password);
     const userObj = {
-      id, firstname, lastname, email, passwordhash,
+      firstname, lastname, email, passwordhash,
     };
-    users.push(userObj);
+    const { id } = database.add('users', userObj);
     return res.status(200).json({
       status: 200,
-      data: { Token: token.createtoken({ id: userObj.id }) },
+      data: { Token: token.createtoken({ id }) },
     });
   }
 
@@ -34,15 +34,15 @@ class userControllers {
     } = req.body;
     let isUser = false;
     let id;
-    users.forEach((user) => {
-      if (user.email === email) {
-        const passwordStat = secure.compare(password, user.passwordhash);
-        if (passwordStat) {
-          ({ id } = user);
-          isUser = true;
-        }
+    const user = database.findItem('users', 'email', email);
+    if (user) {
+      const passwordStat = secure.compare(password, user.passwordhash);
+      if (passwordStat) {
+        ({ id } = user);
+        isUser = true;
       }
-    });
+    }
+
 
     if (isUser) {
       return res.status(200).json({

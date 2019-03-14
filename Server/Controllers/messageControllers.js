@@ -4,8 +4,13 @@ import database from '../helper/crud';
 class EpicMessage {
   static newMessage(req, res) {
     const {
-      subject, message, parentMessageId, status, senderId, receiverId,
+      subject, message, parentMessageId, status, receiverEmail,
     } = req.body;
+    const receiver = database.findItem('users', 'email', receiverEmail);
+    if (receiver === undefined) return errorResponse(400, 'Receiver email does not exist', res);
+    const receiverId = receiver.id;
+    const senderId = req.decoded;
+    if (senderId === Number(receiverId)) return errorResponse(400, 'unable to create email', res);
     const createdOn = new Date();
     const senderDelete = false;
     const receiverDelete = false;

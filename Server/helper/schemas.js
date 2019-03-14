@@ -6,23 +6,22 @@ const schemas = {
       firstname: Joi.string().trim().min(3).required(),
       lastname: Joi.string().trim().min(3).required(),
       email: Joi.string().email().lowercase().required(),
-      password: Joi.required(),
+      password: Joi.string().min(6).required(),
     }),
 
   loginschema:
     Joi.object().keys({
       email: Joi.string().email().lowercase().required(),
-      password: Joi.required(),
+      password: Joi.string().required(),
     }),
 
   messageschema:
   Joi.object().keys({
     subject: Joi.string().required(),
     message: Joi.string().required(),
-    parentMessageId: Joi.number().integer().required(),
-    receiverId: Joi.number().integer().required(),
-    senderId: Joi.number().integer().required(),
-    status: Joi.string().min(3).max(7).required(),
+    parentMessageId: Joi.number().integer().optional(),
+    receiverEmail: Joi.string().email().lowercase().required(),
+    status: Joi.string().regex(/^sent$|^draft$/),
   }),
 
   profileschema:
