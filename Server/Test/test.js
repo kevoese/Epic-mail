@@ -12,10 +12,22 @@ describe('Epic Test', () => {
   describe('/display welcome message', () => {
     it('display the welcome messqge', (done) => {
       chai.request(app)
-        .get('/api/v1/')
+        .get('/')
         .end((err, res) => {
           expect(res.body.message).to.equal('Welcome to EPic mail');
           expect(res.statusCode).to.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('/Unused routes', () => {
+    it('display an error message', (done) => {
+      chai.request(app)
+        .get('/vv/ll')
+        .end((err, res) => {
+          expect(res.body.error).to.equal('route does not exist');
+          expect(res.statusCode).to.equal(400);
           done();
         });
     });
@@ -40,6 +52,16 @@ describe('Epic Test', () => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal(200);
           userToken = res.body.data.Token;
+          done();
+        });
+    });
+
+    it('should not register an existing user', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(users[1])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
           done();
         });
     });
@@ -404,7 +426,7 @@ describe('Epic Test', () => {
     it('should submit a group with valid format of data', (done) => {
       chai.request(app)
         .post('/api/v2/groups')
-        .send({ "name": "new group" })
+        .send({ name: 'new group' })
         .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
