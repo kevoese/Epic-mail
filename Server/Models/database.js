@@ -1,8 +1,8 @@
 const database = {
   users: [
     // {
-    //   id: 2,
-    //   email: 'kevoese@epicmail.com',
+    //   id: 1,
+    //   email: 'joe@epicmail.com',
     //   firstname: 'kelvin',
     //   lastname: 'esegbona',
     //   password: '$2b$10$aIX9BSqaiIH.LervjgHycOjNVEmykleVGi6.HSgL7i1m7flaW45Va',

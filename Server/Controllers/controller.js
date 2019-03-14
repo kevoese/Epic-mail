@@ -16,6 +16,7 @@ class userControllers {
     const {
       firstname, lastname, email, password,
     } = req.body;
+    if (database.findItem('users', 'email', email)) errorResponse(400, 'Email already exist', res);
     const id = users.length + 1;
     const passwordhash = secure.encrypt(password);
     const userObj = {

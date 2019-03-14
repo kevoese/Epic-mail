@@ -43,6 +43,12 @@ const data = {
     const result = dataStorage.filter(element => (element[key] === value));
     return result;
   },
+
+  findItem: (storage, key, value) => {
+    const dataStorage = database[storage];
+    const result = dataStorage.find(element => (element[key] === value));
+    return result;
+  },
 };
 
 
