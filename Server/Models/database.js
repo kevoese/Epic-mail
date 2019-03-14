@@ -173,6 +173,10 @@ const database = {
       messageId: 6,
     },
   ],
+
+  groups: [
+
+  ],
 };
 
 export default database;

@@ -31,6 +31,10 @@ const schemas = {
     lastname: Joi.string().trim().min(3).optional(),
   }),
 
+  groupschema:
+  Joi.object().keys({
+    name: Joi.string().trim().min(3).required(),
+  }),
 };
 
 export default schemas;

@@ -68,6 +68,16 @@ class Validate {
       return next();
     });
   }
+
+  static validateNewGroup(req, res, next) {
+    const { name } = req.body;
+    joi.validate({ name }, schema.groupschema, (err) => {
+      if (err) {
+        return errorResponse(400, 'invalid name format, name is required', res);
+      }
+      return next();
+    });
+  }
 }
 
 export default Validate;
