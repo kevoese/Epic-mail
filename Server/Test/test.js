@@ -388,4 +388,42 @@ describe('Epic Test', () => {
         });
     });
   });
+
+  describe('POST/Groups', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send({ name: 'new group' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('should submit a group with valid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send({ "name": "new group" })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal(200);
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should not submit a message with invalid data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send('12234')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal(400);
+          done();
+        });
+    });
+  });
 });
