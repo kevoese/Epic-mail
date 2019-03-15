@@ -82,6 +82,12 @@ User can upload a profile photo
 
 ### Chaijs
 
+## Links
+Project Management: https://www.pivotaltracker.com/n/projects/2315764
+
+Gh-pages: https://kevoese.github.io/Epic-mail/UI/epic-mail.html
+
+Heroku app: https://epicmailappbykelvin.herokuapp.com/
 
 
 ## Authors
