@@ -3,10 +3,11 @@ import token from '../helper/token';
 import database from '../helper/crud';
 import errorResponse from '../helper/errorResponse';
 
+const { createtoken } = token;
 
 class userControllers {
   static welcome(req, res) {
-    return res.status(200).json({
+    return res.status(200).send({
       message: 'Welcome to EPic mail',
     });
   }
@@ -22,9 +23,9 @@ class userControllers {
       firstname, lastname, email, passwordhash,
     };
     const { id } = database.add('users', userObj);
-    return res.status(200).json({
-      status: 200,
-      data: { Token: token.createtoken({ id }) },
+    return res.status(200).send({
+      status: 'Successful',
+      data: { Token: createtoken({ id }) },
     });
   }
 
@@ -45,9 +46,9 @@ class userControllers {
 
 
     if (isUser) {
-      return res.status(200).json({
-        status: 200,
-        data: { Token: token.createtoken({ id }) },
+      return res.status(200).send({
+        status: 'Successful',
+        data: { Token: createtoken({ id }) },
       });
     }
 
@@ -62,8 +63,8 @@ class userControllers {
     if (firstname) firstname = database.updateOne('users', id, 'firstname', firstname);
     if (lastname) lastname = database.updateOne('users', id, 'lastname', lastname);
 
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: { firstname, lastname },
     });
   }

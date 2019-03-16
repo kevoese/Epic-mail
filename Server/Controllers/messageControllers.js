@@ -27,8 +27,8 @@ class EpicMessage {
     };
     const newData = database.add('messages', msgObj);
     const { id } = newData;
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: {
         id, createdOn, subject, message, parentMessageId, status,
       },
@@ -38,8 +38,8 @@ class EpicMessage {
   static receivedMessage(req, res) {
     const userId = req.decoded;
     const receivedMessages = database.sortItem('messages', 'receiverId', userId);
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: receivedMessages,
     });
   }
@@ -53,8 +53,8 @@ class EpicMessage {
       unread = unread.filter(unreadData => unreadData.id !== read.messageId);
     });
 
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: unread,
 
     });
@@ -64,8 +64,8 @@ class EpicMessage {
     const userId = req.decoded;
     const sortMessage = database.sortItem('messages', 'senderId', userId);
     const sentMessages = sortMessage.filter(element => element.status === 'sent');
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: sentMessages,
     });
   }
@@ -74,8 +74,8 @@ class EpicMessage {
     const userId = req.decoded;
     const sentMessages = database.sortItem('messages', 'senderId', userId);
     const draftMessages = sentMessages.filter(element => element.status === 'draft');
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: draftMessages,
     });
   }
@@ -91,8 +91,8 @@ class EpicMessage {
     const read = { userId, messageId };
     database.add('read', read);
     message.isRead = true;
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: message,
     });
   }
@@ -105,8 +105,8 @@ class EpicMessage {
       return errorResponse(400, 'Invalid! message does not exist', res);
     }
 
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: { message },
     });
   }
