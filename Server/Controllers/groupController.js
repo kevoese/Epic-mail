@@ -15,8 +15,8 @@ class EpicGroup {
     const newData = database.add('groups', groupObj);
     let { id, role } = newData;
     role = 'owner';
-    return res.status(200).json({
-      status: 200,
+    return res.status(200).send({
+      status: 'Successful',
       data: {
         id,
         name,

@@ -1,5 +1,5 @@
-const errorResponse = (statCode, error, res) => res.status(statCode).json({
-  status: statCode,
+const errorResponse = (statCode, error, res) => res.status(statCode).send({
+  status: 'Failure',
   error,
 });
 
