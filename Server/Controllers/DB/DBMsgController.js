@@ -68,6 +68,37 @@ class EpicMessage {
       data: message,
     });
   }
+
+  static async deleteMessage(req, res) {
+    const messageId = req.params.id;
+    const userId = req.decoded;
+    let message;
+    try {
+      message = await CRUD.find('messages', 'id', messageId);
+    } catch (error) {
+      return errorResponse(400, 'Invalid! message does not exist', res);
+    }
+
+
+    if (!message[0]) {
+      return errorResponse(400, 'Invalid! message does not exist', res);
+    }
+
+    const { sender_id, receiver_id } = message[0];
+    if ((sender_id !== userId) && (receiver_id !== userId)) {
+      return errorResponse(400, 'Invalid! message does not exist', res);
+    }
+
+    if (sender_id === userId) { await pool.query(`DELETE FROM messages WHERE id = ${messageId}`, []); }
+    if (receiver_id === userId) {
+      await pool
+        .query(`UPDATE messages SET receiver_del = true WHERE id = ${messageId}`, []);
+    }
+    return res.status(200).json({
+      status: 'Successful',
+      data: 'Msessage successfully deleted',
+    });
+  }
 }
 
 export default EpicMessage;

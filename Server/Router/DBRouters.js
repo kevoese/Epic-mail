@@ -12,4 +12,7 @@ router.get('/', DBUserController.welcome);
 router.post('/auth/signup', Validator.validateSignup, DBUserController.signup);
 router.post('/auth/login', Validator.validateLogin, DBUserController.login);
 router.post('/messages', Auth, Validator.validateMessage, DBMsgController.newMessage);
+router.get('/messages/:id', Auth, DBMsgController.specificMessage);
+router.delete('/messages/:id', Auth, DBMsgController.deleteMessage);
+
 export default router;
