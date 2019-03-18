@@ -58,7 +58,6 @@ class EpicMessage {
     });
   }
 
-
   static async unreadMessage(req, res) {
     const userId = req.decoded;
     let unread = await CRUD.find('messages', 'receiver_id', userId);
@@ -93,6 +92,18 @@ class EpicMessage {
     });
   }
 
+  static async draftMessage(req, res) {
+    const userId = req.decoded;
+    const sentMessages = await CRUD.find('messages', 'sender_id', userId);
+    if (sentMessages[0] === undefined) {
+      return errorResponse(400, 'User does not have any draft message', res);
+    }
+    const draftMessages = sentMessages.filter(element => element.status === 'draft');
+    return res.status(200).json({
+      status: 'Successful',
+      data: draftMessages,
+    });
+  }
 
   static async specificMessage(req, res) {
     const messageId = req.params.id;

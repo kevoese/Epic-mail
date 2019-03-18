@@ -12,10 +12,12 @@ router.get('/', DBUserController.welcome);
 router.post('/auth/signup', Validator.validateSignup, DBUserController.signup);
 router.post('/auth/login', Validator.validateLogin, DBUserController.login);
 router.post('/messages', Auth, Validator.validateMessage, DBMsgController.newMessage);
+router.get('/messages', Auth, DBMsgController.receivedMessage);
+router.get('/messages/unread', Auth, DBMsgController.unreadMessage);
+router.get('/messages/sent', Auth, DBMsgController.sentMessage);
+router.get('/messages/draft', Auth, DBMsgController.draftMessage);
 router.get('/messages/:id', Auth, DBMsgController.specificMessage);
 router.delete('/messages/:id', Auth, DBMsgController.deleteMessage);
-router.get('/messages/sent', Auth, DBMsgController.sentMessage);
-router.get('/messages/unread', Auth, DBMsgController.unreadMessage);
-router.get('/messages', Auth, DBMsgController.receivedMessage);
+router.put('/user/update', Auth, Validator.validateProfile, DBUserController.updateProfile);
 
 export default router;
