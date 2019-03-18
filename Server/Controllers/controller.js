@@ -1,72 +1,72 @@
-import secure from '../helper/encrypt';
-import token from '../helper/token';
-import database from '../helper/crud';
-import errorResponse from '../helper/errorResponse';
+// import secure from '../helper/encrypt';
+// import token from '../helper/token';
+// import database from '../helper/crud';
+// import errorResponse from '../helper/errorResponse';
 
-const { createtoken } = token;
+// const { createtoken } = token;
 
-class userControllers {
-  static welcome(req, res) {
-    return res.status(200).send({
-      message: 'Welcome to EPic mail',
-    });
-  }
+// class userControllers {
+//   static welcome(req, res) {
+//     return res.status(200).send({
+//       message: 'Welcome to EPic mail',
+//     });
+//   }
 
-  static signup(req, res) {
-    const {
-      firstname, lastname, email, password,
-    } = req.body;
-    if (database.findItem('users', 'email', email)) errorResponse(400, 'Email already exist', res);
+//   static signup(req, res) {
+//     const {
+//       firstname, lastname, email, password,
+//     } = req.body;
+//     if (database.findItem('users', 'email', email)) errorResponse(400, 'Email already exist', res);
 
-    const passwordhash = secure.encrypt(password);
-    const userObj = {
-      firstname, lastname, email, passwordhash,
-    };
-    const { id } = database.add('users', userObj);
-    return res.status(200).send({
-      status: 'Successful',
-      data: { Token: createtoken({ id }) },
-    });
-  }
+//     const passwordhash = secure.encrypt(password);
+//     const userObj = {
+//       firstname, lastname, email, passwordhash,
+//     };
+//     const { id } = database.add('users', userObj);
+//     return res.status(200).send({
+//       status: 'Successful',
+//       data: { Token: createtoken({ id }) },
+//     });
+//   }
 
-  static login(req, res) {
-    const {
-      email, password,
-    } = req.body;
-    let isUser = false;
-    let id;
-    const user = database.findItem('users', 'email', email);
-    if (user) {
-      const passwordStat = secure.compare(password, user.passwordhash);
-      if (passwordStat) {
-        ({ id } = user);
-        isUser = true;
-      }
-    }
+//   static login(req, res) {
+//     const {
+//       email, password,
+//     } = req.body;
+//     let isUser = false;
+//     let id;
+//     const user = database.findItem('users', 'email', email);
+//     if (user) {
+//       const passwordStat = secure.compare(password, user.passwordhash);
+//       if (passwordStat) {
+//         ({ id } = user);
+//         isUser = true;
+//       }
+//     }
 
 
-    if (isUser) {
-      return res.status(200).send({
-        status: 'Successful',
-        data: { Token: createtoken({ id }) },
-      });
-    }
+//     if (isUser) {
+//       return res.status(200).send({
+//         status: 'Successful',
+//         data: { Token: createtoken({ id }) },
+//       });
+//     }
 
-    return errorResponse(400, 'Unauthorised user', res);
-  }
+//     return errorResponse(400, 'Unauthorised user', res);
+//   }
 
-  static updateProfile(req, res) {
-    let {
-      firstname, lastname,
-    } = req.body;
-    const id = req.decoded;
-    if (firstname) firstname = database.updateOne('users', id, 'firstname', firstname);
-    if (lastname) lastname = database.updateOne('users', id, 'lastname', lastname);
+//   static updateProfile(req, res) {
+//     let {
+//       firstname, lastname,
+//     } = req.body;
+//     const id = req.decoded;
+//     if (firstname) firstname = database.updateOne('users', id, 'firstname', firstname);
+//     if (lastname) lastname = database.updateOne('users', id, 'lastname', lastname);
 
-    return res.status(200).send({
-      status: 'Successful',
-      data: { firstname, lastname },
-    });
-  }
-}
-export default userControllers;
+//     return res.status(200).send({
+//       status: 'Successful',
+//       data: { firstname, lastname },
+//     });
+//   }
+// }
+// export default userControllers;

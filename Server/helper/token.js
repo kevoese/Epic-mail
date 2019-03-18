@@ -9,10 +9,9 @@ const token = {
   }),
 
   decodetoken: tokenStr => jwt.verify(tokenStr, process.env.token_key, (err, data) => {
-    if (err) return { id: false };
+    if (err) throw new Error('invalid token');
     return data;
-  })
-  ,
+  }),
 
 };
 

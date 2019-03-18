@@ -1,25 +1,25 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import router from './Router/router';
-import groupRouter from './Router/grouprouter';
-import userController from './Controllers/controller';
+// import router from './Router/router';
+import DBRouters from './Router/DBRouters';
+import DBUserController from './Controllers/DB/DBUserController';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api/v1/', router);
-app.use('/api/v2/', groupRouter);
-app.get('/', userController.welcome);
+//app.use('/api/v1/', router);
+app.use('/api/v2/', DBRouters);
+app.get('/', DBUserController.welcome);
 app.all('*', (req, res) => {
-  res.status(400).json({
+  res.status(400).send({
     error: 'route does not exist',
   });
 });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`App is on ${port}`);
+  console.log(`App is running on ${port}`);
 });
 
 export default app;
