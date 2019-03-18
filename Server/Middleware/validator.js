@@ -76,15 +76,15 @@ class Validate {
     });
   }
 
-  static validateNewGroup(req, res, next) {
-    const { name } = req.body;
-    joi.validate({ name }, schema.groupschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
-  }
+  // static validateNewGroup(req, res, next) {
+  //   const { name } = req.body;
+  //   joi.validate({ name }, schema.groupschema, (err) => {
+  //     if (err) {
+  //       return errorResponse(400, joiFormat(err.message), res);
+  //     }
+  //     return next();
+  //   });
+  // }
 }
 
 export default Validate;

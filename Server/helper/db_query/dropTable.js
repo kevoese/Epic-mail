@@ -1,17 +1,4 @@
-import PG from 'pg';
-import dotenv from 'dotenv';
-
-const { Pool } = PG;
-
-dotenv.config();
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-pool.on('connect', () => {
-  console.log('connected to the db');
-});
+import { pool } from './queryMethod';
 
 const dropUsersTable = 'DROP TABLE IF EXISTS users';
 const dropMessagesTable = 'DROP TABLE IF EXISTS messages';
@@ -32,3 +19,4 @@ async function dropTables() {
 }
 
 dropTables();
+
