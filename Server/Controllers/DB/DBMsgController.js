@@ -46,6 +46,19 @@ class EpicMessage {
     }
   }
 
+  static async sentMessage(req, res) {
+    const userId = req.decoded;
+    const sortMessage = await CRUD.find('messages', 'sender_id', userId);
+    if (sortMessage[0] === undefined) {
+      return errorResponse(400, 'User does not have any sent message', res);
+    }
+    const sentMessages = sortMessage.filter(element => element.status === 'sent');
+    return res.status(200).send({
+      status: 'Successful',
+      data: sentMessages,
+    });
+  }
+
 
   static async specificMessage(req, res) {
     const messageId = req.params.id;
