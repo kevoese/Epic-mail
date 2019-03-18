@@ -1,18 +1,20 @@
 import tokenFxn from '../helper/token';
-import database from '../helper/crud';
 import errorResponse from '../helper/errorResponse';
+import CRUD from '../helper/db_query/crud_db';
 
-const users = database.getStorage('users');
 
-const Auth = (req, res, next) => {
-  const { token } = req.headers;
-  const { id } = tokenFxn.decodetoken(token);
-  const isUser = users.find(user => user.id === id);
-  if (isUser === undefined) {
+const Auth = async (req, res, next) => {
+  try {
+    const { token } = req.headers;
+    const { id } = tokenFxn.decodetoken(token);
+    const result = await CRUD.find('users', 'id', id);
+    if (result) {
+      req.decoded = id;
+      next();
+    } else return errorResponse(400, 'Unauthorized user', res);
+  } catch (err) {
     return errorResponse(400, 'Unauthorized user', res);
   }
-  req.decoded = id;
-  next();
 };
 
 export default Auth;

@@ -6,10 +6,10 @@
   "scripts": {
     "start": "rimraf dist/ && babel ./Server -d dist && node dist/app.js",
     "startdev": "nodemon Server/app.js  --exec babel-node",
-    "createTable" : "babel-node ./Server/helper/db_query/createTables.js",
-    "dropTable" : "babel-node ./Server/helper/db_query/dropTable.js",
-    "DBcontrol" : "babel-node ./Server/Models/EpicmailDB/DBUserController.js",
-    "test": "cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --exit",
+    "createTable": "babel-node ./Server/helper/db_query/createTables.js",
+    "dropTable": "babel-node ./Server/helper/db_query/dropTable.js",
+    "DBcontrol": "babel-node ./Server/Models/EpicmailDB/DBUserController.js",
+    "test": "npm run dropTable && npm run createTable && cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --timeout 15000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "rimraf dist/ && babel ./Server -d dist"
   },
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/kevoese/Epic-mail#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.4",
     "bcrypt": "^3.0.4",
     "bcrypt-nodejs": "0.0.3",
@@ -48,6 +49,8 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-regenerator": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",

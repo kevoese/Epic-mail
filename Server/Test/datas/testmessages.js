@@ -38,6 +38,12 @@ const testmessages = [
     parentMessageId: 2,
     status: 'sentdgdy',
   },
+  {
+    subject: 'incorrect data',
+    message: 'for effective texting',
+    receiverEmail: 'joe@epicmail.com',
+    status: 'draft',
+  },
 ];
 
 
