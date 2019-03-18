@@ -46,6 +46,19 @@ class EpicMessage {
     }
   }
 
+  static async receivedMessage(req, res) {
+    const userId = req.decoded;
+    const receivedMessages = await CRUD.find('messages', 'receiver_id', userId);
+    if (receivedMessages[0] === undefined) {
+      return errorResponse(400, 'inbox is empty', res);
+    }
+    return res.status(200).send({
+      status: 'Successful',
+      data: receivedMessages,
+    });
+  }
+
+
   static async unreadMessage(req, res) {
     const userId = req.decoded;
     let unread = await CRUD.find('messages', 'receiver_id', userId);
