@@ -57,6 +57,26 @@ class userControllers {
     return errorResponse(400, 'Unauthorised user', res);
   }
 
+  static async updateProfile(req, res) {
+    const {
+      firstname, lastname,
+    } = req.body;
+    const id = req.decoded;
+    let updated;
 
+    if (firstname !== undefined) {
+      updated = await pool
+        .query('UPDATE users SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname', [firstname, id]);
+    }
+    if (lastname !== undefined) {
+      updated = await pool
+        .query('UPDATE users SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname', [lastname, id]);
+    }
+
+    return res.status(200).send({
+      status: 'Successful',
+      data: updated.rows[0],
+    });
+  }
 }
 export default userControllers;
