@@ -46,6 +46,27 @@ class EpicMessage {
     }
   }
 
+  static async unreadMessage(req, res) {
+    const userId = req.decoded;
+    let unread = await CRUD.find('messages', 'receiver_id', userId);
+    if (unread[0] === undefined) {
+      return errorResponse(400, 'User does not have unread message', res);
+    }
+    const readData = await CRUD.find('read', 'user_id', userId);
+    if (readData[0] === undefined) {
+      return errorResponse(400, 'User does not have unread message', res);
+    }
+    readData.forEach((read) => {
+      unread = unread.filter(unreadData => unreadData.id !== read.message_id);
+    });
+
+    return res.status(200).send({
+      status: 'Successful',
+      data: unread,
+
+    });
+  }
+
   static async sentMessage(req, res) {
     const userId = req.decoded;
     const sortMessage = await CRUD.find('messages', 'sender_id', userId);
