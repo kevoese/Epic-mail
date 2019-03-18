@@ -36,5 +36,27 @@ class userControllers {
     }
   }
 
+  static async login(req, res) {
+    const {
+      email, password,
+    } = req.body;
+    let id;
+    try {
+      const [user] = await CRUD.find('users', 'email', email);
+      if (user) {
+        const passwordStat = secure.compare(password, user.passwordhash);
+        if (passwordStat) {
+          ({ id } = user);
+          return res.status(200).send({
+            status: 'Successful',
+            data: { Token: token.createtoken({ id }) },
+          });
+        }
+      }
+    } catch (err) { return errorResponse(400, 'Unauthorised user', res); }
+    return errorResponse(400, 'Unauthorised user', res);
+  }
+
+
 }
 export default userControllers;
