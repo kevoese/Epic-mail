@@ -1,5 +1,5 @@
 import express from 'express';
-// import userController from '../Controllers/controller';
+import groupController from '../Controllers/groupController';
 import Validator from '../Middleware/validator';
 import Auth from '../Middleware/authenticate';
 import DBUserController from '../Controllers/DB/DBUserController';
@@ -19,5 +19,6 @@ router.get('/messages/draft', Auth, DBMsgController.draftMessage);
 router.get('/messages/:id', Auth, DBMsgController.specificMessage);
 router.delete('/messages/:id', Auth, DBMsgController.deleteMessage);
 router.put('/user/update', Auth, Validator.validateProfile, DBUserController.updateProfile);
+router.post('/groups', Auth, Validator.validateNewGroup, groupController.newGroup);
 
 export default router;
