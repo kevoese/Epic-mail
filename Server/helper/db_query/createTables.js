@@ -43,14 +43,14 @@ const read = `CREATE TABLE IF NOT EXISTS
 const groups = `CREATE TABLE IF NOT EXISTS
         groups(
           id serial PRIMARY KEY,
-          name text NOT NULL,
+          name text NOT NULL UNIQUE,
           admin integer NOT NULL
         );`;
 
 const groupJoin = `CREATE TABLE IF NOT EXISTS
         joint(
-          member integer NOT NULL,
-          group_id integer REFERENCES groups(id)
+          group_id integer REFERENCES groups(id),
+          member integer NOT NULL
         );`;
 
 const create = `${groups}${groupJoin}${users}${messages}${read}`;
@@ -68,6 +68,10 @@ const populateDB = async () => {
     readObj.forEach((obj) => {
       CRUD.insert('read', '(user_id, message_id)', toDBArray(obj));
     });
+
+    CRUD.insert('groups', '(name, admin)', ['great', 1]);
+    CRUD.insert('joint', '(group_id, member)', [1, 1]);
+    CRUD.insert('joint', '(group_id, member)', [1, 3]);
   } catch (err) { console.log(err); }
 };
 

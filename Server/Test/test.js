@@ -492,4 +492,51 @@ describe('Epic Test', () => {
     // });
   });
 
+  describe('PATCH/Groups', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .patch('/api/v2/groups/5')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should edit name of group you are accessible to', (done) => {
+      chai.request(app)
+        .patch('/api/v2/groups/2')
+        .set('token', userToken)
+        .send({ name: 'update group' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('unauthorized users should not edit the name of a group', (done) => {
+      chai.request(app)
+        .patch('/api/v2/groups/3')
+        .send({ name: 'update group' })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('users should not edit the name of a group with wrong format of updated name', (done) => {
+      chai.request(app)
+        .patch('/api/v2/groups/3hj')
+        .send({ name: 'update group' })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+  });
 });

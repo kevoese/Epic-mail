@@ -32,7 +32,13 @@ const schemas = {
 
   groupschema:
   Joi.object().keys({
+    name: Joi.string().trim().required(),
+  }),
+
+  updategroupschema:
+  Joi.object().keys({
     name: Joi.string().trim().min(3).required(),
+    groupId: Joi.number().integer().required(),
   }),
 };
 
