@@ -66,6 +66,26 @@ class EpicGroup {
 
     return errorResponse(401, 'Unauthorized access', res);
   }
+
+  static async deleteGroup(req, res) {
+    const userId = req.decoded;
+    const groupId = req.params.id;
+    try {
+      const getAdmin = await pool.query(`DELETE FROM groups WHERE (id = ${groupId} AND admin = ${userId}) RETURNING *`);
+      if (getAdmin.rows[0] !== undefined) {
+        return res.status(200).send({
+          status: 'Successful',
+          message: 'Group successfully deleted',
+        });
+      }
+    } catch (err) {
+      return errorResponse(404, 'Invalid request', res);
+    }
+
+    return errorResponse(401, 'Unauthorized access', res);
+  }
+
+
 }
 
 export default EpicGroup;

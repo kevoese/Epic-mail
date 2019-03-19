@@ -49,8 +49,9 @@ const groups = `CREATE TABLE IF NOT EXISTS
 
 const groupJoin = `CREATE TABLE IF NOT EXISTS
         joint(
-          group_id integer REFERENCES groups(id),
-          member integer NOT NULL
+          group_id integer NOT NULL,
+          member integer NOT NULL,
+          FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
         );`;
 
 const create = `${groups}${groupJoin}${users}${messages}${read}`;
