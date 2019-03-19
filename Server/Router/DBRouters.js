@@ -20,5 +20,5 @@ router.get('/messages/:id', Auth, DBMsgController.specificMessage);
 router.delete('/messages/:id', Auth, DBMsgController.deleteMessage);
 router.put('/user/update', Auth, Validator.validateProfile, DBUserController.updateProfile);
 router.post('/groups', Auth, Validator.validateNewGroup, groupController.newGroup);
-
+router.get('/groups', Auth, groupController.getGroup);
 export default router;

@@ -29,7 +29,8 @@ const messages = `CREATE TABLE IF NOT EXISTS
           sender_id integer NOT NULL,
           parent_message_id integer,
           status text NOT NULL,
-          receiver_del BOOL NOT NULL
+          receiver_del BOOL NOT NULL,
+          groupid integer REFERENCES groups(id)
         );`;
 
 const read = `CREATE TABLE IF NOT EXISTS
@@ -43,10 +44,16 @@ const groups = `CREATE TABLE IF NOT EXISTS
         groups(
           id serial PRIMARY KEY,
           name text NOT NULL,
-          group_owner_id integer NOT NULL
+          admin integer NOT NULL
         );`;
 
-const create = `${users}${messages}${read}${groups}`;
+const groupJoin = `CREATE TABLE IF NOT EXISTS
+        joint(
+          member integer NOT NULL,
+          group_id integer REFERENCES groups(id)
+        );`;
+
+const create = `${groups}${groupJoin}${users}${messages}${read}`;
 const populateDB = async () => {
   await pool.query(create);
   try {

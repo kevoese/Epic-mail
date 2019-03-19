@@ -419,41 +419,77 @@ describe('Epic Test', () => {
     });
   });
 
-  // describe('POST/Groups', () => {
-  //   it('should not give unauthorized user access', (done) => {
-  //     chai.request(app)
-  //       .post('/api/v2/groups')
-  //       .send({ name: 'new group' })
-  //       .end((err, res) => {
-  //         expect(res.statusCode).to.equal(400);
-  //         expect(res.body.status).to.equal('Failure');
-  //         done();
-  //       });
-  //   });
+  describe('POST/Groups', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send({ name: 'new group' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
 
-  //   it('should submit a group with valid format of data', (done) => {
-  //     chai.request(app)
-  //       .post('/api/v2/groups')
-  //       .send({ name: 'new group' })
-  //       .set('token', userToken)
-  //       .end((err, res) => {
-  //         expect(res.statusCode).to.equal(200);
-  //         expect(res.body.status).to.equal('Successful');
-  //         expect(res.body.data).to.be.an('object');
-  //         done();
-  //       });
-  //   });
+    it('should submit a group with valid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send({ name: 'new group' })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
 
-  //   it('should not submit a message with invalid data', (done) => {
-  //     chai.request(app)
-  //       .post('/api/v2/groups')
-  //       .send('12234')
-  //       .set('token', userToken)
-  //       .end((err, res) => {
-  //         expect(res.statusCode).to.equal(400);
-  //         expect(res.body.status).to.equal('Failure');
-  //         done();
-  //       });
-  //   });
-  // });
+    it('should not submit a group with invalid data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send('12234')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+  });
+
+  describe('GET/Groups', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .get('/api/v2/groups')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should get a group you are accessible to', (done) => {
+      chai.request(app)
+        .get('/api/v2/groups')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    // it('should not get a gr', (done) => {
+    //   chai.request(app)
+    //     .post('/api/v2/groups')
+    //     .send('12234')
+    //     .set('token', userToken)
+    //     .end((err, res) => {
+    //       expect(res.statusCode).to.equal(400);
+    //       expect(res.body.status).to.equal('Failure');
+    //       done();
+    //     });
+    // });
+  });
+
 });

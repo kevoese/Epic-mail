@@ -20,7 +20,7 @@ const query = async (obj) => {
     const res = await pool.query(str, values);
     return res;
   } catch (err) {
-    console.log('errors');
+    console.log(err);
     return false;
   }
 };
