@@ -85,6 +85,17 @@ class Validate {
       return next();
     });
   }
+
+  static validateUpdateGroup(req, res, next) {
+    const { name } = req.body;
+    const groupId = req.params.id;
+    joi.validate({ name, groupId }, schema.updategroupschema, (err) => {
+      if (err) {
+        return errorResponse(400, joiFormat(err.message), res);
+      }
+      return next();
+    });
+  }
 }
 
 export default Validate;

@@ -44,8 +44,27 @@ class EpicGroup {
         data: results,
       });
     }
-
     return errorResponse(404, 'Groups was not found', res);
+  }
+
+  static async updateName(req, res) {
+    const userId = req.decoded;
+    const groupId = req.params.id;
+    const { name } = req.body;
+    try {
+      const getAdmin = await pool.query(`SELECT * FROM groups WHERE (id = ${groupId} AND admin = ${userId})`);
+      if (getAdmin.rows[0] !== undefined) {
+        const update = await pool.query(`UPDATE groups SET name = $1 WHERE id = ${groupId} RETURNING name`, [name]);
+        return res.status(200).send({
+          status: 'Successful',
+          data: update.rows[0],
+        });
+      }
+    } catch (err) {
+      return errorResponse(404, 'Invalid request', res);
+    }
+
+    return errorResponse(401, 'Unauthorized access', res);
   }
 }
 
