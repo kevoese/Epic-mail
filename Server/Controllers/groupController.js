@@ -85,7 +85,25 @@ class EpicGroup {
     return errorResponse(401, 'Unauthorized access', res);
   }
 
-
+  static async deleteUser(req, res) {
+    const userId = req.decoded;
+    const { userToDeleteId, groupId } = req.params;
+    try {
+      const getAdmin = await pool.query(`SELECT * FROM groups WHERE (id = ${groupId} AND admin = ${userId})`);
+      if (getAdmin.rows[0] !== undefined) {
+        const update = await pool.query(`DELETE FROM joint WHERE (member = ${userToDeleteId} AND group_id =${groupId}) RETURNING *`);
+        if (update.rows[0] !== undefined) {
+          return res.status(200).send({
+            status: 'Successful',
+            message: 'User successfully deleted',
+          });
+        }
+      }
+    } catch (err) {
+      return errorResponse(500, 'Something went wrong', res);
+    }
+    return errorResponse(401, 'Unauthorized access', res);
+  }
 }
 
 export default EpicGroup;

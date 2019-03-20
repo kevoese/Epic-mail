@@ -71,8 +71,10 @@ const populateDB = async () => {
     });
 
     CRUD.insert('groups', '(name, admin)', ['great', 1]);
+    CRUD.insert('groups', '(name, admin)', ['it has been God all the way', 3]);
     CRUD.insert('joint', '(group_id, member)', [1, 1]);
     CRUD.insert('joint', '(group_id, member)', [1, 3]);
+    CRUD.insert('joint', '(group_id, member)', [2, 2]);
   } catch (err) { console.log(err); }
 };
 
