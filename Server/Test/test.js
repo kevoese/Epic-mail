@@ -444,6 +444,32 @@ describe('Epic Test', () => {
         });
     });
 
+    it('should submit a group with valid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send({ name: 'new group two' })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+
+    it('should submit a group with valid format of data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups')
+        .send({ name: 'new group latest' })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          expect(res.body.data).to.be.an('object');
+          done();
+        });
+    });
+
     it('should not submit a group with invalid data', (done) => {
       chai.request(app)
         .post('/api/v2/groups')
@@ -479,17 +505,6 @@ describe('Epic Test', () => {
         });
     });
 
-    // it('should not get a gr', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v2/groups')
-    //     .send('12234')
-    //     .set('token', userToken)
-    //     .end((err, res) => {
-    //       expect(res.statusCode).to.equal(400);
-    //       expect(res.body.status).to.equal('Failure');
-    //       done();
-    //     });
-    // });
   });
 
   describe('PATCH/Groups', () => {
@@ -505,7 +520,7 @@ describe('Epic Test', () => {
 
     it('should edit name of group you are accessible to', (done) => {
       chai.request(app)
-        .patch('/api/v2/groups/2')
+        .patch('/api/v2/groups/4')
         .set('token', userToken)
         .send({ name: 'update group' })
         .end((err, res) => {
@@ -551,9 +566,9 @@ describe('Epic Test', () => {
         });
     });
 
-    it('should delete group you are an admin to', (done) => {
+    it('should delete a group you are an admin to', (done) => {
       chai.request(app)
-        .delete('/api/v2/groups/2')
+        .delete('/api/v2/groups/3')
         .set('token', userToken)
         .send({ name: 'update group' })
         .end((err, res) => {
@@ -563,7 +578,7 @@ describe('Epic Test', () => {
         });
     });
 
-    it('unauthorized users should not delete the group', (done) => {
+    it('unauthorized users should not delete the name of group', (done) => {
       chai.request(app)
         .delete('/api/v2/groups/1')
         .send({ name: 'update group' })
@@ -575,17 +590,6 @@ describe('Epic Test', () => {
         });
     });
 
-    // it('users should not edit the name of a group with wrong format of updated name', (done) => {
-    //   chai.request(app)
-    //     .patch('/api/v2/groups/3hj')
-    //     .send({ name: 'update group' })
-    //     .set('token', userToken)
-    //     .end((err, res) => {
-    //       expect(res.statusCode).to.equal(400);
-    //       expect(res.body.status).to.equal('Failure');
-    //       done();
-    //     });
-    // });
   });
 
   describe('DELETE/Groups/:groupId/users', () => {
@@ -601,7 +605,7 @@ describe('Epic Test', () => {
 
     it('should delete a user on a group you are an admin to', (done) => {
       chai.request(app)
-        .delete('/api/v2/groups/3/users/3')
+        .delete('/api/v2/groups/4/users/3')
         .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
@@ -620,17 +624,52 @@ describe('Epic Test', () => {
           done();
         });
     });
+  });
 
-    // it('users should not edit the name of a group with wrong format of updated name', (done) => {
-    //   chai.request(app)
-    //     .patch('/api/v2/groups/3hj')
-    //     .send({ name: 'update group' })
-    //     .set('token', userToken)
-    //     .end((err, res) => {
-    //       expect(res.statusCode).to.equal(400);
-    //       expect(res.body.status).to.equal('Failure');
-    //       done();
-    //     });
-    // });
+  describe('POST/Groups/:groupId/messages', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/1/messages')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should allow a user post a new message to a group', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/5/messages')
+        .set('token', userToken)
+        .send({ subject: 'subject', message: 'message' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should allow a user post a new message to a group', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/5/messages')
+        .set('token', userToken)
+        .send({ subject: 'subject', message: 'message', parentmessageId: 3 })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should not allow a user to post message group he is not a member of', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/5/messages')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
   });
 });

@@ -96,6 +96,24 @@ class Validate {
       return next();
     });
   }
+
+  static validateGroupMsg(req, res, next) {
+    const {
+      subject, message,
+      parentMessageId,
+    } = req.body;
+    const { groupId } = req.params;
+    const newMessage = {
+      subject, message, groupId, parentMessageId,
+    };
+
+    joi.validate(newMessage, schema.sendgroupmsg, (err) => {
+      if (err) {
+        return errorResponse(400, joiFormat(err.message), res);
+      }
+      return next();
+    });
+  }
 }
 
 export default Validate;
