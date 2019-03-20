@@ -48,6 +48,12 @@ const schemas = {
     groupId: Joi.number().integer().required(),
     parentMessageId: Joi.number().integer().optional(),
   }),
+
+  addGroupUsers:
+  Joi.object().keys({
+    groupId: Joi.number().integer().required(),
+    email: Joi.string().email().lowercase().required(),
+  }),
 };
 
 export default schemas;
