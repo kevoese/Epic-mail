@@ -25,4 +25,5 @@ router.patch('/groups/:id', Auth, Validator.validateUpdateGroup, groupController
 router.delete('/groups/:id', Auth, groupController.deleteGroup);
 router.delete('/groups/:groupId/users/:userToDeleteId', Auth, groupController.deleteUser);
 router.post('/groups/:groupId/messages', Auth, Validator.validateGroupMsg, groupController.msgGroup);
+router.post('/groups/:groupId/users', Auth, Validator.validateAddGroupUsers, groupController.addGroupUser);
 export default router;

@@ -114,6 +114,22 @@ class Validate {
       return next();
     });
   }
+
+  static validateAddGroupUsers(req, res, next) {
+    const {
+      email,
+    } = req.body;
+    const { groupId } = req.params;
+    const newMessage = {
+      email, groupId,
+    };
+    joi.validate(newMessage, schema.addGroupUsers, (err) => {
+      if (err) {
+        return errorResponse(400, joiFormat(err.message), res);
+      }
+      return next();
+    });
+  }
 }
 
 export default Validate;

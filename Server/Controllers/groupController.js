@@ -141,6 +141,40 @@ class EpicGroup {
     }
     return errorResponse(401, 'Unauthorized access', res);
   }
+
+  static async addGroupUser(req, res) {
+    const userId = req.decoded;
+    const { groupId } = req.params;
+    const { email } = req.body;
+    const getAdmin = await pool.query(`SELECT * FROM groups WHERE (id = ${groupId} AND admin = ${userId})`);
+    const result = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+
+    if (result.rows[0] === undefined) {
+      return errorResponse(401, 'Email does not exist', res);
+    }
+    const memberId = result.rows[0].id;
+    if (getAdmin.rows[0] !== undefined) {
+      const isMember = await pool.query('SELECT member FROM joint WHERE member = $1', [memberId]);
+      if (isMember.rows[0] !== undefined) { return errorResponse(401, 'User already exist in group', res); }
+      await pool.query(`INSERT INTO joint (group_id, member) VALUES(${groupId}, ${memberId})`);
+      const allGroups = await pool.query(`SELECT * FROM groups 
+       JOIN joint ON groups.id = joint.group_id  WHERE groups.admin = ${userId};`);
+      if (allGroups.rows[0] !== undefined) {
+        const results = [];
+        allGroups.rows.forEach((group) => {
+          const { id, name, admin } = group;
+          let role;
+          (userId === admin) ? role = 'admin' : role = 'member';
+          results.push({ id, name, role });
+        });
+        return res.status(200).send({
+          status: 'Successful',
+          data: results,
+        });
+      }
+    }
+    return errorResponse(401, 'Unauthorized access', res);
+  }
 }
 
 export default EpicGroup;

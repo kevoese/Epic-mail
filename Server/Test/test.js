@@ -504,7 +504,6 @@ describe('Epic Test', () => {
           done();
         });
     });
-
   });
 
   describe('PATCH/Groups', () => {
@@ -589,7 +588,6 @@ describe('Epic Test', () => {
           done();
         });
     });
-
   });
 
   describe('DELETE/Groups/:groupId/users', () => {
@@ -665,6 +663,66 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v2/groups/5/messages')
         .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+  });
+
+  describe('POST/Groups/:groupId/users', () => {
+    it('should not give unauthorized user access', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/2/users')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should allow an admin add a user to a group', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/4/users')
+        .set('token', userToken)
+        .send({ email: 'cyrax@epicmail.com' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should not allow an admin add an existing member to a group', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/4/users')
+        .set('token', userToken)
+        .send({ email: 'cyrax@epicmail.com' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should not allow an admin add an email that does not exist', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/4/users')
+        .set('token', userToken)
+        .send({ email: 'joenh@epicmail.com' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should not allow an admin add an email with invalid form of data', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/4/users')
+        .set('token', userToken)
+        .send({ email: 'joenhpicmai5654' })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
