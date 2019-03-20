@@ -60,24 +60,17 @@ class EpicMessage {
 
   static async unreadMessage(req, res) {
     const userId = req.decoded;
-    let unread = await CRUD.find('messages', 'receiver_id', userId);
-    if (unread[0] === undefined) {
+    const unread = await pool.query(`SELECT id, created_on, subject, message, receiver_id, sender_id, status FROM messages WHERE (receiver_id = ${userId} AND read_stat = 'unread' )`);
+    if (unread.rows[0] === undefined) {
       return errorResponse(400, 'User does not have unread message', res);
     }
-    const readData = await CRUD.find('read', 'user_id', userId);
-    if (readData[0] === undefined) {
-      return errorResponse(400, 'User does not have unread message', res);
-    }
-    readData.forEach((read) => {
-      unread = unread.filter(unreadData => unreadData.id !== read.message_id);
-    });
-
     return res.status(200).send({
       status: 'Successful',
-      data: unread,
+      data: unread.rows,
 
     });
   }
+
 
   static async sentMessage(req, res) {
     const userId = req.decoded;
@@ -110,20 +103,24 @@ class EpicMessage {
     const userId = req.decoded;
     const { rows } = await pool
       .query(`SELECT * FROM messages WHERE (id = ${messageId}) AND (receiver_id = ${userId} OR sender_id = ${userId}) `, []);
-    const read = { userId, messageId };
-    let message;
+    let messagedata = ' no message available';
     if (rows[0] !== undefined) {
-      [message] = rows;
-      const itExist = await pool.query(`SELECT * FROM read WHERE (user_id = ${userId} AND message_id = ${messageId})`, []);
-      const [readmsg] = itExist.rows;
-      if (readmsg === undefined) {
-        await CRUD.insert('read', '(user_id, message_id)', toDBArray(read));
+      const { receiver_id } = rows[0];
+      if (receiver_id === userId) {
+        const result = await pool.query(`UPDATE messages SET read_stat = 'read' WHERE (id = ${messageId}) AND (receiver_id = ${userId}) RETURNING *`);
+        console.log(result.rows[0]);
       }
+      const {
+        id, created_on, subject, message, sender_id, status,
+      } = rows[0];
+      messagedata = {
+        id, created_on, subject, message, receiver_id, sender_id, status,
+      };
     } else return errorResponse(400, 'Message does not exixt', res);
 
     return res.status(200).json({
       status: 'Successful',
-      data: message,
+      data: messagedata,
     });
   }
 

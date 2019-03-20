@@ -27,6 +27,7 @@ const database = {
       parentMessageId: 0,
       status: 'sent',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -39,6 +40,7 @@ const database = {
       parentMessageId: 0,
       status: 'sent',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -51,6 +53,7 @@ const database = {
       parentMessageId: 2,
       status: 'sent',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -63,6 +66,7 @@ const database = {
       parentMessageId: 2,
       status: 'draft',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -75,6 +79,7 @@ const database = {
       parentMessageId: 14,
       status: 'draft',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -87,6 +92,7 @@ const database = {
       parentMessageId: 2,
       status: 'draft',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -99,6 +105,7 @@ const database = {
       parentMessageId: 7,
       status: 'draft',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -111,6 +118,7 @@ const database = {
       parentMessageId: 7,
       status: 'draft',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -123,6 +131,7 @@ const database = {
       parentMessageId: 7,
       status: 'sent',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -134,6 +143,7 @@ const database = {
       parentMessageId: 0,
       status: 'draft',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -145,6 +155,7 @@ const database = {
       parentMessageId: 1,
       status: 'sent',
       receiverDelete: false,
+      read_stat: 'unread',
     },
 
     {
@@ -156,45 +167,10 @@ const database = {
       parentMessageId: 1,
       status: 'sent',
       receiverDelete: false,
+      read_stat: 'unread',
     },
   ],
 
-
-  read: [
-    {
-      userId: 2,
-      messageId: 3,
-    },
-    {
-
-      userId: 1,
-      messageId: 3,
-    },
-    {
-
-      userId: 2,
-      messageId: 6,
-    },
-    {
-
-      userId: 3,
-      messageId: 6,
-    },
-    {
-
-      userId: 3,
-      messageId: 4,
-    },
-    {
-
-      userId: 3,
-      messageId: 3,
-    },
-  ],
-
-  groups: [
-
-  ],
 };
 
 export default database;
