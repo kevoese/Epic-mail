@@ -18,8 +18,9 @@ class userControllers {
     const {
       firstname, lastname, email, password,
     } = req.body;
-    await CRUD.find('users', 'email', email);
-    try {
+
+    const newData = await CRUD.find('users', 'email', email);
+    if (newData[0] === undefined) {
       const passwordhash = secure.encrypt(password);
       const userObj = {
         firstname, lastname, email, passwordhash,
@@ -31,9 +32,8 @@ class userControllers {
         status: 'Successful',
         data: { Token: token.createtoken({ id }) },
       });
-    } catch (err) {
-      return errorResponse(400, 'Email already exist', res);
     }
+    return errorResponse(400, 'Email already exist', res);
   }
 
   static async login(req, res) {

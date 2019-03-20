@@ -25,11 +25,11 @@ const messages = `CREATE TABLE IF NOT EXISTS
           created_on TIMESTAMP NOT NULL,
           subject text NOT NULL,
           message text NOT NULL,
-          receiver_id integer NOT NULL,
-          sender_id integer NOT NULL,
+          receiver_id integer ,
+          sender_id integer ,
           parent_message_id integer,
-          status text NOT NULL,
-          receiver_del BOOL NOT NULL,
+          status text ,
+          receiver_del BOOL ,
           groupid integer REFERENCES groups(id)
         );`;
 
@@ -51,10 +51,11 @@ const groupJoin = `CREATE TABLE IF NOT EXISTS
         joint(
           group_id integer NOT NULL,
           member integer NOT NULL,
-          FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+          FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
+          FOREIGN KEY (member) REFERENCES users(id) ON DELETE CASCADE
         );`;
 
-const create = `${groups}${groupJoin}${users}${messages}${read}`;
+const create = `${users}${groups}${groupJoin}${messages}${read}`;
 const populateDB = async () => {
   await pool.query(create);
   try {
@@ -71,10 +72,10 @@ const populateDB = async () => {
     });
 
     CRUD.insert('groups', '(name, admin)', ['great', 1]);
-    CRUD.insert('groups', '(name, admin)', ['it has been God all the way', 3]);
+    CRUD.insert('groups', '(name, admin)', ['it has been God all the way', 2]);
     CRUD.insert('joint', '(group_id, member)', [1, 1]);
-    CRUD.insert('joint', '(group_id, member)', [1, 3]);
-    CRUD.insert('joint', '(group_id, member)', [2, 2]);
+    // CRUD.insert('joint', '(group_id, member)', [1, 2]);
+    CRUD.insert('joint', '(group_id, member)', [2, 1]);
   } catch (err) { console.log(err); }
 };
 

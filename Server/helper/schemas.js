@@ -40,6 +40,14 @@ const schemas = {
     name: Joi.string().trim().min(3).required(),
     groupId: Joi.number().integer().required(),
   }),
+
+  sendgroupmsg:
+  Joi.object().keys({
+    subject: Joi.string().required(),
+    message: Joi.string().required(),
+    groupId: Joi.number().integer().required(),
+    parentMessageId: Joi.number().integer().optional(),
+  }),
 };
 
 export default schemas;

@@ -2,6 +2,9 @@
 import errorResponse from '../helper/errorResponse';
 import CRUD from '../helper/db_query/crud_db';
 import { pool } from '../helper/db_query/queryMethod';
+import someFxn from '../helper/myFunction';
+
+const { toDBArray } = someFxn;
 
 class EpicGroup {
   static async newGroup(req, res) {
@@ -101,6 +104,40 @@ class EpicGroup {
       }
     } catch (err) {
       return errorResponse(500, 'Something went wrong', res);
+    }
+    return errorResponse(401, 'Unauthorized access', res);
+  }
+
+  static async msgGroup(req, res) {
+    const userId = req.decoded;
+    const { groupId } = req.params;
+    let { subject, message, parentMessageId } = req.body;
+    if (parentMessageId === undefined) parentMessageId = null;
+    const createdOn = new Date();
+    const msgObj = {
+      createdOn,
+      subject,
+      message,
+      groupId,
+      userId,
+      parentMessageId,
+    };
+    const getMembership = await pool.query(`SELECT * FROM joint WHERE (group_id = ${groupId} AND member = ${userId})`);
+    if (getMembership.rows[0] !== undefined) {
+      const [newData] = await CRUD.insert('messages',
+        '(created_on, subject, message, groupid, sender_id, parent_message_id)',
+        toDBArray(msgObj));
+      const { id } = newData;
+      return res.status(200).send({
+        status: 'Successful',
+        message: {
+          id,
+          createdOn,
+          subject,
+          message,
+          parentMessageId,
+        },
+      });
     }
     return errorResponse(401, 'Unauthorized access', res);
   }
