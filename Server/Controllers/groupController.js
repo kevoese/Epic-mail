@@ -47,7 +47,7 @@ class EpicGroup {
         data: results,
       });
     }
-    return errorResponse(404, 'Groups was not found', res);
+    return errorResponse(404, 'Group was not found', res);
   }
 
   static async updateName(req, res) {
@@ -64,7 +64,7 @@ class EpicGroup {
         });
       }
     } catch (err) {
-      return errorResponse(404, 'Invalid request', res);
+      return errorResponse(400, 'Invalid request', res);
     }
 
     return errorResponse(401, 'Unauthorized access', res);

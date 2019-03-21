@@ -54,6 +54,17 @@ const schemas = {
     groupId: Joi.number().integer().required(),
     email: Joi.string().email().lowercase().required(),
   }),
+
+  onlyIdSchema:
+  Joi.object().keys({
+    id: Joi.number().integer().required(),
+  }),
+
+  userDelete:
+  Joi.object().keys({
+    groupId: Joi.number().integer().required(),
+    userId: Joi.number().integer().required(),
+  }),
 };
 
 export default schemas;

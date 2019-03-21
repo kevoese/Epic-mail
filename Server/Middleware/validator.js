@@ -97,6 +97,27 @@ class Validate {
     });
   }
 
+  static validateJustId(req, res, next) {
+    const { id } = req.params;
+    joi.validate({ id }, schema.onlyIdSchema, (err) => {
+      if (err) {
+        return errorResponse(400, joiFormat(err.message), res);
+      }
+      return next();
+    });
+  }
+
+  static validateUserDelete(req, res, next) {
+    const { groupId } = req.params;
+    const userId = req.params.userToDeleteId;
+    joi.validate({ groupId, userId }, schema.userDelete, (err) => {
+      if (err) {
+        return errorResponse(400, joiFormat(err.message), res);
+      }
+      return next();
+    });
+  }
+
   static validateGroupMsg(req, res, next) {
     const {
       subject, message,

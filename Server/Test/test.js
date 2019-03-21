@@ -10,7 +10,7 @@ let userToken;
 
 describe('Epic Test', () => {
   describe('/display welcome message', () => {
-    it('display the welcome messqge', (done) => {
+    it('display the welcome message', (done) => {
       chai.request(app)
         .get('/')
         .end((err, res) => {
@@ -26,8 +26,8 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/vv/ll')
         .end((err, res) => {
-          expect(res.body.error).to.equal('route does not exist');
-          expect(res.statusCode).to.equal(400);
+          expect(res.body.error).to.equal('Route does not exist');
+          expect(res.statusCode).to.equal(404);
           done();
         });
     });
@@ -49,7 +49,7 @@ describe('Epic Test', () => {
         .post('/api/v2/auth/signup')
         .send(users[1])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
+          expect(res.statusCode).to.equal(201);
           expect(res.body.status).to.equal('Successful');
           userToken = res.body.data.Token;
           done();
@@ -61,7 +61,7 @@ describe('Epic Test', () => {
         .post('/api/v2/auth/signup')
         .send(users[1])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(409);
           done();
         });
     });
@@ -83,7 +83,7 @@ describe('Epic Test', () => {
         .post('/api/v2/auth/login')
         .send(users[3])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -93,7 +93,7 @@ describe('Epic Test', () => {
         .post('/api/v2/auth/login')
         .send(users[9])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -283,7 +283,7 @@ describe('Epic Test', () => {
         .get('/api/v2/messages/77')
         .set('token', userToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -294,7 +294,7 @@ describe('Epic Test', () => {
         .get('/api/v2/messages/50')
         .set('token', userToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -302,7 +302,7 @@ describe('Epic Test', () => {
 
     it('should respond with an error on invalid message id', (done) => {
       chai.request(app)
-        .get('/api/v2/messages/77')
+        .get('/api/v2/messages/77ju')
         .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -336,7 +336,7 @@ describe('Epic Test', () => {
 
     it('should respond with an error on invalid message id', (done) => {
       chai.request(app)
-        .delete('/api/v2/messages/77')
+        .delete('/api/v2/messages/77kj')
         .set('token', userToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
@@ -543,6 +543,18 @@ describe('Epic Test', () => {
 
     it('users should not edit the name of a group with wrong format of updated name', (done) => {
       chai.request(app)
+        .patch('/api/v2/groups/3')
+        .send({ name: 6 })
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('should respond with an error on invalid id format', (done) => {
+      chai.request(app)
         .patch('/api/v2/groups/3hj')
         .send({ name: 'update group' })
         .set('token', userToken)
@@ -612,7 +624,18 @@ describe('Epic Test', () => {
         });
     });
 
-    it('unauthorized users should not delete the group', (done) => {
+    it('should delete a user with invalid id format', (done) => {
+      chai.request(app)
+        .delete('/api/v2/groups/4/users/3dr')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+
+    it('unauthorized users should not delete a user from the group', (done) => {
       chai.request(app)
         .delete('/api/v2/groups/1/users/5')
         .set('token', userToken)
