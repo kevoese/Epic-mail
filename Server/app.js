@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import router from './Router/router';
 import DBRouters from './Router/DBRouters';
 import DBUserController from './Controllers/DB/DBUserController';
 
@@ -8,12 +7,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//app.use('/api/v1/', router);
+
 app.use('/api/v2/', DBRouters);
 app.get('/', DBUserController.welcome);
 app.all('*', (req, res) => {
-  res.status(400).send({
-    error: 'route does not exist',
+  res.status(404).send({
+    error: 'Route does not exist',
   });
 });
 

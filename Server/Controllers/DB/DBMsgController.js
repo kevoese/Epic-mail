@@ -15,7 +15,7 @@ class EpicMessage {
         subject, message, status, receiverEmail,
       } = req.body;
       const [receiver] = await CRUD.find('users', 'email', receiverEmail);
-      if (!receiver) return errorResponse(400, 'Receiver email does not exist', res);
+      if (!receiver) return errorResponse(404, 'Receiver email does not exist', res);
       const receiverId = receiver.id;
       const senderId = req.decoded;
       if (senderId === receiverId) return errorResponse(400, 'Unable to create email', res);
@@ -45,7 +45,7 @@ class EpicMessage {
         },
       });
     } catch (err) {
-      return errorResponse(400, 'Unable to create email', res);
+      return errorResponse(500, 'Something went wrong', res);
     }
   }
 
@@ -53,7 +53,7 @@ class EpicMessage {
     const userId = req.decoded;
     const receivedMessages = await CRUD.find('messages', 'receiver_id', userId);
     if (receivedMessages[0] === undefined) {
-      return errorResponse(400, 'inbox is empty', res);
+      return errorResponse(404, 'inbox is empty', res);
     }
     return res.status(200).send({
       status: 'Successful',
@@ -111,7 +111,6 @@ class EpicMessage {
       const { receiver_id } = rows[0];
       if (receiver_id === userId) {
         const result = await pool.query(`UPDATE messages SET read_stat = 'read' WHERE (id = ${messageId}) AND (receiver_id = ${userId}) RETURNING *`);
-        console.log(result.rows[0]);
       }
       const {
         id, created_on, subject, message, sender_id, status,
@@ -119,7 +118,7 @@ class EpicMessage {
       messagedata = {
         id, created_on, subject, message, receiver_id, sender_id, status,
       };
-    } else return errorResponse(400, 'Message does not exixt', res);
+    } else return errorResponse(404, 'Message does not exixt', res);
 
     return res.status(200).json({
       status: 'Successful',
@@ -134,17 +133,17 @@ class EpicMessage {
     try {
       message = await CRUD.find('messages', 'id', messageId);
     } catch (error) {
-      return errorResponse(400, 'Invalid! message does not exist', res);
+      return errorResponse(404, 'Message not found', res);
     }
 
 
     if (!message[0]) {
-      return errorResponse(400, 'Invalid! message does not exist', res);
+      return errorResponse(404, 'Message not found', res);
     }
 
     const { sender_id, receiver_id } = message[0];
     if ((sender_id !== userId) && (receiver_id !== userId)) {
-      return errorResponse(400, 'Invalid! message does not exist', res);
+      return errorResponse(403, 'Message not found', res);
     }
 
     if (sender_id === userId) { await pool.query(`DELETE FROM messages WHERE id = ${messageId}`, []); }

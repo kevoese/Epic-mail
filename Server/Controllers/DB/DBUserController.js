@@ -28,12 +28,12 @@ class userControllers {
       const [user] = await CRUD.insert('users', '(firstname, lastname, email, passwordhash)',
         toDBArray(userObj));
       const { id } = user;
-      return res.status(200).send({
+      return res.status(201).send({
         status: 'Successful',
         data: { Token: token.createtoken({ id }) },
       });
     }
-    return errorResponse(400, 'Email already exist', res);
+    return errorResponse(409, 'Email already exist', res);
   }
 
   static async login(req, res) {
@@ -53,8 +53,8 @@ class userControllers {
           });
         }
       }
-    } catch (err) { return errorResponse(400, 'Unauthorised user', res); }
-    return errorResponse(400, 'Unauthorised user', res);
+    } catch (err) { return errorResponse(401, 'Email or password is wrong', res); }
+    return errorResponse(401, 'Email or password is wrong', res);
   }
 
   static async updateProfile(req, res) {
