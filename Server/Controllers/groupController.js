@@ -71,7 +71,7 @@ class EpicGroup {
       return errorResponse(400, 'Invalid request', res);
     }
 
-    return errorResponse(401, 'Unauthorized access', res);
+    return errorResponse(400, 'Bad request', res);
   }
 
   static async deleteGroup(req, res) {
@@ -87,10 +87,10 @@ class EpicGroup {
         });
       }
     } catch (err) {
-      return errorResponse(404, err, res);
+      return errorResponse(500, 'Something went wrong', res);
     }
 
-    return errorResponse(401, 'Unauthorized access', res);
+    return errorResponse(403, 'Bad request', res);
   }
 
   static async deleteUser(req, res) {
@@ -110,7 +110,7 @@ class EpicGroup {
     } catch (err) {
       return errorResponse(500, 'Something went wrong', res);
     }
-    return errorResponse(401, 'Unauthorized access', res);
+    return errorResponse(403, 'Bad request', res);
   }
 
   static async msgGroup(req, res) {
@@ -152,7 +152,7 @@ class EpicGroup {
         },
       });
     }
-    return errorResponse(401, 'Unauthorized access', res);
+    return errorResponse(400, 'Bad request', res);
   }
 
   static async addGroupUser(req, res) {
@@ -163,15 +163,15 @@ class EpicGroup {
     const getAdmin = await pool.query(`SELECT * FROM groups WHERE (id = ${groupId} AND admin = ${userId})`);
     const result = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
     if (result.rows[0] === undefined) {
-      return errorResponse(401, 'Email does not exist', res);
+      return errorResponse(400, 'Email does not exist', res);
     }
     const memberId = result.rows[0].id;
     if (memberId === userId) {
-      return errorResponse(401, 'You cannot add yourself to the group', res);
+      return errorResponse(400, 'Bad request', res);
     }
     if (getAdmin.rows[0] !== undefined) {
       const isMember = await pool.query('SELECT * FROM joint WHERE (member = $1 AND group_id = $2)', [memberId, groupId]);
-      if (isMember.rows[0] !== undefined) { return errorResponse(401, 'User already exist in group', res); }
+      if (isMember.rows[0] !== undefined) { return errorResponse(409, 'User already exist in group', res); }
       await pool.query(`INSERT INTO joint (group_id, member) VALUES(${groupId}, ${memberId})`);
       const allGroups = await pool.query(`SELECT * FROM groups 
        JOIN joint ON groups.id = joint.group_id  WHERE groups.admin = ${userId};`);
@@ -182,7 +182,7 @@ class EpicGroup {
         });
       }
     }
-    return errorResponse(401, 'Not an admin of the group', res);
+    return errorResponse(400, 'Not an admin of the group', res);
   }
 }
 

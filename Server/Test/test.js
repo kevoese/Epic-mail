@@ -83,7 +83,7 @@ describe('Epic Test', () => {
         .post('/api/v2/auth/login')
         .send(users[3])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -93,7 +93,7 @@ describe('Epic Test', () => {
         .post('/api/v2/auth/login')
         .send(users[9])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -117,7 +117,7 @@ describe('Epic Test', () => {
         .post('/api/v2/messages')
         .send(testmessages[0])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -154,7 +154,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/api/v2/messages')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -178,7 +178,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/api/v2/messages/unread')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -201,7 +201,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/api/v2/messages/sent')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -224,7 +224,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/api/v2/messages/draft')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -248,7 +248,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/api/v2/messages/:id')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -317,7 +317,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .delete('/api/v2/messages/:id')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -363,7 +363,7 @@ describe('Epic Test', () => {
         .put('/api/v2/user/update')
         .send(users[5])
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -425,7 +425,7 @@ describe('Epic Test', () => {
         .post('/api/v2/groups')
         .send({ name: 'new group' })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -488,7 +488,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/api/v2/groups')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -511,7 +511,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .patch('/api/v2/groups/5/name')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -535,7 +535,7 @@ describe('Epic Test', () => {
         .send({ name: 'update group' })
         .set('token', userToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -571,7 +571,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .delete('/api/v2/groups/5')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -595,7 +595,7 @@ describe('Epic Test', () => {
         .send({ name: 'update group' })
         .set('token', userToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(403);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -607,7 +607,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .delete('/api/v2/groups/5/users/2')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -640,7 +640,7 @@ describe('Epic Test', () => {
         .delete('/api/v2/groups/1/users/5')
         .set('token', userToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(403);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -652,7 +652,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v2/groups/1/messages')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -711,7 +711,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v2/groups/2/users')
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(401);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -735,7 +735,7 @@ describe('Epic Test', () => {
         .set('token', userToken)
         .send({ email: 'cyrax@epicmail.com' })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(409);
           expect(res.body.status).to.equal('Failure');
           done();
         });
@@ -747,7 +747,7 @@ describe('Epic Test', () => {
         .set('token', userToken)
         .send({ email: 'joenh@epicmail.com' })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
           done();
         });

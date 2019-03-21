@@ -83,7 +83,7 @@ class EpicMessage {
     const userId = req.decoded;
     const unread = await pool.query(`SELECT id, created_on, subject, message, receiver_id, sender_id, status FROM messages WHERE (receiver_id = ${userId} AND read_stat = 'unread' )`);
     if (unread.rows[0] === undefined) {
-      return errorResponse(400, 'User does not have unread message', res);
+      return errorResponse(404, 'No unread messages', res);
     }
     return res.status(200).send({
       status: 'Successful',
@@ -97,7 +97,7 @@ class EpicMessage {
     const userId = req.decoded;
     const sortMessage = await CRUD.find('messages', 'sender_id', userId);
     if (sortMessage[0] === undefined) {
-      return errorResponse(400, 'User does not have any sent message', res);
+      return errorResponse(404, 'No sent message', res);
     }
     const sentMessages = sortMessage.filter(element => element.status === 'sent');
     return res.status(200).send({
@@ -110,7 +110,7 @@ class EpicMessage {
     const userId = req.decoded;
     const sentMessages = await CRUD.find('messages', 'sender_id', userId);
     if (sentMessages[0] === undefined) {
-      return errorResponse(400, 'User does not have any draft message', res);
+      return errorResponse(404, 'No draft message', res);
     }
     const draftMessages = sentMessages.filter(element => element.status === 'draft');
     return res.status(200).json({
@@ -161,7 +161,7 @@ class EpicMessage {
 
     const { sender_id, receiver_id } = message[0];
     if ((sender_id !== userId) && (receiver_id !== userId)) {
-      return errorResponse(403, 'Message not found', res);
+      return errorResponse(404, 'Message not found', res);
     }
 
     if (sender_id === userId) { await pool.query(`DELETE FROM messages WHERE id = ${messageId}`, []); }
