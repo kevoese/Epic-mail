@@ -53,8 +53,8 @@ class userControllers {
           });
         }
       }
-    } catch (err) { return errorResponse(401, 'Email or password is wrong', res); }
-    return errorResponse(401, 'Email or password is wrong', res);
+    } catch (err) { return errorResponse(400, 'Bad request', res); }
+    return errorResponse(400, 'Bad request', res);
   }
 
   static async updateProfile(req, res) {

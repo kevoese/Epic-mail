@@ -11,9 +11,9 @@ const Auth = async (req, res, next) => {
     if (result) {
       req.decoded = id;
       next();
-    } else return errorResponse(400, 'Unauthorized user', res);
+    } else return errorResponse(401, 'Unauthorized user', res);
   } catch (err) {
-    return errorResponse(400, 'Unauthorized user', res);
+    return errorResponse(401, 'Unauthorized user', res);
   }
 };
 
