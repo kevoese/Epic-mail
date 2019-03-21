@@ -664,11 +664,8 @@ a {
 }
 
 .to::after {
-  content: "\f04b";
   color: grey;
   font-size: 0.5em;
-  bottom: 25%;
-  right: 5%;
 }
 
 .sender {
@@ -727,7 +724,7 @@ a {
   margin: 1em 0.5em;
   cursor: pointer;
   font-size: 0.8em;
-  padding: 0.5em 2em;
+  padding: 0.5em 2.8em 0.5em 1.2em;
 background-color: transparent;
 }
 
@@ -748,7 +745,7 @@ background-color: transparent;
 .fwdbtn::after {
   content: "\f064";
   position: absolute;
-  right: 5px;
+  right: 15%;
 }
 
 .messageDate {
