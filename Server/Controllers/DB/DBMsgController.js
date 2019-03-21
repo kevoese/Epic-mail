@@ -21,6 +21,7 @@ class EpicMessage {
       if (senderId === receiverId) return errorResponse(400, 'Unable to create email', res);
       const createdOn = new Date();
       const receiverDelete = false;
+      const read_stat = 'unread';
       const msgObj = {
         createdOn,
         subject,
@@ -30,11 +31,13 @@ class EpicMessage {
         parentMessageId,
         status,
         receiverDelete,
+        read_stat,
       };
       const [newData] = await CRUD.insert('messages',
-        '(created_on, subject, message, receiver_id, sender_id, parent_message_id, status, receiver_del)',
+        '(created_on, subject, message, receiver_id, sender_id, parent_message_id, status, receiver_del, read_stat)',
         toDBArray(msgObj));
       const { id } = newData;
+      
       return res.status(200).send({
         status: 'Successful',
         data: {
