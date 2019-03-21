@@ -21,7 +21,7 @@ router.delete('/messages/:id', Auth, Validator.validateJustId, DBMsgController.d
 router.put('/user/update', Auth, Validator.validateProfile, DBUserController.updateProfile);
 router.post('/groups', Auth, Validator.validateNewGroup, groupController.newGroup);
 router.get('/groups', Auth, groupController.getGroup);
-router.patch('/groups/:id', Auth, Validator.validateUpdateGroup, groupController.updateName);
+router.patch('/groups/:id/name', Auth, Validator.validateUpdateGroup, groupController.updateName);
 router.delete('/groups/:id', Auth, Validator.validateJustId, groupController.deleteGroup);
 router.delete('/groups/:groupId/users/:userToDeleteId', Validator.validateUserDelete, Auth, groupController.deleteUser);
 router.post('/groups/:groupId/messages', Auth, Validator.validateGroupMsg, groupController.msgGroup);

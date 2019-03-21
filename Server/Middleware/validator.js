@@ -121,16 +121,16 @@ class Validate {
   static validateGroupMsg(req, res, next) {
     const {
       subject, message,
-      parentMessageId,
+      parentMessageId, status,
     } = req.body;
     const { groupId } = req.params;
     const newMessage = {
-      subject, message, groupId, parentMessageId,
+      subject, message, groupId, parentMessageId, status,
     };
 
     joi.validate(newMessage, schema.sendgroupmsg, (err) => {
       if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
+        return errorResponse(400, 'Wrong input', res);
       }
       return next();
     });

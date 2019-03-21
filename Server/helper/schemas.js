@@ -21,7 +21,7 @@ const schemas = {
     message: Joi.string().required(),
     parentMessageId: Joi.number().integer().optional(),
     receiverEmail: Joi.string().email().lowercase().required(),
-    status: Joi.string().regex(/^sent$|^draft$/),
+    status: Joi.string().regex(/^sent$|^draft$/).required(),
   }),
 
   profileschema:
@@ -47,6 +47,7 @@ const schemas = {
     message: Joi.string().required(),
     groupId: Joi.number().integer().required(),
     parentMessageId: Joi.number().integer().optional(),
+    status: Joi.string().regex(/^sent$|^draft$/).required(),
   }),
 
   addGroupUsers:

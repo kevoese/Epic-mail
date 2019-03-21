@@ -6,8 +6,13 @@ const { Pool } = pg;
 
 dotenv.config();
 
+const enviroment = process.env.NODE_ENV;
+
+const connectionURL = enviroment === 'test' ? process.env.TEST_DATABASE_URL : process.env.TEST_DATABASE_URL;
+
+
 const pool = new Pool({
-  connectionString: process.env.TEST_DATABASE_URL,
+  connectionString: connectionURL,
 });
 
 pool.on('connect', () => {

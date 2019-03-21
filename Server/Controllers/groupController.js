@@ -8,8 +8,9 @@ const { toDBArray } = someFxn;
 
 class EpicGroup {
   static async newGroup(req, res) {
-    const { name } = req.body;
+    let { name } = req.body;
     const ownerId = req.decoded;
+    name = name.trim();
     try {
       const itExist = await CRUD.find('groups', 'name', name);
       if (!itExist) {
@@ -19,6 +20,7 @@ class EpicGroup {
         return res.status(200).send({
           status: 'Successful',
           data: {
+            id,
             name,
             role: 'owner',
           },
@@ -53,7 +55,9 @@ class EpicGroup {
   static async updateName(req, res) {
     const userId = req.decoded;
     const groupId = req.params.id;
-    const { name } = req.body;
+    let { name } = req.body;
+    name = name.trim();
+    console.log(name);
     try {
       const getAdmin = await pool.query(`SELECT * FROM groups WHERE (id = ${groupId} AND admin = ${userId})`);
       if (getAdmin.rows[0] !== undefined) {
@@ -75,6 +79,7 @@ class EpicGroup {
     const groupId = req.params.id;
     try {
       const getAdmin = await pool.query(`DELETE FROM groups WHERE (id = ${groupId} AND admin = ${userId}) RETURNING *`);
+
       if (getAdmin.rows[0] !== undefined) {
         return res.status(200).send({
           status: 'Successful',
@@ -82,7 +87,7 @@ class EpicGroup {
         });
       }
     } catch (err) {
-      return errorResponse(404, 'Invalid request', res);
+      return errorResponse(404, err, res);
     }
 
     return errorResponse(401, 'Unauthorized access', res);
@@ -111,7 +116,12 @@ class EpicGroup {
   static async msgGroup(req, res) {
     const userId = req.decoded;
     const { groupId } = req.params;
-    let { subject, message, parentMessageId } = req.body;
+    let {
+      subject, message, parentMessageId, status,
+    } = req.body;
+    subject = subject.trim();
+    message = message.trim();
+    status = status.trim();
     if (parentMessageId === undefined) parentMessageId = null;
     const createdOn = new Date();
     const msgObj = {
@@ -121,11 +131,12 @@ class EpicGroup {
       groupId,
       userId,
       parentMessageId,
+      status,
     };
     const getMembership = await pool.query(`SELECT * FROM joint WHERE (group_id = ${groupId} AND member = ${userId})`);
     if (getMembership.rows[0] !== undefined) {
       const [newData] = await CRUD.insert('messages',
-        '(created_on, subject, message, groupid, sender_id, parent_message_id)',
+        '(created_on, subject, message, groupid, sender_id, parent_message_id, status)',
         toDBArray(msgObj));
       const { id } = newData;
       return res.status(200).send({
@@ -136,6 +147,8 @@ class EpicGroup {
           subject,
           message,
           parentMessageId,
+          status,
+          groupId,
         },
       });
     }
@@ -145,35 +158,31 @@ class EpicGroup {
   static async addGroupUser(req, res) {
     const userId = req.decoded;
     const { groupId } = req.params;
-    const { email } = req.body;
+    let { email } = req.body;
+    email = email.trim();
     const getAdmin = await pool.query(`SELECT * FROM groups WHERE (id = ${groupId} AND admin = ${userId})`);
     const result = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
-
     if (result.rows[0] === undefined) {
       return errorResponse(401, 'Email does not exist', res);
     }
     const memberId = result.rows[0].id;
+    if (memberId === userId) {
+      return errorResponse(401, 'You cannot add yourself to the group', res);
+    }
     if (getAdmin.rows[0] !== undefined) {
-      const isMember = await pool.query('SELECT member FROM joint WHERE member = $1', [memberId]);
+      const isMember = await pool.query('SELECT * FROM joint WHERE (member = $1 AND group_id = $2)', [memberId, groupId]);
       if (isMember.rows[0] !== undefined) { return errorResponse(401, 'User already exist in group', res); }
       await pool.query(`INSERT INTO joint (group_id, member) VALUES(${groupId}, ${memberId})`);
       const allGroups = await pool.query(`SELECT * FROM groups 
        JOIN joint ON groups.id = joint.group_id  WHERE groups.admin = ${userId};`);
       if (allGroups.rows[0] !== undefined) {
-        const results = [];
-        allGroups.rows.forEach((group) => {
-          const { id, name, admin } = group;
-          let role;
-          (userId === admin) ? role = 'admin' : role = 'member';
-          results.push({ id, name, role });
-        });
         return res.status(200).send({
           status: 'Successful',
-          data: results,
+          data: 'User successfully added to groups',
         });
       }
     }
-    return errorResponse(401, 'Unauthorized access', res);
+    return errorResponse(401, 'Not an admin of the group', res);
   }
 }
 

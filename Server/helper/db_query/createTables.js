@@ -30,7 +30,8 @@ const messages = `CREATE TABLE IF NOT EXISTS
           status text ,
           receiver_del BOOL ,
           read_stat text,
-          groupid integer REFERENCES groups(id)
+          groupid integer,
+          FOREIGN KEY (groupid) REFERENCES groups(id) ON DELETE CASCADE
         );`;
 
 
@@ -70,4 +71,3 @@ const populateDB = async () => {
 };
 
 populateDB();
-
