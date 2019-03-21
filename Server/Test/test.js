@@ -509,7 +509,7 @@ describe('Epic Test', () => {
   describe('PATCH/Groups', () => {
     it('should not give unauthorized user access', (done) => {
       chai.request(app)
-        .patch('/api/v2/groups/5')
+        .patch('/api/v2/groups/5/name')
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
@@ -519,7 +519,7 @@ describe('Epic Test', () => {
 
     it('should edit name of group you are accessible to', (done) => {
       chai.request(app)
-        .patch('/api/v2/groups/4')
+        .patch('/api/v2/groups/4/name')
         .set('token', userToken)
         .send({ name: 'update group' })
         .end((err, res) => {
@@ -531,7 +531,7 @@ describe('Epic Test', () => {
 
     it('unauthorized users should not edit the name of a group', (done) => {
       chai.request(app)
-        .patch('/api/v2/groups/1')
+        .patch('/api/v2/groups/1/name')
         .send({ name: 'update group' })
         .set('token', userToken)
         .end((err, res) => {
@@ -543,7 +543,7 @@ describe('Epic Test', () => {
 
     it('users should not edit the name of a group with wrong format of updated name', (done) => {
       chai.request(app)
-        .patch('/api/v2/groups/3')
+        .patch('/api/v2/groups/3/name')
         .send({ name: 6 })
         .set('token', userToken)
         .end((err, res) => {
@@ -555,7 +555,7 @@ describe('Epic Test', () => {
 
     it('should respond with an error on invalid id format', (done) => {
       chai.request(app)
-        .patch('/api/v2/groups/3hj')
+        .patch('/api/v2/groups/3hj/name')
         .send({ name: 'update group' })
         .set('token', userToken)
         .end((err, res) => {
@@ -662,7 +662,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v2/groups/5/messages')
         .set('token', userToken)
-        .send({ subject: 'subject', message: 'message' })
+        .send({ subject: 'subject', message: 'message', status: 'sent', })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal('Successful');
@@ -674,14 +674,14 @@ describe('Epic Test', () => {
       chai.request(app)
         .post('/api/v2/groups/5/messages')
         .set('token', userToken)
-        .send({ subject: 'subject', message: 'message', parentmessageId: 3 })
+        .send({ subject: 'subject', message: 'message', status: 'sent', })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal('Successful');
           done();
         });
     });
-
+   
     it('should not allow a user to post message group he is not a member of', (done) => {
       chai.request(app)
         .post('/api/v2/groups/5/messages')
@@ -689,6 +689,18 @@ describe('Epic Test', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
+    
+    it('should respond with all received messages', (done) => {
+      chai.request(app)
+        .get('/api/v2/messages')
+        .set('token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          expect(res.body.data).to.be.an('array');
           done();
         });
     });

@@ -11,9 +11,13 @@ class EpicMessage {
     let { parentMessageId } = req.body;
     if (parentMessageId === undefined) parentMessageId = null;
     try {
-      const {
+      let {
         subject, message, status, receiverEmail,
       } = req.body;
+      subject = subject.trim();
+      message = message.trim();
+      status = status.trim();
+      receiverEmail = receiverEmail.trim();
       const [receiver] = await CRUD.find('users', 'email', receiverEmail);
       if (!receiver) return errorResponse(404, 'Receiver email does not exist', res);
       const receiverId = receiver.id;
@@ -37,7 +41,7 @@ class EpicMessage {
         '(created_on, subject, message, receiver_id, sender_id, parent_message_id, status, receiver_del, read_stat)',
         toDBArray(msgObj));
       const { id } = newData;
-      
+
       return res.status(200).send({
         status: 'Successful',
         data: {
@@ -51,13 +55,27 @@ class EpicMessage {
 
   static async receivedMessage(req, res) {
     const userId = req.decoded;
-    const receivedMessages = await CRUD.find('messages', 'receiver_id', userId);
-    if (receivedMessages[0] === undefined) {
+    const receivedMessages = await pool.query(`SELECT * FROM messages WHERE receiver_id = ${userId}`);
+    const groups = await pool.query(`SELECT group_id FROM joint WHERE member = ${userId}`);
+    if (groups.rows[0] !== undefined) {
+      return groups.rows.forEach(group => pool.query(`SELECT * FROM messages WHERE groupid = ${group.group_id}`)
+        .then((groupMsg) => {
+          const inbox = [...receivedMessages.rows];
+          if (groupMsg.rows[0] !== undefined) {
+            inbox.push(groupMsg.rows);
+            return res.status(200).send({
+              status: 'Successful',
+              data: inbox,
+            });
+          }
+        }));
+    }
+    if (receivedMessages.rows[0] === undefined) {
       return errorResponse(404, 'inbox is empty', res);
     }
     return res.status(200).send({
       status: 'Successful',
-      data: receivedMessages,
+      data: receivedMessages.rows,
     });
   }
 
@@ -106,7 +124,7 @@ class EpicMessage {
     const userId = req.decoded;
     const { rows } = await pool
       .query(`SELECT * FROM messages WHERE (id = ${messageId}) AND (receiver_id = ${userId} OR sender_id = ${userId}) `, []);
-    let messagedata = ' no message available';
+    let messagedata = ' No message available';
     if (rows[0] !== undefined) {
       const { receiver_id } = rows[0];
       if (receiver_id === userId) {
