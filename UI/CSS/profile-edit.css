@@ -285,7 +285,8 @@ nav {
   height: 3em;
     border-radius: 5px;
     width: 5em;
-    margin: 0 1em;
+    display: block;
+    margin: 1em auto;
     border: 1px solid rgb(184, 184, 184);
 }
 
