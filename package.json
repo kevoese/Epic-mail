@@ -9,7 +9,7 @@
     "createTable": "babel-node ./Server/helper/db_query/createTables.js",
     "dropTable": "babel-node ./Server/helper/db_query/dropTable.js",
     "DBcontrol": "babel-node ./Server/Models/EpicmailDB/DBUserController.js",
-    "test": "npm run dropTable && npm run createTable && cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --timeout 15000 --exit",
+    "test": "npm run dropTable && npm run createTable && cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --timeout 3000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "rimraf dist/ && babel ./Server -d dist"
   },

@@ -1,13 +1,5 @@
-import joi from 'joi';
 import schema from '../helper/schemas';
-import errorResponse from '../helper/errorResponse';
-
-const joiFormat = (error) => {
-  let format = error;
-  format = format.slice(format.indexOf('[') + 1, format.indexOf(']'));
-  format = format.replace(/"/gi, '');
-  return format;
-};
+import joiTest from '../helper/JoiTest';
 
 class Validate {
   static validateSignup(req, res, next) {
@@ -17,30 +9,14 @@ class Validate {
     const user = {
       firstname, lastname, email, password,
     };
-
-    joi.validate(user, schema.userschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest(user, schema.userschema, res, next);
   }
 
   static validateLogin(req, res, next) {
     const {
       email, password,
     } = req.body;
-
-    const user = {
-      email, password,
-    };
-
-    joi.validate(user, schema.loginschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest({ email, password }, schema.loginschema, res, next);
   }
 
   static validateMessage(req, res, next) {
@@ -52,12 +28,7 @@ class Validate {
       subject, message, parentMessageId, status, receiverEmail,
     };
 
-    joi.validate(newMessage, schema.messageschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest(newMessage, schema.messageschema, res, next);
   }
 
   static validateProfile(req, res, next) {
@@ -68,54 +39,29 @@ class Validate {
       firstname, lastname,
     };
 
-    joi.validate(updateuser, schema.profileschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest(updateuser, schema.profileschema, res, next);
   }
 
   static validateNewGroup(req, res, next) {
     const { name } = req.body;
-    joi.validate({ name }, schema.groupschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest({ name }, schema.groupschema, res, next);
   }
 
   static validateUpdateGroup(req, res, next) {
     const { name } = req.body;
     const groupId = req.params.id;
-    joi.validate({ name, groupId }, schema.updategroupschema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest({ name, groupId }, schema.updategroupschema, res, next);
   }
 
   static validateJustId(req, res, next) {
     const { id } = req.params;
-    joi.validate({ id }, schema.onlyIdSchema, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest({ id }, schema.onlyIdSchema, res, next);
   }
 
   static validateUserDelete(req, res, next) {
     const { groupId } = req.params;
     const userId = req.params.userToDeleteId;
-    joi.validate({ groupId, userId }, schema.userDelete, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    joiTest({ groupId, userId }, schema.userDelete, res, next);
   }
 
   static validateGroupMsg(req, res, next) {
@@ -127,29 +73,14 @@ class Validate {
     const newMessage = {
       subject, message, groupId, parentMessageId, status,
     };
-
-    joi.validate(newMessage, schema.sendgroupmsg, (err) => {
-      if (err) {
-        return errorResponse(400, 'Wrong input', res);
-      }
-      return next();
-    });
+    joiTest(newMessage, schema.sendgroupmsg, res, next);
   }
 
   static validateAddGroupUsers(req, res, next) {
-    const {
-      email,
-    } = req.body;
+    const { email } = req.body;
     const { groupId } = req.params;
-    const newMessage = {
-      email, groupId,
-    };
-    joi.validate(newMessage, schema.addGroupUsers, (err) => {
-      if (err) {
-        return errorResponse(400, joiFormat(err.message), res);
-      }
-      return next();
-    });
+    const newMessage = { email, groupId };
+    joiTest(newMessage, schema.addGroupUsers, res, next);
   }
 }
 

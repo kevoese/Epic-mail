@@ -1,45 +1,51 @@
 const users = [
   {
-    'email': 'jjchinosoviolet',
-    'firstname': 'Jude',
-    'lastname': 'violet',
+    email: 'jjchinosoviolet',
+    firstname: 'Jude',
+    lastname: 'violet',
   },
 
   {
-    'email': 'kevoese@epicmail.com',
-    'firstname': 'Kelvin',
-    'lastname': 'Esegbona',
-    "password": 'kevoese',
+    email: 'kevoese@epicmail.com',
+    firstname: 'Kelvin',
+    lastname: 'Esegbona',
+    password: 'kevoese',
   },
   {
-    "email": "kevoeseepicmail.com",
-    "password" : "kevoese"
+    email: 'joe@epicmail.com',
+    firstname: 'Joe',
+    lastname: 'Big',
+    password: 'kevoese',
   },
   {
-    "email": "kevoese@epicmail.com",
-    "password" : "kevos"
+    email: 'kevoeseepicmail.com',
+    password: 'kevoese',
   },
   {
-    "email": "kevoese@epicmail.com",
-    "password" : "kevoese"
+    email: 'kevoese@epicmail.com',
+    password: 'kevos',
   },
   {
-    "firstname": "Ken",
-    "lastname" : "Ese"
+    email: 'kevoese@epicmail.com',
+    password: 'kevoese',
   },
   {
-    "firstname": 3,
-    "lastname" : 145
+    firstname: 'Ken',
+    lastname: 'Ese',
   },
   {
-    "firstname": "Paul",
+    firstname: 3,
+    lastname: 145,
   },
   {
-    "lastname" : "Tommy",
+    firstname: 'Paul',
   },
   {
-    "email": "kevoesegs@epicmail.com",
-    "password" : "kevos"
+    lastname: 'Tommy',
+  },
+  {
+    email: 'kevoesegs@epicmail.com',
+    password: 'kevos',
   },
 ];
 
