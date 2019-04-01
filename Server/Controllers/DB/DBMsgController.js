@@ -1,52 +1,69 @@
 /* eslint-disable camelcase */
-import CRUD from '../../helper/db_query/crud_db';
-import helper from '../../helper/myFunction';
 import errorResponse from '../../helper/errorResponse';
-import { pool } from '../../helper/db_query/queryMethod';
+import pool from '../../helper/db_query/queryMethod';
+import queries from '../../helper/db_query/queries';
 
-const { toDBArray } = helper;
+const { userQuery, msgQuery } = queries;
 
 class EpicMessage {
   static async newMessage(req, res) {
     let { parentMessageId } = req.body;
+    const senderId = req.decoded;
     if (parentMessageId === undefined) parentMessageId = null;
+    else {
+      const checkParentMsg = await pool.query(msgQuery.getParentMsg, [parentMessageId, senderId]);
+      if (checkParentMsg.rows[0] === undefined) {
+        return errorResponse(400, 'Invalid parent message', res);
+      }
+    }
+    let {
+      subject, message, status, receiverEmail,
+    } = req.body;
+    subject = subject.trim();
+    message = message.trim();
+    status = status.trim();
+    receiverEmail = receiverEmail.trim();
+    const receiver = await pool.query(userQuery.getEmail, [receiverEmail]);
+    if (receiver.rows[0] === undefined) return errorResponse(404, 'Receiver email does not exist', res);
+    const receiverId = receiver.rows[0].id;
+    if (senderId === receiverId) return errorResponse(400, 'Unable to create email', res);
+    const read_status = 'unread';
+    const msgArray = [
+      subject,
+      message,
+      receiverId,
+      senderId,
+      parentMessageId,
+    ];
     try {
-      let {
-        subject, message, status, receiverEmail,
-      } = req.body;
-      subject = subject.trim();
-      message = message.trim();
-      status = status.trim();
-      receiverEmail = receiverEmail.trim();
-      const [receiver] = await CRUD.find('users', 'email', receiverEmail);
-      if (!receiver) return errorResponse(404, 'Receiver email does not exist', res);
-      const receiverId = receiver.id;
-      const senderId = req.decoded;
-      if (senderId === receiverId) return errorResponse(400, 'Unable to create email', res);
-      const createdOn = new Date();
-      const receiverDelete = false;
-      const read_stat = 'unread';
-      const msgObj = {
-        createdOn,
+      const { rows } = await pool.query(msgQuery.insertNewMsg, msgArray);
+      const newData = rows[0];
+      const { id } = newData;
+      const sentArray = [
+        id,
+        subject,
+        message,
+        senderId,
+        receiverId,
+        parentMessageId,
+        status,
+      ];
+      const inboxArray = [
+        id,
         subject,
         message,
         receiverId,
         senderId,
         parentMessageId,
-        status,
-        receiverDelete,
-        read_stat,
-      };
-      const [newData] = await CRUD.insert('messages',
-        '(created_on, subject, message, receiver_id, sender_id, parent_message_id, status, receiver_del, read_stat)',
-        toDBArray(msgObj));
-      const { id } = newData;
-
+        read_status,
+      ];
+      await pool.query(msgQuery.insertNewSentMsg, sentArray);
+      if (status === 'sent') {
+        await pool.query(msgQuery.insertNewInboxMsg, inboxArray);
+      }
       return res.status(200).send({
         status: 'Successful',
-        data: {
-          id, createdOn, subject, message, parentMessageId, status,
-        },
+        data: newData,
       });
     } catch (err) {
       return errorResponse(500, 'Something went wrong', res);
@@ -55,21 +72,7 @@ class EpicMessage {
 
   static async receivedMessage(req, res) {
     const userId = req.decoded;
-    const receivedMessages = await pool.query(`SELECT * FROM messages WHERE receiver_id = ${userId}`);
-    const groups = await pool.query(`SELECT group_id FROM joint WHERE member = ${userId}`);
-    if (groups.rows[0] !== undefined) {
-      return groups.rows.forEach(group => pool.query(`SELECT * FROM messages WHERE groupid = ${group.group_id}`)
-        .then((groupMsg) => {
-          const inbox = [...receivedMessages.rows];
-          if (groupMsg.rows[0] !== undefined) {
-            inbox.push(groupMsg.rows);
-            return res.status(200).send({
-              status: 'Successful',
-              data: inbox,
-            });
-          }
-        }));
-    }
+    const receivedMessages = await pool.query(msgQuery.getInbox, [userId]);
     if (receivedMessages.rows[0] === undefined) {
       return errorResponse(404, 'inbox is empty', res);
     }
@@ -81,7 +84,7 @@ class EpicMessage {
 
   static async unreadMessage(req, res) {
     const userId = req.decoded;
-    const unread = await pool.query(`SELECT id, created_on, subject, message, receiver_id, sender_id, status FROM messages WHERE (receiver_id = ${userId} AND read_stat = 'unread' )`);
+    const unread = await pool.query(msgQuery.getUnread, [userId]);
     if (unread.rows[0] === undefined) {
       return errorResponse(404, 'No unread messages', res);
     }
@@ -92,30 +95,39 @@ class EpicMessage {
     });
   }
 
+  static async readMessage(req, res) {
+    const userId = req.decoded;
+    const read = await pool.query(msgQuery.getRead, [userId]);
+    if (read.rows[0] === undefined) {
+      return errorResponse(404, 'No read messages', res);
+    }
+    return res.status(200).send({
+      status: 'Successful',
+      data: read.rows,
+    });
+  }
 
   static async sentMessage(req, res) {
     const userId = req.decoded;
-    const sortMessage = await CRUD.find('messages', 'sender_id', userId);
-    if (sortMessage[0] === undefined) {
-      return errorResponse(404, 'No sent message', res);
+    const sent = await pool.query(msgQuery.getSent, [userId]);
+    if (sent.rows[0] === undefined) {
+      return errorResponse(404, 'No sent messages', res);
     }
-    const sentMessages = sortMessage.filter(element => element.status === 'sent');
     return res.status(200).send({
       status: 'Successful',
-      data: sentMessages,
+      data: sent.rows,
     });
   }
 
   static async draftMessage(req, res) {
     const userId = req.decoded;
-    const sentMessages = await CRUD.find('messages', 'sender_id', userId);
-    if (sentMessages[0] === undefined) {
-      return errorResponse(404, 'No draft message', res);
+    const draft = await pool.query(msgQuery.getDraft, [userId]);
+    if (draft.rows[0] === undefined) {
+      return errorResponse(404, 'No draft messages', res);
     }
-    const draftMessages = sentMessages.filter(element => element.status === 'draft');
-    return res.status(200).json({
+    return res.status(200).send({
       status: 'Successful',
-      data: draftMessages,
+      data: draft.rows,
     });
   }
 
@@ -123,55 +135,38 @@ class EpicMessage {
     const messageId = req.params.id;
     const userId = req.decoded;
     const { rows } = await pool
-      .query(`SELECT * FROM messages WHERE (id = ${messageId}) AND (receiver_id = ${userId} OR sender_id = ${userId}) `, []);
-    let messagedata = ' No message available';
-    if (rows[0] !== undefined) {
-      const { receiver_id } = rows[0];
-      if (receiver_id === userId) {
-        const result = await pool.query(`UPDATE messages SET read_stat = 'read' WHERE (id = ${messageId}) AND (receiver_id = ${userId}) RETURNING *`);
-      }
-      const {
-        id, created_on, subject, message, sender_id, status,
-      } = rows[0];
-      messagedata = {
-        id, created_on, subject, message, receiver_id, sender_id, status,
-      };
-    } else return errorResponse(404, 'Message does not exixt', res);
-
+      .query(msgQuery.getSpecificMsg, [messageId, userId]);
+    if (rows[0] === undefined) {
+      return errorResponse(404, 'Message does not exist', res);
+    }
+    const { user_id } = rows[0];
+    if (user_id === userId) {
+      await pool.query(msgQuery.updateReadStat, [messageId, userId]);
+    }
     return res.status(200).json({
       status: 'Successful',
-      data: messagedata,
+      data: rows[0],
     });
   }
 
   static async deleteMessage(req, res) {
     const messageId = req.params.id;
     const userId = req.decoded;
-    let message;
-    try {
-      message = await CRUD.find('messages', 'id', messageId);
-    } catch (error) {
-      return errorResponse(404, 'Message not found', res);
+    const { rows } = await pool
+      .query(msgQuery.getDelUsers, [messageId, userId]);
+
+    if (rows[0] === undefined) {
+      return errorResponse(404, 'Message does not exist', res);
     }
 
+    const { user_id, sender_id } = rows[0];
 
-    if (!message[0]) {
-      return errorResponse(404, 'Message not found', res);
-    }
+    if (sender_id === userId) await pool.query(msgQuery.delSentMsg, [messageId]);
+    if (user_id === userId) await pool.query(msgQuery.delInboxMsg, [messageId]);
 
-    const { sender_id, receiver_id } = message[0];
-    if ((sender_id !== userId) && (receiver_id !== userId)) {
-      return errorResponse(404, 'Message not found', res);
-    }
-
-    if (sender_id === userId) { await pool.query(`DELETE FROM messages WHERE id = ${messageId}`, []); }
-    if (receiver_id === userId) {
-      await pool
-        .query(`UPDATE messages SET receiver_del = true WHERE id = ${messageId}`, []);
-    }
     return res.status(200).json({
       status: 'Successful',
-      data: 'Msessage successfully deleted',
+      data: 'Message successfully deleted',
     });
   }
 }

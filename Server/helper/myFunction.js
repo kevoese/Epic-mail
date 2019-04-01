@@ -1,8 +1,17 @@
 const someFunction = {
-  toDBArray: (obj) => {
-    const result = [];
-    Object.keys(obj).forEach(value => result.push(obj[value]));
-    return result;
+
+  multiInsert: (arr, groupmsgObj) => {
+    const {
+      id, subject, message, userId, groupId, parentMessageId, readStatus,
+    } = groupmsgObj;
+    let insertStr = '';
+    arr.forEach((obj) => {
+      const { member } = obj;
+      insertStr += `(${member}, ${id}, '${subject}', '${message}', ${userId}, ${groupId}, ${parentMessageId}, '${readStatus}'), `;
+    });
+    insertStr = insertStr.slice(0, -2);
+    insertStr += ';';
+    return insertStr;
   },
 };
 

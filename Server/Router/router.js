@@ -13,6 +13,7 @@ router.post('/auth/login', Validator.validateLogin, userController.login);
 router.post('/messages', Auth, Validator.validateMessage, messageController.newMessage);
 router.get('/messages', Auth, messageController.receivedMessage);
 router.get('/messages/unread', Auth, messageController.unreadMessage);
+router.get('/messages/read', Auth, messageController.readMessage);
 router.get('/messages/sent', Auth, messageController.sentMessage);
 router.get('/messages/draft', Auth, messageController.draftMessage);
 router.get('/messages/:id', Auth, messageController.specificMessage);
