@@ -1,0 +1,303 @@
+:root {
+    --myColor: rgba(53, 38, 170, 0.9);
+    --myTransPurple: rgba(39, 10, 56, 0.7);
+    --myLightcolor: rgba(72, 60, 168, 0.5);
+    --myLightPurpleV: whitesmoke;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .vcenter {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  @font-face {
+    font-family: myfont;
+    src: url("fonts/Darleston.otf");
+  }
+  
+  button,
+  input {
+    border: none;
+  }
+  
+  .icon::after {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    margin: 0;
+    min-height: 100vh;
+    height: 100%;
+    background-color: rgb(130, 130, 130);
+    position: relative;
+  }
+  
+  body::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(15, 11, 34, 0.7);
+    z-index: 1;
+  }
+  
+  .backgnd {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url(../images/slide03.jpg) center no-repeat fixed;
+    background-size: cover;
+    filter: blur(10px);
+  }
+  
+  
+  .logo {
+    color: var(--myColor);
+    font-family: myfont;
+    font-weight: 100;
+    font-size: 2em;
+    margin: 0 0.7em;
+    align-self: center;
+    letter-spacing: 0.05em;
+    position: absolute;
+    top: 7%;
+    left: 3%;
+    cursor: default;
+  }
+  
+  .btn {
+    color: var(--myColor);
+    padding: 0.9em 2em;
+    font-size: 1em;
+    transition: background-color 0.2s linear;   
+    position: absolute;
+    top: 2em;
+    cursor: pointer;
+    right: 0.4em;
+   border: 2px solid var(--myLightcolor);
+   border-radius: 3em;
+  }
+
+  .btn:hover{
+      background-color: var(--myColor);
+      color: white;
+  }
+   
+  #skip::after {
+    content: "\f054";
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+  }
+
+  .wrapper {
+    z-index: 2;
+    position: relative;
+    margin:  auto;
+    width: 85%;
+    min-width: 300px;
+  }
+  
+  .container {
+    display: block;
+    background-color: white;
+    margin: auto;
+      padding: 3em;
+      color: rgba(36, 35, 35, 0.9);
+      position: relative;
+      box-shadow: 2px 2px 2px #050505;
+  }
+
+  
+  .name {
+    text-align: center;
+    font-weight: 100;
+    font-size: 3em;
+    margin: 0.4em;
+    color: rgba(76, 66, 126, 0.7);
+    padding-bottom: 0.4em;
+  }
+  
+  
+  .profilepic {
+    width: 16em;
+    height: 16em;
+    object-fit: cover;
+    border-radius: 100%;
+    position: relative;
+    left: 50%;
+    box-shadow: 1px 1px 5px 2px rgba(4, 0, 66, 0.4);
+    transform: translateX(-50%);
+  }
+  
+  .upload{
+      position: relative;
+      margin: 4em auto;
+  }
+
+  .changepic {
+    margin: 0em auto;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    transform: translateX(-50%) scale(1);
+    left: 50%;
+    text-align: center;
+    cursor: pointer;
+    color:  rgba(36, 35, 35, 0.9);
+  }
+  
+  .changepic input {
+    position: absolute;
+    height: 3.8em;
+    cursor: pointer;
+    top: 30%;
+    left: 20%;
+    height: 100%;
+    translate: translateX(-50%);
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .addphoto {
+    width: 15em;
+    height: 3em;
+    white-space: nowrap;
+    font-size: 1.1em;
+    font-family: cambria;
+    border-radius: 4em;
+    background-color: white;
+    border: 1px solid var(--myLightcolor);
+    color: var(--myColor);
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .saved {
+    white-space: nowrap;
+    font-size: 1.1em;
+    font-family: cambria;
+    position: absolute;
+    transform: translateX(-50%) scale(0);
+    left: 50%;
+    transition: transform 0.3s ease-out;
+    color: var(--myColor);
+    padding: 0.9em 3em 0.9em 2em;
+    border: 2px solid var(--myLightcolor);
+    border-radius: 3em;
+ }
+
+ .error { 
+        white-space: nowrap;
+        letter-spacing: 0.1em;
+        font-size: 1.1em;
+        font-family: cambria;
+        position: absolute;
+        transform: translateX(-50%) scale(1);
+        left: 50%;
+        transition: transform 0.3s ease-out;
+        color: var(--myColor);
+        padding: 0.9em 3em 0.9em 2em;
+        border: 1px solid var(--myLightcolor);
+ }
+
+ .error::after {
+    content: "\f071";
+    right: 1em;
+    
+  }
+
+  .saved::after {
+    content: "\f00c";
+    right: 1em;
+  }
+
+  .addphoto::after {
+    content: "\f030";
+    right: 12em;
+  }
+
+  .changepic:hover .addphoto {
+    background-color: var(--myColor);
+    color: white;
+  }
+  
+
+  @keyframes load {
+    from {
+      transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+      transform: translateX(-50%) rotate(360deg);
+    }
+  }
+  
+  .loading {
+    height: 3em;
+    width: 3em;
+    padding: 0;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--myColor);
+    border-left: 5px solid var(--myColor);
+    border-bottom: 5px solid var(--myColor);
+    border-radius: 50%;
+    animation: load 2s 0.5s linear infinite;
+    position: absolute;
+  }
+
+  .hide {
+    display: none;
+}
+
+  @media screen and (max-width: 700px) {
+    body {
+      font-size: 0.9em;
+    }
+      
+    .profilepic {
+          width: 7em;
+          height: 7em;
+      }   
+  
+  }
+  
+  @media screen and (max-width: 500px) {
+    
+    .name {
+        font-size: 2em;
+    }
+     .btn{
+        font-size: 0.7em;
+    }
+    .upload{
+        font-size: 0.7em;
+    }
+  }
+  
+  
+  
