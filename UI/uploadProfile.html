@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>User profile epic mail</title>
+    <link rel="stylesheet" href="CSS/uploadProfile.css" />
+    <link
+      href="CSS/fonts/fontawesome-free-5.7.2-web/css/all.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="backgnd"></div>
+    
+    <div class="wrapper">
+      <div class="container">
+          <a
+          class="vcenter logo"
+          >Epic mail</a>
+          <a id="skip" class= "btn icon" >Skip</a>
+          <a id="save" class= "btn hide" >Save</a>
+        <img src="images/userprofile.png" class="profilepic" />
+        <div class="name">Upload a profile picture</div>
+       <div class="upload">
+        <div class="changepic">
+          <button class="addphoto icon">Change photo</button>
+          <input type="file" name="file" class="createimgfile" accept="image/*" data-max-size="2000" />
+        </div>
+        <span class="saved icon">Saved</span> 
+        <div class="loading hide"></div>
+        <span class="error icon hide">Problem uploading profile picture</span>
+       </div>
+       
+      </div>        
+        
+    </div>
+    <script src="JS/uploadProfile.js"></script>
+  </body>
+</html>
