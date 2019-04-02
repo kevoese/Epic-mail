@@ -33,10 +33,10 @@ class Validate {
 
   static validateProfile(req, res, next) {
     const {
-      firstname, lastname,
+      firstname, lastname, profilePic,
     } = req.body;
     const updateuser = {
-      firstname, lastname,
+      firstname, lastname, profilePic,
     };
 
     joiTest(updateuser, schema.profileschema, res, next);

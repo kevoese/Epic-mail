@@ -6,7 +6,8 @@ const users = `CREATE TABLE IF NOT EXISTS
         email text NOT NULL UNIQUE,
         firstname text NOT NULL,
         lastname text NOT NULL,
-        passwordhash text NOT NULL
+        passwordhash text NOT NULL,
+        profile_pic text DEFAULT 'https://i.imgur.com/wtjaVfi.png'
       );`;
 
 const messages = `CREATE TABLE IF NOT EXISTS

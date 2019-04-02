@@ -29,7 +29,6 @@ const getImglink = async (imageFile) => {
     loading.classList.add('hide');
     saved.style.transform = 'translateX(-50%) scale(1)';
     profileImage.src = imgUrl;
-    console.log(imgUrl);
     skipbtn.classList.remove('hide');
     skipbtn.textContent = 'Go';
   } catch (err) {

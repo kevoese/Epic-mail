@@ -410,18 +410,6 @@ describe('Epic Test', () => {
           done();
         });
     });
-
-    it('should not respond with an error if firstname is not given', (done) => {
-      chai.request(app)
-        .put('/api/v2/user/update')
-        .send(users[9])
-        .set('token', userAToken)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal('Successful');
-          done();
-        });
-    });
   });
 
   describe('Groups', () => {

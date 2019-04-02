@@ -2,8 +2,9 @@ const queries = {
   userQuery: {
     getEmail: 'SELECT * FROM users WHERE email = $1',
     insertNewUser: 'INSERT INTO users (firstname, lastname, email, passwordhash) VALUES ($1, $2, $3, $4) RETURNING *',
-    updateFirstName: 'UPDATE users SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname',
-    updateLastName: 'UPDATE users SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname',
+    updateFirstName: 'UPDATE users SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
+    updateLastName: 'UPDATE users SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
+    updateProfilePic: 'UPDATE users SET profile_pic = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
   },
 
   msgQuery: {
