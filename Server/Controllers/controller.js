@@ -1,12 +1,13 @@
 import secure from '../helper/encrypt';
 import token from '../helper/token';
-import users from '../Models/users';
+import database from '../helper/crud';
 import errorResponse from '../helper/errorResponse';
 
+const { createtoken } = token;
 
 class userControllers {
   static welcome(req, res) {
-    return res.status(200).json({
+    return res.status(200).send({
       message: 'Welcome to EPic mail',
     });
   }
@@ -15,15 +16,16 @@ class userControllers {
     const {
       firstname, lastname, email, password,
     } = req.body;
-    const id = users.length + 1;
+    if (database.findItem('users', 'email', email)) errorResponse(400, 'Email already exist', res);
+
     const passwordhash = secure.encrypt(password);
     const userObj = {
-      id, firstname, lastname, email, passwordhash,
+      firstname, lastname, email, passwordhash,
     };
-    users.push(userObj);
-    return res.status(200).json({
-      status: 200,
-      data: { Token: token({ id: userObj.id }) },
+    const { id } = database.add('users', userObj);
+    return res.status(200).send({
+      status: 'Successful',
+      data: { Token: createtoken({ id }) },
     });
   }
 
@@ -33,24 +35,38 @@ class userControllers {
     } = req.body;
     let isUser = false;
     let id;
-    users.forEach((user) => {
-      if (user.email === email) {
-        const passwordStat = secure.compare(password, user.passwordhash);
-        if (passwordStat) {
-          ({ id } = user);
-          isUser = true;
-        }
+    const user = database.findItem('users', 'email', email);
+    if (user) {
+      const passwordStat = secure.compare(password, user.passwordhash);
+      if (passwordStat) {
+        ({ id } = user);
+        isUser = true;
       }
-    });
+    }
+
 
     if (isUser) {
-      return res.status(200).json({
-        status: 200,
-        data: { Token: token({ id }) },
+      return res.status(200).send({
+        status: 'Successful',
+        data: { Token: createtoken({ id }) },
       });
     }
 
     return errorResponse(400, 'Unauthorised user', res);
+  }
+
+  static updateProfile(req, res) {
+    let {
+      firstname, lastname,
+    } = req.body;
+    const id = req.decoded;
+    if (firstname) firstname = database.updateOne('users', id, 'firstname', firstname);
+    if (lastname) lastname = database.updateOne('users', id, 'lastname', lastname);
+
+    return res.status(200).send({
+      status: 'Successful',
+      data: { firstname, lastname },
+    });
   }
 }
 export default userControllers;

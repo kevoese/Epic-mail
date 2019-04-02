@@ -7,15 +7,12 @@ cache:
 directories:
   - "node_modules"
 
-env:
-  - global:
-      - NODE_ENV = test
-      - CC_TEST_REPORTER_ID=38ca17ec3b2aa07b5ff9c8d6710221798d6c3fef2fe052bd4640a423944c5099
+services:
+  - postgresql
 
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+  - psql -c 'create database epic_mail_test_db;' -U postgres
+  - npm run createTable
 
 script:
   - npm test
