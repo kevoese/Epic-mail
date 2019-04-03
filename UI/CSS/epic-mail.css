@@ -190,7 +190,7 @@ button:focus {
 }
 
 .lcontent {
-  height: 11em;
+  height: 7em;
   width: 100%;
   display: block;
   padding: 5%;
@@ -299,12 +299,10 @@ input {
   width: 90%;
   height: 3em;
   padding: 0em 1.2em;
-  margin: 2em auto 0.31em;
+  margin: 2em auto 2em;
 }
 
-.SignUp input {
-  margin: 1em auto 0.31em;
-}
+
 
 .getInfo div , .lgetinfo div{
   position: relative;
@@ -324,6 +322,10 @@ input {
 
 input[type="submit"] {
   border: none;
+}
+
+.Login input[type="submit"] {
+  margin: 4em auto;
 }
 
 .fname::after {
@@ -454,7 +456,7 @@ input[type="submit"] {
   .Login {
     margin: 0 auto;
     left: 0;
-    top: 68%;
+    top: 50%;
     width: 400px;
     font-size: 0.9em;
   }
@@ -489,7 +491,7 @@ input[type="submit"] {
 
   .Login {
     margin: 0 auto;
-    top: 70%;
+    top: 60%;
     font-size: 0.8em;
     width: 80%;
     min-width: 150px;

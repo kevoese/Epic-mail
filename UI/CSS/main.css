@@ -619,6 +619,8 @@ a {
     margin: 10px 5px;
   background-color: white;
   box-shadow: 2px 2px 3px grey;
+  padding-top: 1em;
+  padding-bottom: 0.5em;
 }
 
 .msginfo{
@@ -723,8 +725,7 @@ a {
   font-weight: bold;
   margin: 1em 0.5em;
   cursor: pointer;
-  font-size: 0.8em;
-  padding: 0.5em 2.8em 0.5em 1.2em;
+  font-size: 0.8em; 
 background-color: transparent;
 }
 
@@ -732,13 +733,14 @@ background-color: transparent;
 .replybtn {
   grid-row: 10/11;
   grid-column: 2/3;
-
+  padding: 0.5em 2em 0.5em 2em;
 }
 
 .fwdbtn {
   grid-row: 10/11;
   grid-column: 3/4;
   padding: 0.7em 1.7em 0.7em 0.6em;
+  padding: 0.5em 2.8em 0.5em 1.2em;
   position: relative;
 }
 
