@@ -30,12 +30,14 @@ const users = [
     password: 'kevoese',
   },
   {
-    firstname: 'Ken',
-    lastname: 'Ese',
+    firstname: 'Kelvin',
+    lastname: 'Esegbona',
+    profilePic: 'https://i.imgur.com/wtjaVfi.png',
   },
   {
-    firstname: 3,
-    lastname: 145,
+    firstname: 'Kelvin',
+    lastname: 'Esegbona',
+    profilePic: 'https://i.com/wtjaVfi.png',
   },
   {
     firstname: 'Paul',
