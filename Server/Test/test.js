@@ -111,6 +111,39 @@ describe('Epic Test', () => {
           done();
         });
     });
+
+    it('should return this user info', (done) => {
+      chai.request(app)
+        .get('/api/v2/user')
+        .set('token', userAToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should return a user', (done) => {
+      chai.request(app)
+        .get('/api/v2/user/1')
+        .set('token', userAToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should return a user that does not exist', (done) => {
+      chai.request(app)
+        .get('/api/v2/user/112')
+        .set('token', userAToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(404);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
   });
 
   describe('MESSAGES', () => {

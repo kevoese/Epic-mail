@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const validClr = 'var(--myColor)';
 const invalidClr = 'var(--myLightcolor)';
 const inputs = document.querySelectorAll('input');
@@ -19,19 +20,11 @@ mediaBreakpoint1.addListener(() => {
   if (mediaBreakpoint1.matches) {
     loginForm.style.display = 'flex';
     signupForm.style.display = 'flex';
-  } 
-  else {
+  } else {
     loginForm.style.display = 'none';
     signupForm.style.display = 'flex';
   }
 });
-
-
-const checkclass = (element, className) => {
-  const index = element.classList.length;
-  if (element.classList[index - 1] === className) return true;
-  return false;
-};
 
 const required = {
   name: /^[\w]{3,20}$/,
