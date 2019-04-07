@@ -669,14 +669,6 @@ input:hover{
 }
 
 @keyframes wrong {
-  0%{
-    transform: translateX(-1%);
-  }
-
-  100%{
-    transform: translateX(1%);
-  }
-
   0%, 100% {  transform: translateX(0%);}
   20% , 60%{ transform: translateX(-2%);}
   40% , 80%{ transform: translateX(2%);}

@@ -1,14 +1,6 @@
 const container = document.querySelector('.container');
 const buttons = document.querySelectorAll('button');
 
-const hide = (element) => {
-  element.classList.add('hideElement');
-};
-
-const unhide = (element) => {
-  element.classList.remove('hideElement');
-};
-
 const getLoginInfo = () => {
   const email = document.querySelector('.email').value.trim();
   const password = document.querySelector('.password').value.trim();
@@ -34,7 +26,7 @@ container.addEventListener('submit', async (event) => {
   const thisFormId = thisForm.id;
   if (thisFormId === 'loginform') details = getLoginInfo();
   else details = getSignUpInfo();
-  const url = (thisFormId === 'loginform') ? 'http://localhost:3000/api/v2/auth/login' : 'http://localhost:3000/api/v2/auth/signup'
+  const url = (thisFormId === 'loginform') ? `${app}auth/login` : `${app}auth/signup`;
   thisForm.classList.add('loader');
   const error = thisForm.querySelector('.invalid');
   buttons.forEach(button => hide(button));
