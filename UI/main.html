@@ -24,8 +24,8 @@
             <ul class="navmenu">
             <li>
                 <a href="https://kevoese.github.io/Epic-mail/UI/main.html" class="profile vcenter">
-                    <img src="images/dummy2.png" alt="" class="profileimg">
-                    <span class="profilename">John Doe</span>
+                    <img src="images/userprofile.png"  class="profileimg">
+                    <span class="profilename"></span>
                 </a>  
             </li> 
                 <li ><a href="https://kevoese.github.io/Epic-mail/UI/profile-edit.html" data-tool-tip="Edit Profile" class=" vcenter editprofile icon">Profile</a></li> 
@@ -179,24 +179,26 @@
         <div class="chats">
             <div class="composewrapper">
                 
-                    <div class="container ">
+                    <form id = "newMessage" class="container icon ">
                        <div class="newmsg icon">New Message <div class="cutmsg icon"></div></div>
                        <span class="composefrom">From</span>
                        <span class="composesender">Johndoe@epicmail.com</span>
                        <span class="composeto icon">to</span>
-                       <div class="addContacts">
-                            <input type="text" class="newmsgsearch" placeholder="Enter Contact Email">
+                       
+                            <input id = "receiverEmail"  type="text" class="newmsgsearch" 
+                            placeholder="Enter Contact Email" pattern="^\w+@epicmail.com$" 
+                            required title= "Email must be a valid epic email e.g john@epicmail.com">
                                <select id = "contacts" class="contactselect" name="gender" >
                                    <option  disabled selected>Add contacts</option>
                                    <option >John Doe</option>
                                    <option >Amos Doe</option>
                                    <option >Nonso Jude</option>
                                </select>
-                       </div>
-                       <input id="composesubject" type="text" placeholder="Subjects" class="composesubject">
-                       <textarea name="" id="composemessage" class="composemessage" cols="30" rows="10"></textarea>
+                       
+                       <input required id="composesubject" type="text" placeholder="Subjects" class="composesubject">
+                       <textarea required  name="" id="composemessage" class="composemessage" cols="30" rows="10"></textarea>
                        <button class="composesend icon">Send</button>
-                    </div>
+                    </form>
                 </div>
                 <div class="composewrapper Groupwrap">
                 
@@ -342,6 +344,8 @@ Also, we invite you to dive into our recen
         </div>
         
     </div>
+    <script src="JS/helpers.js"></script>
+    <script src="JS/main2.js"></script>
     <script src="JS/admin-page.js"></script>
     <script src="JS/main.js"></script>
   </body>

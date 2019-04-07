@@ -81,5 +81,28 @@ class userControllers {
       data: updated.rows[0],
     });
   }
+
+  static async getUser(req, res) {
+    const { id } = req.params;
+    const { rows } = await pool.query(userQuery.getUser, [id]);
+    const [user] = rows;
+    if (user === undefined) {
+      return errorResponse(404, 'user does not exist', res);
+    }
+    return res.status(200).send({
+      status: 'Successful',
+      data: user,
+    });
+  }
+
+  static async userInfo(req, res) {
+    const id = req.decoded;
+    const { rows } = await pool.query(userQuery.getUser, [id]);
+    const [user] = rows;
+    return res.status(200).send({
+      status: 'Successful',
+      data: user,
+    });
+  }
 }
 export default userControllers;
