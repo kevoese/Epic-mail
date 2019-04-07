@@ -1,22 +1,13 @@
+const container = document.querySelector('.container');
+const buttons = document.querySelectorAll('button');
 
-const fetchCall = async (url, method, body = undefined) => {
-  const object = {
-    method,
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, object);
-  const responseObj = await response.json();
-  return responseObj;
+const hide = (element) => {
+  element.classList.add('hideElement');
 };
 
-// const login = document.querySelector('#loginform');
-// const register = document.querySelector('#registerForm');
-
-
-const container = document.querySelector('.container');
+const unhide = (element) => {
+  element.classList.remove('hideElement');
+};
 
 const getLoginInfo = () => {
   const email = document.querySelector('.email').value.trim();
@@ -26,10 +17,10 @@ const getLoginInfo = () => {
 };
 
 const getSignUpInfo = () => {
-  const email = document.querySelector('.email').value.trim();
-  const password = document.querySelector('.password').value;
-  const firstname = document.querySelector('.email').value.trim();
-  const lastname = document.querySelector('.password').value.trim();
+  const email = document.querySelector('.emailR').value.trim();
+  const password = document.querySelector('.passwordR').value;
+  const firstname = document.querySelector('.firstname').value.trim();
+  const lastname = document.querySelector('.lastname').value.trim();
   const obj = {
     firstname, lastname, email, password,
   };
@@ -39,14 +30,24 @@ const getSignUpInfo = () => {
 container.addEventListener('submit', async (event) => {
   let details;
   event.preventDefault();
-  const thisForm = event.target.id;
-  if (thisForm === 'loginform') details = getLoginInfo();
+  const thisForm = event.target;
+  const thisFormId = thisForm.id;
+  if (thisFormId === 'loginform') details = getLoginInfo();
   else details = getSignUpInfo();
-  const response = await fetchCall('http://localhost:3000/api/v2/auth/login', 'POST', details);
-  if (response.status === 200) {
-    const { Token } = response.data;
+  const url = (thisFormId === 'loginform') ? 'http://localhost:3000/api/v2/auth/login' : 'http://localhost:3000/api/v2/auth/signup'
+  thisForm.classList.add('loader');
+  const error = thisForm.querySelector('.invalid');
+  buttons.forEach(button => hide(button));
+  const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
+  thisForm.classList.remove('loader');
+  if (statusCode === 200) {
+    const { Token } = responseObj.data;
     localStorage.setItem('token', Token);
+  } else if (statusCode === 400) {
+    unhide(error);
+  } else if (statusCode === 409) {
+    unhide(error);
+    const email = thisForm.querySelector('.emailicon');
+    email.classList.add('wrongemail');
   }
-  console.log(response.status);
-  event.target.reset();
 });

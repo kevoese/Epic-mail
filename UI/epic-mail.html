@@ -12,112 +12,142 @@
     />
   </head>
   <body>
-      <div class="back"></div>
-    <div class="backgnd"> 
-     
-    <div class="container">
-        <div class="pageContent">
+    <div class="back"> </div>
+    <div class="wrapper"> 
+      <div class="container">
+        <dialog> 
+          <div class="contact icon">
+            <div class="closebox icon"></div>
+            <p class="dname icon">Developer: Esegbona Kelvin</p>
+            <p class="demail icon">kevoesegbona@gmail.com</p>
+            <p class="dphone icon">+2347052648321</p>
+          </div>
+        </dialog>
+        <nav class="navbar">
+          <div class="epiclogo"> <a href="#" class="logolink">EPIC MAIL</a></div>
+          <span id="contactlink">CONTACT US</span>
+        </nav>  
+        <main>
+             <div class="pageContent">
             <h2 class="pageWelcome">
                 Epic Mail
             </h2>
             <p>Experience fast, smooth and easy exchange
-                 of information with Epic Mail.
+                of information with Epic Mail.
             </p>
             <div id = "register" class="register icon">
               Join now
             </div>
         </div>
-        <form id= "loginform" action = "https://kevoese.github.io/Epic-mail/UI/main.html" class=" Login wrapper">
-            <div class="lcontent">
-              <h3>Sign in</h3>
-            </div>
-            <div class="lgetinfo">
+       <div class="formswrap icon">
+        <div id = "close" class="cut icon"></div>
+        <form id= "loginform" class="Login load">            
+          <div class="formcenter">
+              <div class="mobilebtn">
+                  <p>Don't have an account?</p>
+                  <span class= 'mobilereg'>Register here</span>
+                </div>
+            <h2>Sign In</h2>
               <div class="icon emailicon linfo">
-                <input
-                  required
-                  type="text"
-                  id="email"
-                  pattern="^\w+@epicmail.com$"
-                  class="email"
-                  placeholder="Email"
-                  required
+                <input type="text" id="email" pattern="^\w+@epicmail.com$" class="email" placeholder="Email" required 
+                title = "Emter a valid Epic-mail email"
                 />
               </div>
               <div class="icon passwrd linfo">
-                <input
-                  id="password"
-                  type="password"
-                  class="password"
-                  pattern="^[\w@.]{7,20}$"
-                  placeholder="Password"
-                  required
-                />
+                <input id="password" type="password" class="password" placeholder="Password" required/>
               </div>
-              <input type="submit" class="submit" value="Login">
-              <!-- <span id = "signuplink" class="signuplink">Not a Member? Register Here</span> -->
-            </div>
+              <div class="buttonwrap">
+                <button class="submit">LOGIN</button>
+                <a href="" class="forgetp">Forgot password?</a>
+              </div>
+              <p class="invalid icon hideElement">Invalid user name or password</p>
+          </div>    
+          
           </form>
-
-        <form action="https://kevoese.github.io/Epic-mail/UI/admin-page.html" class="icon SignUp wrapper ">
-            <div id="close" class="close"></div>
-            <div class="content">
-                <h2 class="welcome">Welcome to Epic Mail</h2>
-                 <div class="getstarted">Get Started Here</div>
-            </div>
-            <div class="getInfo">
-                <h2 class="signup">Sign up</h2>
-                <div class="icon fname">
+        <form id="registerForm" class="icon SignUp">            
+            <div class="formcenter">
+              <div class="mobilebtn">
+                <p>Already a member?</p>
+                <span class= 'mobilelog'>Login here</span>
+              </div>
+              <h2 class="signup">Sign up</h2>
+                <div class="linfo icon fname">
                 <input
                     type="text"
                     id="name"
                     pattern="^[\w]{3,20}$"
-                    class="firstName"
+                    class="firstname"
                     placeholder="First name"
                     required
+                    title= "name must contain 3 to 20 characters"
                 />
                 </div>
-                <div class="icon lname">
+                <div class="linfo icon lname">
                 <input
                     id="name"
                     pattern="^[\w]{3,20}$"
                     type="text"
-                    class="lastName"
+                    class="lastname"
                     placeholder="Last name"
+                    title = "name must contain 3 to 20 characters"
                     required
                 />
                 </div>
-                <div class="icon emailicon">
+                <div class="linfo icon emailicon">
                 <input
+                    value="@epicmail.com"
                     required
                     pattern="^\w+@epicmail.com$"
                     type="text"
                     id="email"
-                    class="email"
+                    class="emailR"
                     placeholder="Email"
+                    title= "Email must be a valid address e.g john@epicmail.com"
                 />
               </div>
-               
                 <div>
-                  <div class="icon passwrd">
+                  <div class="linfo icon passwrd">
                     <input
                     id="password"
                     type="password"
-                    class="password"
+                    class="passwordR"
                     pattern="^[\w@.]{7,20}$"
                     placeholder="Password"
                     required
-                     />
+                    title= "Password must be alphanumeric (-@. and _ are also included) and must contain 7 to 20 characters long"
+                    />
                   </div>
-                
+                  
                 </div>
-                <input type="submit"  class="submit" value="Sign up">
-                <span id="loginlink" class="loginlink">Already a Member? Login Here</span>
-              </form>
+                <button class="submit">SIGN UP NOW</button>
+                <p class="invalid icon hideElement">Email already exists</p>
+            </div>
+                
+        </form>
+              <div class="slider moveright">
+                <h2 class="welcome">Welcome to Epic mail</h2>
+        
+                <div class="regHere hideElement">
+                    <h3>Don't have an account? </h3>
+                    <button class="regbtn">REGISTER HERE</button>
+                </div>
+                <div class="logHere">
+                    <h3>Already a member? </h3>
+                    <button class="logbtn">LOGIN HERE</button>
+                </div>
+              </div>
         </div>
-           
+
+        </main>
+      
+        <footer>
+          <div class="allhrs">HOURS SERVICES</div>
+          <div class="secure icon">SECURE INFORMATION</div>
+        </footer>
+      </div>
     </div>
-    
-  </div>
+    <script src="JS/helpers.js"></script>
+    <script src="JS/epicmail2.js"></script>
     <script src="JS/epic-mail.js"></script>
   </body>
 </html>

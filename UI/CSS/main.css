@@ -62,7 +62,7 @@ body::before {
   bottom: 0;
   left: 0;
   right: 0;
-  background: url(../images/slide04.jpg) center no-repeat fixed;
+  background: url(../images/bg_mage8.jpg) center no-repeat fixed;
   background-size: cover;
   filter: blur(10px);
 }
