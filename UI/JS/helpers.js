@@ -2,6 +2,7 @@
 const { token } = localStorage;
 const app = 'https://epicmailappbykelvin.herokuapp.com/api/v2/';
 const applocal = 'http://localhost:3000/api/v2/';
+const appurl = app;
 
 
 const fetchCall = async (url, method, body = undefined) => {
@@ -16,12 +17,12 @@ const fetchCall = async (url, method, body = undefined) => {
   const response = await fetch(url, object);
   const statusCode = response.status;
   const responseObj = await response.json();
-  // console.log(responseObj);
+  //  console.log(responseObj);
   return { responseObj, statusCode };
 };
 
 const getUser = async (id = false) => {
-  const url = id ? `${app}user/${id}` : `${app}user`;
+  const url = id ? `${appurl}user/${id}` : `${appurl}user`;
   const { responseObj, statusCode } = await fetchCall(url, 'GET');
   if (statusCode === 200) {
     return responseObj.data;
