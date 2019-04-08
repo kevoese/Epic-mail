@@ -74,7 +74,10 @@ class EpicMessage {
     const userId = req.decoded;
     const receivedMessages = await pool.query(msgQuery.getInbox, [userId]);
     if (receivedMessages.rows[0] === undefined) {
-      return errorResponse(404, 'inbox is empty', res);
+      return res.status(200).send({
+        status: 'Empty',
+        data: 'Inbox is empty',
+      });
     }
     return res.status(200).send({
       status: 'Successful',
@@ -86,7 +89,10 @@ class EpicMessage {
     const userId = req.decoded;
     const unread = await pool.query(msgQuery.getUnread, [userId]);
     if (unread.rows[0] === undefined) {
-      return errorResponse(404, 'No unread messages', res);
+     return res.status(200).send({
+        status: 'Empty',
+        data: 'No unread messages',
+      });
     }
     return res.status(200).send({
       status: 'Successful',
@@ -99,7 +105,10 @@ class EpicMessage {
     const userId = req.decoded;
     const read = await pool.query(msgQuery.getRead, [userId]);
     if (read.rows[0] === undefined) {
-      return errorResponse(404, 'No read messages', res);
+      return res.status(200).send({
+        status: 'Empty',
+        data: 'No read messages',
+      });
     }
     return res.status(200).send({
       status: 'Successful',
@@ -111,7 +120,10 @@ class EpicMessage {
     const userId = req.decoded;
     const sent = await pool.query(msgQuery.getSent, [userId]);
     if (sent.rows[0] === undefined) {
-      return errorResponse(404, 'No sent messages', res);
+      return res.status(200).send({
+        status: 'Empty',
+        data: 'Sent box is empty',
+      });
     }
     return res.status(200).send({
       status: 'Successful',
@@ -123,7 +135,10 @@ class EpicMessage {
     const userId = req.decoded;
     const draft = await pool.query(msgQuery.getDraft, [userId]);
     if (draft.rows[0] === undefined) {
-      return errorResponse(404, 'No draft messages', res);
+      return res.status(200).send({
+        status: 'Empty',
+        data: 'Draft box is empty',
+      });
     }
     return res.status(200).send({
       status: 'Successful',
