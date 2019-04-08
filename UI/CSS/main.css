@@ -443,7 +443,7 @@ a {
 
 .readmsg::after {
     content: '\f2b6';
-    right: 1em;
+    right: 2em;
     top: 50%;
     color: #888;
     transform: translateY(-50%);
@@ -453,7 +453,7 @@ a {
 
 .unreadmsg::after {
     content: '\f0e0';
-    right: 1em;
+    right: 2em;
     top: 50%;
     color: #888;
     transform: translateY(-50%);
@@ -1003,6 +1003,44 @@ select:focus {
 .allgroupbutton::after{
   content: '';
   left: 18%;
+}
+
+.refresh
+{
+  position: relative;
+  padding: 0.6em;
+  margin: 5px;
+  color: rgba(58, 58, 58, 0.815);
+  border: 1px solid rgba(192, 191, 191, 0.603);
+  cursor: pointer;
+}
+
+.refresh:hover {
+  background-color: rgb(218, 216, 216, 0.2);
+}
+
+.refresh::after {
+  position: absolute;
+  content: '\f2f1';
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.refreshing {
+  height: 1em;
+  width: 1em;
+  margin: 5px auto;
+  padding: 0px;
+  border: 3px solid rgba(112, 112, 112, 0.575);
+  border-right: 4px solid rgba(192, 191, 191, 0);
+  border-radius: 50%;
+  overflow: hidden;
+  animation: load 2s 0.5s linear infinite;
+}
+
+.refreshing::after {
+  content: '';
 }
 
 @keyframes load {

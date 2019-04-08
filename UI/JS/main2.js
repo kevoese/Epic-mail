@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 const createMsg = document.querySelector('#newMessage');
 const inputs = document.querySelectorAll('input');
+const refresh = document.querySelector('.refresh');
 let thisUser;
 
 const loadUserInfo = async () => {
@@ -15,6 +16,7 @@ const loadUserInfo = async () => {
   profilename.textContent = `${firstname} ${lastname}`;
   senderemail.textContent = email;
   profileimg.src = profile_pic;
+  await populateInbox();
 };
 
 window.addEventListener('load', async () => {
@@ -51,7 +53,7 @@ createMsg.addEventListener('submit', async (event) => {
   event.preventDefault();
   const thisForm = event.target;
   const details = getMsgInfo();
-  const url = `${app}messages`;
+  const url = `${appurl}messages`;
   const buttons = thisForm.querySelectorAll('button');
   addClass(thisForm, 'loader');
   buttons.forEach(button => hide(button));
@@ -59,7 +61,8 @@ createMsg.addEventListener('submit', async (event) => {
   removeClass(thisForm, 'loader');
   if (statusCode === 200) {
     addClass(thisForm, 'successmsg');
-    addTosent(responseObj.data);
+    // addTosent(responseObj.data);
+    event.reset();
   } else if (statusCode === 404) {
     addClass(thisForm, 'receiverErr');
     const email = thisForm.querySelector('#receiverEmail');
@@ -67,4 +70,10 @@ createMsg.addEventListener('submit', async (event) => {
   } else if (statusCode === 400) {
     addClass(thisForm, 'parentmsgErr');
   }
+});
+
+refresh.addEventListener('click', async (event) => {
+  addClass(refresh, 'refreshing');
+  await populateInbox();
+  removeClass(refresh, 'refreshing');
 });
