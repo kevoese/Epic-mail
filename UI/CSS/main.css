@@ -319,15 +319,24 @@ a {
   text-decoration: none;
 }
 
+.btncheck{
+  position: relative;
+  display: flex;
+}
+
+.btncheck input {
+  position: absolute;
+  opacity: 0;
+}
+
 .allbutton,
 .sentbutton,
 .draftbutton {
+  flex-grow: 1;
   text-align: center;
-  align-self: center;
   font-size: 0.9em;
   font-weight: bold;
   color: var(--myPurple);
-  align-self: center;
   padding: 1em;
   height: 3em;
   background-color: white;
@@ -354,8 +363,8 @@ a {
 .draftbutton::before,
 .sentbutton::before,
 .allbutton::before {
-  content: attr(data-tool-tip);
-  right: 50%;
+  content: attr(box);
+  right: 1em;
   transform: translate(50%, -50%);
   top: 50%;
   font-weight: light;
@@ -364,20 +373,9 @@ a {
     font-size: 1em;
 }
 
-.allno,
-.sentno,
-.draftno {
-  position: absolute;
-  right: 1em;
-}
-
-.msgbuttons a:target {
+.btncheck input:checked + label {
   outline: none;
   background-color: var(--myPurple);
-  color: white;
-}
-
-.msgbuttons a:target::before {
   color: white;
 }
 
@@ -387,6 +385,7 @@ a {
   margin: 0 auto;
   overflow: hidden;
   flex-grow: 1;
+  padding-bottom: 2em;
 }
 
 .msgcontain {
@@ -410,12 +409,13 @@ a {
 }
 
 .checkbox {
-    display: inline-flex;
+    display: flex;
     width: 90%;
     margin: 0.5em;
+    justify-content: space-between;
 }
 
-.read, .unread {
+.checkbox div {
     width: 30%;
     height: 1.8em;
     display: inline-flex;
@@ -428,6 +428,7 @@ a {
     cursor: pointer;
     color: #555;
     font-family: consolas;
+    white-space: nowrap;
 }
 
 .incheckbox {
@@ -482,13 +483,12 @@ a {
   position: absolute;
 } */
 
- .read label:hover::before,
- .unread label:hover::before{
+
+ .checkbox div label:hover::before{
     border-color: var(--myPurple);
 }
 
-.read label::before,
-.unread label::before{
+.checkbox div label::before{
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     position: relative;
@@ -1011,7 +1011,7 @@ select:focus {
 
 .refresh::after {
   position: absolute;
-  content: '\f2f1';
+  content: '\f01e';
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);

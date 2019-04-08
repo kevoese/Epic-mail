@@ -1,5 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
+const readLabel = document.querySelector('#readLabel');
+const unreadLabel = document.querySelector('#unreadLabel');
+
 const getDateStr = (str) => {
   const end = str.indexOf('T');
   const rawDate = str.slice(0, end);
@@ -12,17 +15,6 @@ const getDateStr = (str) => {
   const monthStr = monthStrArr[Number(month) - 1];
   return `${monthStr} ${day} ${year}`;
 };
-
-const checkboxes = `<div class="checkbox">
-<div class="read icon">
-    <input id = "incheckbox1" type="checkbox" class="incheckbox">
-    <label class = "icon" for = "incheckbox1">Unread</label>
-</div>
-<div class="unread icon">
-    <input id = "incheckbox2" type="checkbox" class="incheckbox">
-    <label class = "icon" for = "incheckbox2">Read</label>
-</div>
-</div>`;
 
 const emptyMsgBox = message => `<p class="empty">
 ${message}
@@ -46,15 +38,26 @@ const messagepanel = (msgObj) => {
 };
 
 
-const populateInbox = async () => {
+const populateInbox = async (type = false) => {
   const inboxhtml = document.querySelector('.all');
-  const inboxNum = document.querySelector('.allno');
-  const url = `${appurl}messages`;
-  const { responseObj, statusCode } = await fetchCall(url, 'GET');
-  inboxhtml.innerHTML = checkboxes;
-  if (statusCode === 200) {
+  const inboxNum = document.querySelector('#allbutton');
+  let url;
+  let empty;
+  if (type) {
+    empty = (type === 'unread') ? 'There are no unread messages' : 'No messages have been read';
+    url = (type === 'unread') ? `${appurl}messages/unread` : `${appurl}messages/read`;
+  } else {
+    empty = 'Inbox is empty';
+    url = `${appurl}messages`;
+  }
+
+  const { responseObj } = await fetchCall(url, 'GET');
+  inboxhtml.innerHTML = ' ';
+  if (responseObj.status === 'Successful') {
     const { data } = responseObj;
-    inboxNum.textContent = data.length;
+    if (type === 'read') readLabel.textContent = `Read(${data.length})`;
+    else if (type === 'unread') unreadLabel.textContent = `Unread(${data.length})`;
+    else inboxNum.setAttribute('box', data.length);
     data.forEach(async (rMessage) => {
       const {
         message_id, subject, message, read_status, created_on,
@@ -69,21 +72,23 @@ const populateInbox = async () => {
       inboxhtml.innerHTML += messagepanel(msgObj);
     });
   }
-  if (statusCode === 404) {
-    inboxNum.textContent = 0;
-    inbboxhtml.innerHTML = emptyMsgBox('inbox is empty');
+  if (responseObj.status === 'Empty') {
+    if (type === 'read') readLabel.textContent = `Read(${0})`;
+    else if (type === 'unread') unreadLabel.textContent = `Unread(${0})`;
+    else inboxNum.setAttribute('box', 0);
+    inboxhtml.innerHTML += emptyMsgBox(empty);
   }
 };
 
 
 const populateOutbox = async (type) => {
   const boxhtml = document.querySelector(`.${type}`);
-  const boxNum = document.querySelector(`.${type}no`);
+  const boxNum = document.querySelector(`#${type}button`);
   const url = (type === 'sent') ? `${appurl}messages/sent` : `${appurl}messages/draft`;
-  const { responseObj, statusCode } = await fetchCall(url, 'GET');
-  if (statusCode === 200) {
+  const { responseObj } = await fetchCall(url, 'GET');
+  if (responseObj.status === 'Successful') {
     const { data } = responseObj;
-    boxNum.textContent = data.length;
+    boxNum.setAttribute('box', data.length);
     boxhtml.innerHTML = '';
     data.forEach(async (rMessage) => {
       const {
@@ -98,8 +103,8 @@ const populateOutbox = async (type) => {
       boxhtml.innerHTML += messagepanel(msgObj);
     });
   }
-  if (statusCode === 404) {
-    boxNum.textContent = 0;
+  if (responseObj.status === 'Empty') {
+    boxNum.setAttribute('box', 0);
     boxhtml.innerHTML = emptyMsgBox(`${type} box is empty`);
   }
 };

@@ -1,8 +1,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 const createMsg = document.querySelector('#newMessage');
-const inputs = document.querySelectorAll('input');
+const viewWrapper = document.querySelector('.chats');
+const inputs = viewWrapper.querySelectorAll('input');
 const refresh = document.querySelector('.refresh');
+const myinbox = document.querySelector('.all');
+const inboxbtn = document.querySelector('#radioall');
 let thisUser;
 
 const loadUserInfo = async () => {
@@ -75,10 +78,55 @@ createMsg.addEventListener('submit', async (event) => {
   }
 });
 
-refresh.addEventListener('click', async (event) => {
+refresh.addEventListener('click', async () => {
   addClass(refresh, 'refreshing');
   await populateInbox();
   await populateOutbox('sent');
   await populateOutbox('draft');
   removeClass(refresh, 'refreshing');
+});
+
+// readcheckbox.addEventListener('click', async () => {
+//   messageContainer.style.left = '0';
+//   if (!readcheckbox.checked) {
+//     addClass(myinbox, 'loading');
+//     await populateInbox('read');
+//     addClass(myinbox, 'loading');
+//   }
+// });
+
+// unreadcheckbox.addEventListener('click', async () => {
+//   messageContainer.style.left = '0';
+//   if (unreadcheckbox.checked) {
+//     addClass(myinbox, 'loading');
+//     await populateInbox('unread');
+//     addClass(myinbox, 'loading');
+//   }
+// });
+
+checkbox.addEventListener('click', async (event) => {
+  const btn = event.target;
+  const btntype = btn.id;
+  inboxbtn.checked = true;
+  if (btntype === 'incheckbox0') {
+    if (btn.checked) {
+      addClass(myinbox, 'loader');
+      await populateInbox();
+      addClass(myinbox, 'loader');
+    }
+  }
+  if (btntype === 'incheckbox1') {
+    if (btn.checked) {
+      addClass(myinbox, 'loader');
+      await populateInbox('unread');
+      addClass(myinbox, 'loader');
+    }
+  }
+  if (btntype === 'incheckbox2') {
+    if (btn.checked) {
+      addClass(myinbox, 'loader');
+      await populateInbox('read');
+      addClass(myinbox, 'loader');
+    }
+  }
 });

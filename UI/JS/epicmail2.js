@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const container = document.querySelector('.container');
 const buttons = document.querySelectorAll('button');
 
@@ -26,13 +27,13 @@ container.addEventListener('submit', async (event) => {
   const thisFormId = thisForm.id;
   if (thisFormId === 'loginform') details = getLoginInfo();
   else details = getSignUpInfo();
-  const url = (thisFormId === 'loginform') ? `${app}auth/login` : `${app}auth/signup`;
+  const url = (thisFormId === 'loginform') ? `${appurl}auth/login` : `${appurl}auth/signup`;
   thisForm.classList.add('loader');
   const error = thisForm.querySelector('.invalid');
   buttons.forEach(button => hide(button));
   const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
   thisForm.classList.remove('loader');
-  if (statusCode === 200) {
+  if (statusCode === 200 || statusCode === 201) {
     const { Token } = responseObj.data;
     localStorage.setItem('token', Token);
   } else if (statusCode === 400) {
