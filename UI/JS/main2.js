@@ -17,6 +17,8 @@ const loadUserInfo = async () => {
   senderemail.textContent = email;
   profileimg.src = profile_pic;
   await populateInbox();
+  await populateOutbox('sent');
+  await populateOutbox('draft');
 };
 
 window.addEventListener('load', async () => {
@@ -57,11 +59,12 @@ createMsg.addEventListener('submit', async (event) => {
   const buttons = thisForm.querySelectorAll('button');
   addClass(thisForm, 'loader');
   buttons.forEach(button => hide(button));
-  const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
+  const { statusCode } = await fetchCall(url, 'POST', details);
   removeClass(thisForm, 'loader');
   if (statusCode === 200) {
+    await populateOutbox('sent');
+    await populateOutbox('draft');
     addClass(thisForm, 'successmsg');
-    // addTosent(responseObj.data);
     event.reset();
   } else if (statusCode === 404) {
     addClass(thisForm, 'receiverErr');
@@ -75,5 +78,7 @@ createMsg.addEventListener('submit', async (event) => {
 refresh.addEventListener('click', async (event) => {
   addClass(refresh, 'refreshing');
   await populateInbox();
+  await populateOutbox('sent');
+  await populateOutbox('draft');
   removeClass(refresh, 'refreshing');
 });
