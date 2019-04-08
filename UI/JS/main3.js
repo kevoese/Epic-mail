@@ -24,13 +24,17 @@ const checkboxes = `<div class="checkbox">
 </div>
 </div>`;
 
+const emptyMsgBox = message => `<p class="empty">
+${message}
+</p>`;
+
 
 const messagepanel = (msgObj) => {
   const {
-    id, senderName, message, subject, read_status, datestr,
+    message_id, Name, message, subject, status, datestr,
   } = msgObj;
-  const msghtml = `<div id = "${id}_small" class="wrapmsghead icon ${read_status}msg">
-    <p class="username icon">${senderName}</p><p class="msgdate icon">${datestr}</p>
+  const msghtml = `<div id = "${message_id}_small" class="wrapmsghead icon ${status}msg">
+    <p class="username icon">${Name}</p><p class="msgdate icon">${datestr}</p>
     <p class="msgtitle">
        ${subject}
     </p>
@@ -40,6 +44,7 @@ const messagepanel = (msgObj) => {
 
   return msghtml;
 };
+
 
 const populateInbox = async () => {
   const inboxhtml = document.querySelector('.all');
@@ -56,11 +61,45 @@ const populateInbox = async () => {
       } = rMessage;
       const datestr = getDateStr(created_on);
       const { firstname, lastname } = await getUser(rMessage.sender_id);
-      const senderName = `${firstname} ${lastname}`;
+      const Name = `${firstname} ${lastname}`;
+      const status = read_status;
       const msgObj = {
-        senderName, message_id, subject, message, read_status, datestr,
+        Name, message_id, subject, message, status, datestr,
       };
       inboxhtml.innerHTML += messagepanel(msgObj);
     });
+  }
+  if (statusCode === 404) {
+    inboxNum.textContent = 0;
+    inbboxhtml.innerHTML = emptyMsgBox('inbox is empty');
+  }
+};
+
+
+const populateOutbox = async (type) => {
+  const boxhtml = document.querySelector(`.${type}`);
+  const boxNum = document.querySelector(`.${type}no`);
+  const url = (type === 'sent') ? `${appurl}messages/sent` : `${appurl}messages/draft`;
+  const { responseObj, statusCode } = await fetchCall(url, 'GET');
+  if (statusCode === 200) {
+    const { data } = responseObj;
+    boxNum.textContent = data.length;
+    boxhtml.innerHTML = '';
+    data.forEach(async (rMessage) => {
+      const {
+        message_id, subject, message, status, created_on,
+      } = rMessage;
+      const datestr = getDateStr(created_on);
+      const { firstname, lastname } = await getUser(rMessage.receiver_id);
+      const Name = `${firstname} ${lastname}`;
+      const msgObj = {
+        Name, message_id, subject, message, status, datestr,
+      };
+      boxhtml.innerHTML += messagepanel(msgObj);
+    });
+  }
+  if (statusCode === 404) {
+    boxNum.textContent = 0;
+    boxhtml.innerHTML = emptyMsgBox(`${type} box is empty`);
   }
 };

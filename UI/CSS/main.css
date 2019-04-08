@@ -234,9 +234,9 @@ left: 50%;
 }
 
 .inbox {
-  display: grid;
-  grid-template-rows: repeat(20, minmax(auto, auto));
-  grid-gap: 0.3em;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
   width: 100%;
   margin: 0 auto;
   background-color: whitesmoke;
@@ -244,7 +244,7 @@ left: 50%;
   margin:  0.6em;
   box-shadow: 2px 2px 2px 2px grey;
   min-height: 350px;
-    height: 83vh;
+  height: 83vh;
 }
 
 .inboxcontent {
@@ -305,10 +305,8 @@ left: 50%;
 .msgbuttons {
   display: grid;
   width: 99%;
-  margin: 0 auto;
-  grid-row: 3/5;
+  margin: 0.3em auto;
   grid-template-columns: repeat(3, 1fr);
-
   grid-column-gap: 2px;
 }
 
@@ -384,11 +382,11 @@ a {
 }
 
 .messages {
-  grid-row: 5/21;
   position: relative;
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  flex-grow: 1;
 }
 
 .msgcontain {
@@ -404,6 +402,7 @@ a {
 .all,
 .sent,
 .draft {
+  position: relative;
   margin: 0 auto;
   width: 100%;
   overflow-y: scroll;
@@ -433,7 +432,9 @@ a {
 
 .incheckbox {
     opacity: 0;
-    position: absolute
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .checkbox label:hover {
@@ -461,6 +462,26 @@ a {
     position: absolute;
 }
 
+/* .draftmsg::after {
+  content: '\f044';
+  right: 2em;
+  top: 50%;
+  color: #888;
+  transform: translateY(-50%);
+  font-weight: 300;
+  position: absolute;
+}
+
+.sentmsg::after {
+  content: '\f1d8';
+  right: 2em;
+  top: 50%;
+  color: #888;
+  transform: translateY(-50%);
+  font-weight: 300;
+  position: absolute;
+} */
+
  .read label:hover::before,
  .unread label:hover::before{
     border-color: var(--myPurple);
@@ -478,6 +499,7 @@ a {
     left: 0;
     top: -0.2em;
     margin: 0 1em;
+    margin-left: 0.1em;
     font-size: 0.6em;
     color: ghostwhite;
     content: '\f00c';
@@ -963,46 +985,14 @@ select:focus {
   font-size: 0.8em;
 }
 
-
-/**************  ADMIN  **************/
-
-.groupnumbers {
-    font-style: italic;
-}
-
-.groupcontent {
-  width: 99%;
-  grid-row: 1/3;
-  margin: 0 auto;
-  padding: 1px;
-  background-color: var(--myPurple);
-     max-height: 4em;
-}
-
-.groupcontent button:hover {
-  background-color: var(--myPurple);
-  color: white;
-}
-
-.admincreategroup {
-    width: 100%;
-    padding-left: 0.8em
-}
-
-.groupbutton {
- display: grid;
-  width: 99%;
-  margin: 0 auto;
-  grid-row: 3/5;
-}
-
-.allgroupbutton {
-    width: 100%;
-}
-
-.allgroupbutton::after{
-  content: '';
-  left: 18%;
+.empty {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 1.2em;
+  font-weight: bold;
+  left:50%;
+  top: 40%;
+  color: rgb(95, 95, 95);
 }
 
 .refresh
@@ -1110,14 +1100,6 @@ select:focus {
   color: red;
 }
 
-.receiverErr::after {
-  position: absolute;
-  content: "\f06a";
-  left: 39%;
-  bottom: 5%;
-  color: red;
-}
-
 .parentmsgErr::before {
   position: absolute;
   content: 'Message you are replying to does not exist';
@@ -1147,6 +1129,50 @@ select:focus {
   transform: scale(0);
   opacity: 0;
 }
+
+
+/**************  ADMIN  **************/
+
+.groupnumbers {
+    font-style: italic;
+}
+
+.groupcontent {
+  width: 99%;
+  grid-row: 1/3;
+  margin: 0 auto;
+  padding: 1px;
+  background-color: var(--myPurple);
+     max-height: 4em;
+}
+
+.groupcontent button:hover {
+  background-color: var(--myPurple);
+  color: white;
+}
+
+.admincreategroup {
+    width: 100%;
+    padding-left: 0.8em
+}
+
+.groupbutton {
+ display: grid;
+  width: 99%;
+  margin: 0 auto;
+  grid-row: 3/5;
+}
+
+.allgroupbutton {
+    width: 100%;
+}
+
+.allgroupbutton::after{
+  content: '';
+  left: 18%;
+}
+
+
 
 @media screen and (max-width: 950px) { 
 

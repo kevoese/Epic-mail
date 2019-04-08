@@ -17,7 +17,7 @@ const fetchCall = async (url, method, body = undefined) => {
   const response = await fetch(url, object);
   const statusCode = response.status;
   const responseObj = await response.json();
-  //  console.log(responseObj);
+  // console.log(responseObj);
   return { responseObj, statusCode };
 };
 
