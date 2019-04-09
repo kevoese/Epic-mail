@@ -32,7 +32,8 @@ const getMsgInfo = () => {
   const receiverEmail = document.querySelector('#receiverEmail').value.trim();
   const message = document.querySelector('#composemessage').value.trim();
   const subject = document.querySelector('#composesubject').value.trim();
-  const status = 'sent';
+  const savedraft = document.querySelector('#insavedraft').checked;
+  const status = (savedraft) ? 'draft' : 'sent';
   const obj = {
     receiverEmail, message, subject, status,
   };
@@ -80,6 +81,8 @@ createMsg.addEventListener('submit', async (event) => {
 
 refresh.addEventListener('click', async () => {
   addClass(refresh, 'refreshing');
+  await populateInbox('read');
+  await populateInbox('unread');
   await populateInbox();
   await populateOutbox('sent');
   await populateOutbox('draft');
@@ -113,15 +116,43 @@ checkbox.addEventListener('click', async (event) => {
   }
 });
 
+let deleteMsgId;
+const deleteresponse = document.querySelector('.deleteresponse');
+const closeDeleteErr = document.querySelector('#closeDeleteErr');
+
 messageContainer.addEventListener('click', async (event) => {
   const thisElement = event.target;
   const thisMsg = thisElement.parentElement;
   const thisMsgId = thisMsg.id;
-  const thisElementId = thisMsg.id;
   if (thisMsg.classList[0] === 'wrapmsghead') {
     const msgId = thisMsgId.slice(0, thisMsgId.indexOf('_'));
     addClass(view, 'loader');
     await populateView(msgId);
     removeClass(view, 'loader');
   }
+
+  if (thisMsg.classList[0] === 'deletediv') {
+    const deleteMsg = thisMsg.parentElement;
+    deleteMsgId = deleteMsg.id;
+    deleteModal.showModal();
+  }
 });
+
+deleteModal.addEventListener('click', async (event) => {
+  const element = document.getElementById(deleteMsgId);
+  const btnTypeId = event.target.id;
+  if (btnTypeId === 'closebox' || btnTypeId === 'cancel') deleteModal.close();
+  else if (btnTypeId === 'yes') {
+    deleteModal.close();
+    addClass(element, 'deleteAni');
+    setTimeout(() => {
+      element.parentNode.removeChild(element);
+    }, 600);
+    const msgId = deleteMsgId.slice(0, deleteMsgId.indexOf('_'));
+    const result = await deleteMsgEndpoint(msgId);
+    if (!result) deleteresponse.showModal();
+  }
+});
+
+closeDeleteErr.addEventListener('click', () => deleteresponse.close());
+

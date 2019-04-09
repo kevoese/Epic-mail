@@ -63,12 +63,15 @@ slider.addEventListener('click', (event) => {
 modal.addEventListener('click', (event) => {
   let { target } = event;
   do {
-    if (target.classList[0] === 'wrapmsghead') break;
     if (target.id === 'inbox') return;
+    if (target.classList.contains('delete')) return;
+    if (target.classList.contains('sureDelete')) return;
+    if (target.parentElement.classList[0] === ('wrapmsghead')) break;
     target = target.parentNode;
-  } while (target);
+  } while (target.classList.length > 0);
   inboxCard('hide');
 });
+
 
 navIcon.addEventListener('click', (event) => {
   let status = event.target.id;
