@@ -37,6 +37,31 @@ const messagepanel = (msgObj) => {
   return msghtml;
 };
 
+const messageView = (msgObj) => {
+  const {
+    senderName, receiverName, message_id, subject, message, profileImg, datestr,
+  } = msgObj;
+  const msghtml = ` <div id = "${message_id}_big" class="messagewrap">
+  <div class="msginfo">
+      <span class="subject">${subject}</span>
+      <span class="sender">${senderName}</span>
+      <span class="from">From:</span>
+      <span class="to icon">to</span>
+      <span class="receiver">${receiverName}</span>
+      <span class="reply icon"></span>
+      <img src="${profileImg}" class="senderimg">
+      <span class="messageDate icon">(${datestr})</span> 
+  </div>
+  <p class = "msgP">
+      ${message}
+  </p>
+  <button class="replybtn icon">Reply</button>
+  <button class="fwdbtn icon">Forward</button> 
+  </div>`;
+
+  return msghtml;
+};
+
 
 const populateInbox = async (type = false) => {
   const inboxhtml = document.querySelector('.all');
@@ -106,5 +131,31 @@ const populateOutbox = async (type) => {
   if (responseObj.status === 'Empty') {
     boxNum.setAttribute('box', 0);
     boxhtml.innerHTML = emptyMsgBox(`${type} box is empty`);
+  }
+};
+
+const populateView = async (msgId) => {
+  const url = `${appurl}messages/${msgId}`;
+
+  const { responseObj } = await fetchCall(url, 'GET');
+  view.innerHTML = ' ';
+  if (responseObj.status === 'Successful') {
+    const { data } = responseObj;
+    const {
+      message_id, subject, message, created_on, sender_id, user_id,
+    } = data;
+    const datestr = getDateStr(created_on);
+    const sender = await getUser(sender_id);
+    const receiver = await getUser(user_id);
+    const senderName = (thisUser.email === sender.email) ? 'You' : `${sender.firstname} ${sender.lastname}`;
+    const receiverName = (thisUser.email === receiver.email) ? 'You' : `${receiver.firstname} ${receiver.lastname}`;
+    const profileImg = (thisUser.email === sender.email) ? receiver.profile_pic : sender.profile_pic;
+    const msgObj = {
+      senderName, receiverName, message_id, subject, message, profileImg, datestr,
+    };
+    view.innerHTML += messageView(msgObj);
+  }
+  if (responseObj.status === 'Failure') {
+    console.log('bad request');
   }
 };

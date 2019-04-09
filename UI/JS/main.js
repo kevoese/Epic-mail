@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const messageBtns = document.querySelector('.msgbuttons');
 const checkbox = document.querySelector('.checkbox');
+const view = document.querySelector('.chatcontent');
 
 messageBtns.addEventListener('click', (event) => {
   const btnType = event.target.id;
