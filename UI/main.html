@@ -42,24 +42,38 @@
                 <button class="createGroup icon"> Groups</button>
             </div>
             <div class="msgbuttons">
-                    <a id="allbutton" href="#allbutton" data-tool-tip="Inbox" class="allbutton icon"><span class=" vcenter allno"></span></a>
-                    <a id="sentbutton" href="#sentbutton" data-tool-tip="Sent" class="sentbutton icon"><span class="vcenter sentno"></span></a>
-                    <a id="draftbutton" href="#draftbutton" data-tool-tip="Draft" class="draftbutton icon"><span class="vcenter draftno"></span></a>
+                <div class = "btncheck">
+                    <input id = "radioall" name="msgbtn" type="radio" checked>    
+                    <label id="allbutton" for = "radioall"   box="0" class="allbutton icon">Inbox</label>
+                </div>
+                <div class = "btncheck">
+                        <input id = "radiosent" name="msgbtn" type="radio">    
+                        <label id="sentbutton"  for = "radiosent" box="0" class="sentbutton icon">Sent</label>
+                </div>
+                <div class = "btncheck">
+                        <input id = "radiodraft" name= "msgbtn" type="radio">    
+                        <label id="draftbutton" for = "radiodraft" box="0" class="draftbutton icon">Draft</label>
+                </div>
             </div>
             <div class="messages">
                 <div class="refresh icon"></div>
+                <div class="checkbox">
+                    <div class="icon">
+                            <input id = "incheckbox0" name = "filter" type="radio" checked class="incheckbox">
+                            <label class = "icon" for = "incheckbox0">All</label>
+                    </div>
+                    <div class="icon">
+                        <input id = "incheckbox1" name = "filter" type="radio" class="incheckbox">
+                        <label id = "unreadLabel" class = "icon" for = "incheckbox1">Unread(0)</label>
+                    </div>
+                    <div class="icon">
+                        <input id = "incheckbox2" name = "filter" type="radio" class="incheckbox">
+                        <label id = "readLabel" class = "icon" for = "incheckbox2">Read(0)</label>
+                    </div>
+                </div>
                <div class="msgcontain">
                     <div class="all">
-                        <div class="checkbox">
-                                <div class="read icon">
-                                    <input id = "incheckbox1" type="checkbox" class="incheckbox">
-                                    <label class = "icon" for = "incheckbox1">Unread</label>
-                                </div>
-                                <div class="unread icon">
-                                    <input id = "incheckbox2" type="checkbox" class="incheckbox">
-                                    <label class = "icon" for = "incheckbox2">Read</label>
-                                </div>
-                        </div>
+                        
                         <p class="empty"> inbox is empty</p>
                     </div>
                     <div class="sent">
@@ -241,9 +255,9 @@ Also, we invite you to dive into our recen
         
     </div>
     <script src="JS/helpers.js"></script>
-    <script src="JS/main3.js"></script>
-    <script src="JS/main2.js"></script>
     <script src="JS/admin-page.js"></script>
     <script src="JS/main.js"></script>
+    <script src="JS/main3.js"></script>
+    <script src="JS/main2.js"></script>
   </body>
 </html>

@@ -45,9 +45,9 @@ const removeClass = (element, thisclass) => {
 };
 
 const hide = (element) => {
-  element.classList.add('hideElement');
+  if (!checkclass(element, 'hideElement')) element.classList.add('hideElement');
 };
 
 const unhide = (element) => {
-  element.classList.remove('hideElement');
+  if (checkclass(element, 'hideElement')) element.classList.remove('hideElement');
 };

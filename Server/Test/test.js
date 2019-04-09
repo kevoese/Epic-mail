@@ -175,8 +175,8 @@ describe('Epic Test', () => {
         .get('/api/v2/messages')
         .set('token', userAToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(404);
-          expect(res.body.status).to.equal('Failure');
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Empty');
           done();
         });
     });
@@ -186,8 +186,8 @@ describe('Epic Test', () => {
         .get('/api/v2/messages/unread')
         .set('token', userAToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(404);
-          expect(res.body.status).to.equal('Failure');
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Empty');
           done();
         });
     });
@@ -197,8 +197,8 @@ describe('Epic Test', () => {
         .get('/api/v2/messages/read')
         .set('token', userAToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(404);
-          expect(res.body.status).to.equal('Failure');
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Empty');
           done();
         });
     });
@@ -208,8 +208,8 @@ describe('Epic Test', () => {
         .get('/api/v2/messages/sent')
         .set('token', userAToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(404);
-          expect(res.body.status).to.equal('Failure');
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Empty');
           done();
         });
     });
@@ -219,8 +219,8 @@ describe('Epic Test', () => {
         .get('/api/v2/messages/draft')
         .set('token', userAToken)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(404);
-          expect(res.body.status).to.equal('Failure');
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Empty');
           done();
         });
     });
