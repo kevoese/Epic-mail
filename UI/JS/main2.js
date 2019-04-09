@@ -68,7 +68,7 @@ createMsg.addEventListener('submit', async (event) => {
     await populateOutbox('sent');
     await populateOutbox('draft');
     addClass(thisForm, 'successmsg');
-    event.reset();
+    thisForm.reset();
   } else if (statusCode === 404) {
     addClass(thisForm, 'receiverErr');
     const email = thisForm.querySelector('#receiverEmail');
@@ -86,24 +86,6 @@ refresh.addEventListener('click', async () => {
   removeClass(refresh, 'refreshing');
 });
 
-// readcheckbox.addEventListener('click', async () => {
-//   messageContainer.style.left = '0';
-//   if (!readcheckbox.checked) {
-//     addClass(myinbox, 'loading');
-//     await populateInbox('read');
-//     addClass(myinbox, 'loading');
-//   }
-// });
-
-// unreadcheckbox.addEventListener('click', async () => {
-//   messageContainer.style.left = '0';
-//   if (unreadcheckbox.checked) {
-//     addClass(myinbox, 'loading');
-//     await populateInbox('unread');
-//     addClass(myinbox, 'loading');
-//   }
-// });
-
 checkbox.addEventListener('click', async (event) => {
   const btn = event.target;
   const btntype = btn.id;
@@ -112,21 +94,34 @@ checkbox.addEventListener('click', async (event) => {
     if (btn.checked) {
       addClass(myinbox, 'loader');
       await populateInbox();
-      addClass(myinbox, 'loader');
+      removeClass(myinbox, 'loader');
     }
   }
   if (btntype === 'incheckbox1') {
     if (btn.checked) {
       addClass(myinbox, 'loader');
       await populateInbox('unread');
-      addClass(myinbox, 'loader');
+      removeClass(myinbox, 'loader');
     }
   }
   if (btntype === 'incheckbox2') {
     if (btn.checked) {
       addClass(myinbox, 'loader');
       await populateInbox('read');
-      addClass(myinbox, 'loader');
+      removeClass(myinbox, 'loader');
     }
+  }
+});
+
+messageContainer.addEventListener('click', async (event) => {
+  const thisElement = event.target;
+  const thisMsg = thisElement.parentElement;
+  const thisMsgId = thisMsg.id;
+  const thisElementId = thisMsg.id;
+  if (thisMsg.classList[0] === 'wrapmsghead') {
+    const msgId = thisMsgId.slice(0, thisMsgId.indexOf('_'));
+    addClass(view, 'loader');
+    await populateView(msgId);
+    removeClass(view, 'loader');
   }
 });
