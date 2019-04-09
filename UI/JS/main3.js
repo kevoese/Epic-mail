@@ -31,7 +31,9 @@ const messagepanel = (msgObj) => {
        ${subject}
     </p>
     <p class="msgcontent">${message}</p>
+    <div class = "deletediv">
     <span class="delete icon" data-tool-tip="Delete"></span>
+    </div>
 </div> `;
 
   return msghtml;
@@ -61,7 +63,6 @@ const messageView = (msgObj) => {
 
   return msghtml;
 };
-
 
 const populateInbox = async (type = false) => {
   const inboxhtml = document.querySelector('.all');
@@ -159,3 +160,10 @@ const populateView = async (msgId) => {
     console.log('bad request');
   }
 };
+
+const deleteMsgEndpoint = async (msgId) => {
+  const url = `${appurl}messages/${msgId}`;
+  const { responseObj } = await fetchCall(url, 'DELETE');
+  if (responseObj.status === 'Successful') return true;
+  return false;
+}

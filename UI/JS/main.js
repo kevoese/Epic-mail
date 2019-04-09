@@ -2,6 +2,7 @@
 const messageBtns = document.querySelector('.msgbuttons');
 const checkbox = document.querySelector('.checkbox');
 const view = document.querySelector('.chatcontent');
+const deleteModal = document.querySelector('.sureDelete');
 
 messageBtns.addEventListener('click', (event) => {
   const btnType = event.target.id;
