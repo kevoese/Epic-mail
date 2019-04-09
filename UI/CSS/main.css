@@ -422,7 +422,7 @@ a {
     position: relative;
 } 
 
-.checkbox label{
+.checkbox label, .saveDraft label{
     font-size: 0.9em;
     align-self: center;
     cursor: pointer;
@@ -438,7 +438,7 @@ a {
     transform: translateY(-50%);
 }
 
-.checkbox label:hover {
+.checkbox label:hover , .saveDraft label:hover{
     color: var(--myLightPurple);
 }
 
@@ -463,32 +463,14 @@ a {
     position: absolute;
 }
 
-/* .draftmsg::after {
-  content: '\f044';
-  right: 2em;
-  top: 50%;
-  color: #888;
-  transform: translateY(-50%);
-  font-weight: 300;
-  position: absolute;
-}
 
-.sentmsg::after {
-  content: '\f1d8';
-  right: 2em;
-  top: 50%;
-  color: #888;
-  transform: translateY(-50%);
-  font-weight: 300;
-  position: absolute;
-} */
-
-
- .checkbox div label:hover::before{
+ .checkbox div label:hover::before,
+ .saveDraft label:hover::before{
     border-color: var(--myPurple);
 }
 
-.checkbox div label::before{
+.checkbox div label::before,
+.saveDraft label::before{
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     position: relative;
@@ -586,9 +568,12 @@ a {
   position: relative;
 }
 
-.delete {
-  grid-row: 1/3;
+.deletediv {
+  grid-row: 2/3;
   grid-column: 20/21;
+  
+}
+.delete {
   position: relative;
 }
 
@@ -608,6 +593,109 @@ a {
 
 .wrapmsghead:hover .delete::after {
   opacity: 1;
+}
+
+.deleteAni {
+  animation: deleting 0.5s 0.2s linear both;
+}
+
+.sureDelete {
+  border: none;
+  padding: 2em;
+}
+
+.closebox {
+  position: relative;
+  color: var(--myColor);
+}
+
+.closebox::after {
+  content: '\f00d';
+  right: -1.5em;
+  top: -1.5em;
+  cursor: pointer;
+}
+
+.sureDelete p {
+  padding: 0.5em;
+  font-size: 1.2em;
+  color: var(--myColor);
+}
+
+.deleteactions {
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+.sureDelete button{
+ border: 2px solid var(--myColor);
+ margin: 0 0.5em;
+ font-size: 1em;
+ font-family: cambria;
+ border-radius: 0.5em;
+}
+
+.yes {
+  color: white;
+  background-color: var(--myColor);
+  padding: 0.5em 1em;
+}
+
+.cancel {
+  color: var(--myColor);
+  background-color: transparent;
+  padding: 0.5em 0.7em;
+  padding-left: 1.7em;
+  position: relative;
+}
+
+.cancel::after {
+  content: '\f00d';
+  right: 75%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.sureDelete button:hover {
+  box-shadow: 4px 4px 7px -3px rgba(0, 0, 0, 0.5);
+}
+
+.deleteresponse {
+  border: none;
+  padding: 0.2em 3em;
+  position: relative;
+}
+
+.deleteresponse p {
+  font-size: 1.1em;
+  color: red;
+  padding-left: 1.5em;
+  position: relative;
+}
+
+.deleteresponse p::after {
+   content: '\f06a';
+   left: 0;
+}
+
+#closeDeleteErr::after {
+  right: -2.5em;
+  color: red;
+  top: 0.3em;
+}
+
+@keyframes deleting {
+  from {
+     transform: translateX(0%);
+     opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 
 .chats {
@@ -806,6 +894,14 @@ background-color: transparent;
   width: 5px;
 }
 
+.container::-webkit-scrollbar{
+  width: 5px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
 .composewrapper {
   z-index: 2;
   position: relative;
@@ -824,7 +920,7 @@ background-color: transparent;
   background-color: white;
   box-shadow: 5px 5px 5px grey;
   padding-bottom: 0.4em;
-    overflow-x: scroll;
+  overflow-x: scroll;
 }
 
 .container span {
@@ -983,6 +1079,20 @@ select:focus {
   right: 10%;
   top: 35%;
   font-size: 0.8em;
+}
+
+.saveDraft {
+  grid-column: 9/11;
+  grid-row: 9/10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0 1em;
+}
+
+.saveDraft label {
+  white-space: nowrap;
 }
 
 .empty {
@@ -1307,6 +1417,11 @@ select:focus {
     
     .container span {
         display: none;
+    }
+
+    .saveDraft {
+      justify-content: flex-start;
+      margin: 1em;
     }
 }
 

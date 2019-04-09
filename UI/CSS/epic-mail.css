@@ -81,6 +81,7 @@ dialog::backdrop {
 .closebox {
   position: relative;
 }
+
 .closebox::after {
   content: '\f00d';
   right: -1.5em;

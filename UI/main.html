@@ -36,6 +36,18 @@
          
      </nav>
     <div class="wrapper modal">
+        <dialog class = "sureDelete icon">
+                <div id = "closebox" class="closebox icon"></div>
+            <p>Are you sure you want to delete?</p>
+            <div class="deleteactions">
+                <button id = "cancel" class="cancel icon">Cancel</button>
+            <button id ="yes" class="yes">Yes</button>
+            </div>
+        </dialog>
+        <dialog class = "deleteresponse">
+            <div id = "closeDeleteErr" class="closebox icon"></div>
+            <p class = 'icon' >Error deleteing message</p>
+        </dialog>
         <div id = "inbox" class="inbox open">
             <div id="createbtn" class="inboxcontent">
                 <button class="createMessage icon">Compose</button>
@@ -64,11 +76,11 @@
                     </div>
                     <div class="icon">
                         <input id = "incheckbox1" name = "filter" type="radio" class="incheckbox">
-                        <label id = "unreadLabel" class = "icon" for = "incheckbox1">Unread(0)</label>
+                        <label id = "unreadLabel" class = "icon" for = "incheckbox1">Unread</label>
                     </div>
                     <div class="icon">
                         <input id = "incheckbox2" name = "filter" type="radio" class="incheckbox">
-                        <label id = "readLabel" class = "icon" for = "incheckbox2">Read(0)</label>
+                        <label id = "readLabel" class = "icon" for = "incheckbox2">Read</label>
                     </div>
                 </div>
                <div class="msgcontain">
@@ -87,7 +99,7 @@
         </div>
         <div class="chats">
             <div class="composewrapper">
-                
+                 
                     <form id = "newMessage" class="container icon ">
                        <div class="newmsg icon">New Message <div class="cutmsg icon"></div></div>
                        <span class="composefrom">From</span>
@@ -107,6 +119,10 @@
                        <input required id="composesubject" type="text" placeholder="Subjects" class="composesubject">
                        <textarea required  name="" id="composemessage" class="composemessage" cols="30" rows="10"></textarea>
                        <button class="composesend icon">Send</button>
+                       <div class="saveDraft icon">
+                            <input id = "insavedraft"  type="checkbox"  class="incheckbox">
+                            <label class = "icon" for = "insavedraft">Save As Draft</label>
+                       </div>
                     </form>
                 </div>
                 <div class="composewrapper Groupwrap">
