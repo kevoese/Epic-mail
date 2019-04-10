@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 const createMsg = document.querySelector('#newMessage');
+const createMsgGrp = document.querySelector('#groupform');
 const viewWrapper = document.querySelector('.chats');
 const inputs = viewWrapper.querySelectorAll('input');
 const refresh = document.querySelector('.refresh');
@@ -12,16 +13,19 @@ const loadUserInfo = async () => {
   thisUser = await getUser();
   const profilename = document.querySelector('.profilename');
   const senderemail = document.querySelector('.composesender');
+  const senderemailGrp = Groupwrap.querySelector('.composesender');
   const profileimg = document.querySelector('.profileimg');
   const {
     firstname, lastname, email, profile_pic,
   } = thisUser;
   profilename.textContent = `${firstname} ${lastname}`;
   senderemail.textContent = email;
+  senderemailGrp.textContent = email;
   profileimg.src = profile_pic;
   await populateInbox();
   await populateOutbox('sent');
   await populateOutbox('draft');
+  await populateGrpContact();
 };
 
 window.addEventListener('load', async () => {
@@ -36,6 +40,20 @@ const getMsgInfo = () => {
   const status = (savedraft) ? 'draft' : 'sent';
   const obj = {
     receiverEmail, message, subject, status,
+  };
+  return obj;
+};
+
+const getGrpMsgInfo = () => {
+  const groups = Groupwrap.querySelector('#grpcontacts');
+  const index = groups.selectedIndex;
+  const { id } = groups.children[index];
+  const message = Groupwrap.querySelector('#composemessagegrp').value.trim();
+  const subject = Groupwrap.querySelector('#composesubjectgrp').value.trim();
+  const savedraft = document.querySelector('#insavedraftgrp').checked;
+  const status = (savedraft) ? 'draft' : 'sent';
+  const obj = {
+    id, message, subject, status,
   };
   return obj;
 };
@@ -75,6 +93,32 @@ createMsg.addEventListener('submit', async (event) => {
     const email = thisForm.querySelector('#receiverEmail');
     addClass(email, 'wrongemail');
   } else if (statusCode === 400) {
+    addClass(thisForm, 'parentmsgErr');
+  }
+});
+
+createMsgGrp.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const thisForm = event.target;
+  const details = getGrpMsgInfo();
+  const url = `${appurl}groups/${details.id}/messages`;
+  console.log(thisForm);
+  const buttons = thisForm.querySelectorAll('button');
+  addClass(thisForm, 'loader');
+  buttons.forEach(button => hide(button));
+  const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
+  removeClass(thisForm, 'loader');
+  if (statusCode === 200) {
+    await populateOutbox('sent');
+    await populateOutbox('draft');
+    await populateInbox();
+    addClass(thisForm, 'successmsg');
+    thisForm.reset();
+  } else if (statusCode === 400 && responseObj.error === 'Bad request') {
+    addClass(thisForm, 'receiverErr');
+    const grpselect = thisForm.querySelector('#grpcontacts');
+    addClass(grpselect, 'wrongemail');
+  } else if (statusCode === 400 && responseObj.error === 'invalid parent message') {
     addClass(thisForm, 'parentmsgErr');
   }
 });
@@ -124,11 +168,19 @@ messageContainer.addEventListener('click', async (event) => {
   const thisElement = event.target;
   const thisMsg = thisElement.parentElement;
   const thisMsgId = thisMsg.id;
+
   if (thisMsg.classList[0] === 'wrapmsghead') {
+    const allmsgs = document.querySelectorAll('.wrapmsghead');
     const msgId = thisMsgId.slice(0, thisMsgId.indexOf('_'));
     addClass(view, 'loader');
     await populateView(msgId);
+    removeClass(thisMsg, 'unreadmsg');
+    addClass(thisMsg, 'readmsg');
     removeClass(view, 'loader');
+    allmsgs.forEach((element) => {
+      if (checkclass(element, 'currentmsg')) removeClass(element, 'currentmsg');
+    });
+    addClass(thisMsg, 'currentmsg');
   }
 
   if (thisMsg.classList[0] === 'deletediv') {
@@ -155,4 +207,3 @@ deleteModal.addEventListener('click', async (event) => {
 });
 
 closeDeleteErr.addEventListener('click', () => deleteresponse.close());
-

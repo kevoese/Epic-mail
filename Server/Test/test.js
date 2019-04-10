@@ -521,19 +521,7 @@ describe('Epic Test', () => {
         });
     });
 
-    it('should allow a member(UserA) post a new message to a group with a parent_message_id', (done) => {
-      chai.request(app)
-        .post('/api/v2/groups/1/messages')
-        .set('token', userAToken)
-        .send({
-          subject: 'subject', message: 'message', status: 'sent', parentMessageId: 5,
-        })
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.status).to.equal('Successful');
-          done();
-        });
-    });
+   
 
     it('should not allow a non-member(UserB) to post a message to a group', (done) => {
       chai.request(app)
@@ -551,6 +539,34 @@ describe('Epic Test', () => {
         .post('/api/v2/groups/1/users')
         .set('token', userAToken)
         .send({ email: 'joe@epicmail.com' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should allow a member(UserB) post a new message to a group without a parent_message_id', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/1/messages')
+        .set('token', userBToken)
+        .send({
+          subject: 'subject', message: 'message', status: 'sent',
+        })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+    
+    it('should allow a member(UserA) post a new message to a group with a parent_message_id', (done) => {
+      chai.request(app)
+        .post('/api/v2/groups/1/messages')
+        .set('token', userAToken)
+        .send({
+          subject: 'subject', message: 'message', status: 'sent', parentMessageId: 4,
+        })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal('Successful');
