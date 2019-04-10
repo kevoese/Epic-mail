@@ -49,9 +49,9 @@
             <p class = 'icon' >Error deleteing message</p>
         </dialog>
         <div id = "inbox" class="inbox open">
-            <div id="createbtn" class="inboxcontent">
-                <button class="createMessage icon">Compose</button>
-                <button class="createGroup icon"> Groups</button>
+            <div  class="togglepage">
+                <span>View Groups</span>
+                <a class="viewgrps icon"></a>
             </div>
             <div class="msgbuttons">
                 <div class = "btncheck">
@@ -127,23 +127,24 @@
                 </div>
                 <div class="composewrapper Groupwrap">
                 
-                        <div class="container ">
+                        <form id= 'groupform' class="container icon">
                            <div class="newmsg icon">New Group Message <div id ="hidegroup" class="cutmsg icon"></div></div>
                            <span class="composefrom">From</span>
                            <span class="composesender">Johndoe@epicmail.com</span>
                            <span class="composeto icon">to</span>
                            <div class="addContacts">
-                                <select id = "contacts" class="contactselect" name="gender" >
+                                <select id = "grpcontacts" class="contactselect" name="gender" >
                                        <option  disabled selected>Add Groups</option>
-                                       <option >Good</option>
-                                       <option >Great</option>
-                                       <option >Best</option>
                                    </select>
                            </div>
-                           <input id="composesubject" type="text" placeholder="Subjects" class="composesubject">
-                           <textarea name="" id="composemessage" class="composemessage" cols="30" rows="10"></textarea>
+                           <input id="composesubjectgrp" type="text" placeholder="Subjects" class="composesubject">
+                           <textarea name="" id="composemessagegrp" class="composemessage" cols="30" rows="10"></textarea>
                            <button class="composesend icon">Send</button>
-                        </div>
+                           <div class="saveDraft icon">
+                                <input id = "insavedraftgrp"  type="checkbox"  class="incheckbox">
+                                <label class = "icon" for = "insavedraftgrp">Save As Draft</label>
+                           </div>
+                        </form>
                     </div>
             <div class="thread">
                <div class="chatcontent">
@@ -152,7 +153,16 @@
             </div>
             
         </div>
-        
+    <div class="newmsgbtn">
+        <div class="wrapall">
+            <div class="plusbtns hideplusbtns">
+                <span class="composeNewMsg">New message</span>
+                <span class="composeNewGrpMsg">Group message</span>
+            </div>
+            <div class="plus icon">
+            </div>
+        </div>
+    </div>
     </div>
     <script src="JS/helpers.js"></script>
     <script src="JS/admin-page.js"></script>

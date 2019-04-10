@@ -50,7 +50,10 @@ class EpicGroup {
         data: results,
       });
     }
-    return errorResponse(404, 'Group was not found', res);
+    return res.status(200).send({
+      status: 'Empty',
+      data: 'No groups available',
+    });
   }
 
   static async updateName(req, res) {
@@ -144,11 +147,15 @@ class EpicGroup {
       const { id } = newData;
       await pool.query(groupsQuery.insertNewSentMsg,
         [id, subject, message, userId, groupId, parentMessageId, status]);
+
       const { rows } = await pool.query(`SELECT member FROM joint WHERE group_id = ${groupId}`);
-      const insertStr = multiInsert(rows, {
-        id, subject, message, userId, groupId, parentMessageId, readStatus,
-      });
-      await pool.query(`INSERT INTO inbox (user_id, message_id, subject, message, sender_id, group_id, parent_message_id, read_status) VALUES ${insertStr}`);
+      const newarr = rows.filter(row => row.member !== userId);
+      if (newarr[0] !== undefined) {
+        const insertStr = multiInsert(newarr, {
+          id, subject, message, userId, groupId, parentMessageId, readStatus,
+        });
+        await pool.query(`INSERT INTO inbox (user_id, message_id, subject, message, sender_id, group_id, parent_message_id, read_status) VALUES ${insertStr}`);
+      }
       return res.status(200).send({
         status: 'Successful',
         message: newData,
@@ -177,7 +184,7 @@ class EpicGroup {
       await pool.query(groupsQuery.insertNewMember, [groupId, memberId]);
       return res.status(200).send({
         status: 'Successful',
-        data: 'User successfully added to groups',
+        data: 'User successfully added to group',
       });
     }
     return errorResponse(400, 'Not an admin of the group', res);

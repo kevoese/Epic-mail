@@ -1,16 +1,9 @@
-const messageContainer = document.querySelector('.msgcontain');
-const hideCompose = document.querySelector('.cutmsg');
-const newMsg = document.querySelector('.composewrapper');
-const newGroup = document.querySelector('.Groupwrap');
-const inboxes = document.querySelector('.thread');
 const inboxList = document.querySelector('.inbox');
 const slider = document.querySelector('.openinbox');
 const navIcon = document.querySelector('.menu');
 const menuList = document.querySelector('.navmenu');
 const modal = document.querySelector('.wrapper');
-const composeBtns = document.querySelector('.createMessage');
-const createGroup = document.querySelector('.createGroup');
-const hideGroup = document.querySelector('#hidegroup');
+
 
 const inboxCard = (status) => {
   if (status === 'hide') {
@@ -21,32 +14,6 @@ const inboxCard = (status) => {
     modal.classList.add('modal');
   }
 };
-
-composeBtns.addEventListener('click', () => {
-  newMsg.style.display = 'block';
-  inboxes.style.display = 'none';
-  newGroup.style.display = 'none';
-  inboxCard('hide');
-});
-
-createGroup.addEventListener('click', () => {
-  newMsg.style.display = 'none';
-  newGroup.style.display = 'block';
-  inboxes.style.display = 'none';
-  inboxCard('hide');
-});
-
-hideCompose.addEventListener('click', () => {
-  newMsg.style.display = 'none';
-  inboxes.style.display = 'block';
-  newGroup.style.display = 'none';
-});
-
-hideGroup.addEventListener('click', () => {
-  newMsg.style.display = 'none';
-  inboxes.style.display = 'block';
-  newGroup.style.display = 'none';
-});
 
 slider.addEventListener('click', (event) => {
   let status = event.target.id;

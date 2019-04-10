@@ -11,7 +11,7 @@ router.get('/', DBUserController.welcome);
 
 router.post('/auth/signup', Validator.validateSignup, DBUserController.signup);
 router.post('/auth/login', Validator.validateLogin, DBUserController.login);
-router.get('/user', Auth,  DBUserController.userInfo);
+router.get('/user', Auth, DBUserController.userInfo);
 router.get('/user/:id', Auth, Validator.validateJustId, DBUserController.getUser);
 router.post('/messages', Auth, Validator.validateMessage, DBMsgController.newMessage);
 router.get('/messages', Auth, DBMsgController.receivedMessage);
