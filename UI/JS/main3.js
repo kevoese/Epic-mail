@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
 const readLabel = document.querySelector('#readLabel');
@@ -62,6 +64,18 @@ const messageView = (msgObj) => {
   </div>`;
 
   return msghtml;
+};
+
+const groupContacts = (grpArr) => {
+  let optiontags = '';
+  grpArr.forEach((group) => {
+    optiontags += ` <option id = "${group.id}" class= "group.name" >${group.name}</option>`;
+  });
+  grpContacthtml = ` <select id = "grpcontacts" class="contactselect" name="gender" >
+   <option  disabled selected>Choose Groups</option>
+   ${optiontags}
+</select>`;
+  return grpContacthtml;
 };
 
 const populateInbox = async (type = false) => {
@@ -166,4 +180,14 @@ const deleteMsgEndpoint = async (msgId) => {
   const { responseObj } = await fetchCall(url, 'DELETE');
   if (responseObj.status === 'Successful') return true;
   return false;
-}
+};
+
+const populateGrpContact = async () => {
+  const url = `${appurl}groups`;
+  const { responseObj } = await fetchCall(url, 'GET');
+  if (responseObj.status === 'Successful') {
+    addGrpContact.innerHTML = groupContacts(responseObj.data);
+  } else if (responseObj.status === 'Empty') {
+    addGrpContact.innerHTML = groupContacts([]);
+  }
+};

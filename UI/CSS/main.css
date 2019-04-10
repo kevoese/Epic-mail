@@ -1,9 +1,11 @@
 :root {
-  --myPurple:  rgb(4, 16, 43);
-  --myTransPurple: rgba(39, 10, 56, 0.7);
-  --myLightPurple: rgba(4, 16, 43, 0.7);
-  --myLightPurpleV: whitesmoke;
+  --myPurple:  rgba(15, 2, 116, 0.9);
+  --myTransPurple: rgba(25, 13, 117, 0.9);
+  --myLightPurple: rgba(40, 14, 236, 0.9);
+  --mygrey: rgb(94, 94, 94);
+  --mywhite: rgb(250, 250, 250);
   --myColor: rgba(53, 38, 170, 0.9);
+  --myColorTrans: rgba(53, 38, 170, 0.3);
   --myLightcolor: rgba(72, 60, 168, 0.5);
 }
 
@@ -204,7 +206,7 @@ left: 50%;
 .signout {
   color: white;
   text-align: center;
-  padding: 0.5em;
+  padding: 0.5em 0.3em;
   font-size: 1em;
   position: relative;
   cursor: pointer;
@@ -213,7 +215,7 @@ left: 50%;
 }
 
 .signout:hover {
-  background-color: blueviolet;
+  border-bottom: 1px solid white;
 }
 
 .wrapper {
@@ -226,7 +228,7 @@ left: 50%;
   min-height: 500px;
   width: 96%;
   grid-gap: 0.3em;
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 .inbox button {
@@ -238,16 +240,60 @@ left: 50%;
   flex-flow: column;
   justify-content: flex-start;
   width: 100%;
-  margin: 0 auto;
-  background-color: whitesmoke;
-  padding: 0.6em;
-  margin:  0.6em;
-  box-shadow: 2px 2px 2px 2px grey;
+  background-color: var(--mywhite);
+  padding: 0em;
+  margin: 0 0.2em 0 0;
+  border: 1px solid darkslategray;
   min-height: 350px;
-  height: 83vh;
+  height: 85.5vh;
 }
 
-.inboxcontent {
+.togglepage {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.3em 20%;
+  background-color: white;
+  border-bottom: 1px solid var(--myColor);
+}
+
+.togglepage span{
+  padding: 0.3em 0.7em;
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: cambria;
+  color: var(--myColor);
+}
+
+.viewgrps {
+  padding:  1.7em;
+  font-size: 1em;
+  color: var(--myColor) !important;
+  border: 2px solid var(--myColor);
+  font-family: cambria;
+  border-radius: 50%;
+  position: relative;
+  background-color: white;
+  box-shadow: 0px 1px 5px rgba(31, 30, 30, 0.5); 
+}
+
+.viewgrps::after {
+  content: '\f0c0';
+  top:50%;
+  left: 50%;
+  font-size: 1.2em;
+  transform: translate(-50%, -50%);
+  color: var(--myColor);
+}
+
+.viewgrps:hover {
+  background-color: var(--myColor);
+}
+
+.viewgrps:hover::after {
+ color: white;
+}
+/* .inboxcontent {
   display: grid;
   width: 99%;
   grid-row: 1/3;
@@ -257,9 +303,9 @@ left: 50%;
   padding: 1px;
   background-color: var(--myPurple);
      max-height: 4em;
-}
+} */
 
-.inboxcontent button:hover {
+/* .inboxcontent button:hover {
   background-color: var(--myPurple);
   color: white;
 }
@@ -269,14 +315,14 @@ left: 50%;
   text-align: center;
   padding: 0.8em;
   padding-left: 35%;
-  background-color: var(--myLightPurpleV);
+  background-color: var(--mywhite);
   font-size: 0.9em;
   font-weight: 700;
   font-family: cambria;
   height: 100%;
   position: relative;
   transition: all 0.2s linear;
-  box-shadow: 2px 2px 2px grey;
+  box-shadow: 2px 2px 2px var(--mygrey);
 }
 
 
@@ -300,19 +346,15 @@ left: 50%;
   font-size: 1.2em;
        top: 50%;
     transform: translateY(-50%);
-}
+} */
 
 .msgbuttons {
   display: grid;
-  width: 99%;
-  margin: 0.3em auto;
+  width: 100%;
+  margin: 0 auto;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 2px;
-}
-
-.msgbuttons a::after {
-  transform: translate(50%, -50%);
-  top: 50%;    
+  background-color: white;
 }
 
 a {
@@ -338,33 +380,33 @@ a {
   font-weight: bold;
   color: var(--myPurple);
   padding: 1em;
-  height: 3em;
+  height: 3.5em;
   background-color: white;
   transition: color 0.3s;
   position: relative;
-  border: 1px solid var(--myPurple);
+  border-bottom: 3px solid transparent;
 }
 
 .allbutton::after {
   content: "\f01c";
-  left: 10%;
+  left: 15%;
 }
 
 .sentbutton::after {
   content: "\f1d8";
-  left: 10%;
+  left: 15%;
 }
 
 .draftbutton::after {
   content: "\f044";
-  left: 5%;
+  left: 15%;
 }
 
 .draftbutton::before,
 .sentbutton::before,
 .allbutton::before {
   content: attr(box);
-  right: 1em;
+  right: 10%;
   transform: translate(50%, -50%);
   top: 50%;
   font-weight: light;
@@ -375,8 +417,7 @@ a {
 
 .btncheck input:checked + label {
   outline: none;
-  background-color: var(--myPurple);
-  color: white;
+ border-bottom-color: var(--myColor);
 }
 
 .messages {
@@ -390,7 +431,7 @@ a {
 
 .msgcontain {
   width: 100%;
-  height: 100%;
+  height: 93%;
   display: grid;
   left: 0;
   grid-template-columns: 100% 100% 100%;
@@ -405,13 +446,15 @@ a {
   margin: 0 auto;
   width: 100%;
   overflow-y: scroll;
-  background-color: var(--myLightPurpleV);
+  background-color: var(--mywhite);
 }
 
 .checkbox {
     display: flex;
-    width: 90%;
-    margin: 0.5em;
+    width: 100%;
+    padding: 0.2em;
+    margin: 0em;
+    border-bottom: 1px solid darkslategrey;
     justify-content: space-between;
 }
 
@@ -426,7 +469,7 @@ a {
     font-size: 0.9em;
     align-self: center;
     cursor: pointer;
-    color: #555;
+    color: var(--myLightcolor);
     font-family: consolas;
     white-space: nowrap;
 }
@@ -439,7 +482,7 @@ a {
 }
 
 .checkbox label:hover , .saveDraft label:hover{
-    color: var(--myLightPurple);
+    color: var(--myColor);
 }
 
 
@@ -453,11 +496,20 @@ a {
     position: absolute;
 }
 
+.unreadmsg {
+  background-color: rgb(230, 230, 230);
+}
+
+.unreadmsg p {
+  font-weight: bold;
+  color: rgb(49, 48, 48);
+}
+
 .unreadmsg::after {
     content: '\f0e0';
     right: 2em;
     top: 50%;
-    color: #888;
+    color: rgb(49, 48, 48);
     transform: translateY(-50%);
     font-weight: 300;
     position: absolute;
@@ -489,28 +541,28 @@ a {
 }
 
 .incheckbox:checked + label::before{
-    background-color: var(--myPurple);
-    border-color: var(--myPurple);
+    background-color: var(--myColor);
+    border-color: var(--myColor);
 }
 
 .incheckbox:checked + label{
    font-weight: bold;
+   color: var(--myColor);
 }
 
 .wrapmsghead {
   display: grid;
   grid-template-columns: repeat(19, 1fr);
   grid-template-rows: 33% 33% 34%;
-  padding: 5px 4px;
-  box-shadow: 2px 2px 2px grey;
-    border: 1px solid grey;
-    position: relative;
+  padding: 5px;
+  margin-right: 2px;
+  border-left: 0.4em solid var(--myColorTrans);
+  border-bottom: 1px solid var(--mygrey);
+  position: relative;
 }
 
 .wrapmsghead:hover {
   background-color: white;
-  border-left: 2px solid grey;
-  padding-left: 2px;
 }
 
 .wrapmsghead p {
@@ -555,7 +607,7 @@ a {
   overflow: hidden;
   white-space: nowrap;
   padding: 10px 10px 0;
-  color: grey;
+  color: var(--mygrey);
 }
 
 .msgdate {
@@ -563,7 +615,7 @@ a {
   grid-column: 12/21;
   text-align: right;
   padding: 10px 0 0;
-  color: grey;
+  color: var(--mygrey);
   font-size: 0.9em;
   position: relative;
 }
@@ -581,7 +633,7 @@ a {
   content: "\f2ed";
   color: var(--myLightPurple);
   top: 60%;
-  right: 100%;
+  right: 0%;
   font-size: 1.1em;
   opacity: 0;
 }
@@ -593,6 +645,71 @@ a {
 
 .wrapmsghead:hover .delete::after {
   opacity: 1;
+}
+
+.newmsgbtn {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.wrapall {
+  position: relative;
+  padding: 0.5em;
+}
+
+.plus {
+  position: relative;
+  height: 3.5em;
+  width: 3.5em;
+  border-radius: 50%;
+  border: 1px solid var(--myLightcolor);
+  box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
+  background-color: white;
+}
+
+.plus::after {
+   content: '\f067';
+   top:50%;
+   left: 50%;
+   font-size: 1.2em;
+   transform: translate(-50%, -50%);
+   color: var(--myColor);
+}
+
+.plus:hover {
+   background-color: var(--myColor);
+}
+
+.plus:hover::after {
+  color: white;
+}
+
+.plusbtns {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  transition: transform 0.5s ease-out;
+}
+
+.plusbtns span {
+  white-space: nowrap;
+  padding: 0.2em;
+  margin: 0.2em;
+  font-size: 1em;
+  font-weight: bold;
+  color:  rgba(72, 60, 168, 0.7);
+  cursor: pointer;
+}
+
+.plusbtns span:hover {
+  color:var(--myColor);
+}
+
+.hideplusbtns {
+  transform: translateX(150%);
 }
 
 .deleteAni {
@@ -715,7 +832,7 @@ a {
 
 .thread {
   height: 85vh;
-  padding: 0 1.45em 10px;
+  padding: 0 0.2em 0.3em;
   display: block;
 }
 
@@ -730,7 +847,7 @@ a {
   display: block;
     margin: 10px 5px;
   background-color: white;
-  box-shadow: 2px 2px 3px grey;
+  box-shadow: 2px 2px 3px var(--mygrey);
   padding-top: 1em;
   padding-bottom: 0.5em;
 }
@@ -880,6 +997,7 @@ background-color: transparent;
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
+  width: 5px;
 }
 
 .chats::-webkit-scrollbar-thumb {
@@ -1095,6 +1213,11 @@ select:focus {
   white-space: nowrap;
 }
 
+.currentmsg{
+  border-left: 0.4em solid var(--myColor);
+  background-color: white;
+}
+
 .empty {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -1110,20 +1233,16 @@ select:focus {
   position: relative;
   padding: 0.6em;
   margin: 5px;
-  color: rgba(58, 58, 58, 0.815);
-  border: 1px solid rgba(192, 191, 191, 0.603);
   cursor: pointer;
 }
 
-.refresh:hover {
-  background-color: rgb(218, 216, 216, 0.2);
-}
 
 .refresh::after {
   position: absolute;
   content: '\f01e';
   left: 50%;
   top: 50%;
+  color: var(--myColor);
   transform: translate(-50%, -50%);
 }
 
@@ -1132,8 +1251,8 @@ select:focus {
   width: 1em;
   margin: 5px auto;
   padding: 0px;
-  border: 3px solid rgba(112, 112, 112, 0.575);
-  border-right: 4px solid rgba(192, 191, 191, 0);
+  border: 3px solid var(--myColor);
+  border-right: 4px solid var(--mywhite);
   border-radius: 50%;
   overflow: hidden;
   animation: load 2s 0.5s linear infinite;
@@ -1154,8 +1273,8 @@ select:focus {
 
 .loader::before {
   content: ' ';
-  height: 2.5em;
-  width: 2.5em;
+  height: 1.5em;
+  width: 1.5em;
   padding: 0;
   left: 50%;
   top: 50%;
@@ -1176,7 +1295,7 @@ select:focus {
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(85, 85, 85, 0.2);
+    background-color: rgba(182, 59, 59, 0);
 }
 
 .successmsg::before {
@@ -1222,6 +1341,17 @@ select:focus {
   color: red;
 }
 
+.groupErr::before {
+  position: absolute;
+  content: 'Group no longer exists';
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  font-size: 1.1em;
+  font-family: Cambria;
+  padding-left: 1.5em;
+  color: red;
+}
 
 .wrongemail {
   border: 1px solid red;
@@ -1281,7 +1411,6 @@ select:focus {
   content: '';
   left: 18%;
 }
-
 
 
 @media screen and (max-width: 950px) { 
@@ -1355,7 +1484,7 @@ select:focus {
     
     .openinbox::after{
         content: '\f142';
-        color: whitesmoke;
+        color: var(--mywhite);
         font-size: 1.5em;
         left: 1em;
         top: 50%;
@@ -1386,6 +1515,7 @@ select:focus {
     .messagewrap {
         display: block;
         grid-template-columns: repeat(3, 1fr);
+        margin: 0;
     }
     
     .msgP {
@@ -1408,7 +1538,7 @@ select:focus {
     }
     
      .thread {
-        padding: 1em 0.2em;
+        padding: 0;
     }
     
     .container {
@@ -1436,7 +1566,7 @@ select:focus {
     }
     
     .search::after {
-        color:whitesmoke;
+        color:var(--mywhite);
         right: 1.5em;
         top: -0.5em;
         font-size: 2em;
