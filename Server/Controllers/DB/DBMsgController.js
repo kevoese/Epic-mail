@@ -89,7 +89,7 @@ class EpicMessage {
     const userId = req.decoded;
     const unread = await pool.query(msgQuery.getUnread, [userId]);
     if (unread.rows[0] === undefined) {
-     return res.status(200).send({
+      return res.status(200).send({
         status: 'Empty',
         data: 'No unread messages',
       });
