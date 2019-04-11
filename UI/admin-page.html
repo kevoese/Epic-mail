@@ -24,11 +24,10 @@
             <ul class="navmenu">
             <li>
                 <div class="profile vcenter">
-                    <img src="images/admin.png" alt="" class="profileimg">
-                    <span class="profilename">Admin</span>
+                    <img src="images/userprofile.png" alt="" class="profileimg">
+                    <span class="profilename"></span>
                 </div>  
             </li> 
-                <!-- <li ><a data-tool-tip="Edit Profile" class=" vcenter editprofile icon"></a></li>  -->
                 <li> <a href="https://kevoese.github.io/Epic-mail/UI/epic-mail.html" class="vcenter signout icon">Sign out</a></li> 
              </ul>
                 
@@ -38,92 +37,29 @@
     <div class="wrapper">
             <div id = "inbox" class="inbox">
             <div id= "close" class="show icon"></div>
-            <div id="createbtn" class="groupcontent">
-                <!-- <button class="createMessage icon">Compose</button> -->
-                <button class="createGroup admincreategroup icon">New Group</button>
-            </div>
-            <div class="groupbutton">
-                    <a id="allbutton" href="#allbutton" data-tool-tip="Groups" class="allbutton allgroupbutton icon"><span class=" vcenter allno groupbuttonNo">7</span></a>
-                    <!-- <a id="sentbutton" href="#sentbutton" data-tool-tip="Sent" class="sentbutton icon"><span class="vcenter sentno">3</span></a>
-                    <a id="draftbutton" href="#draftbutton" data-tool-tip="Draft" class="draftbutton icon"><span class="vcenter draftno">3</span></a> -->
-            </div>
-            <div class="messages">
+            <div class="messages grpdetails">
+               <div class="refresh icon"></div>
                <div class="msgcontain">
                     <div class="all allgroups">
-                        <div class="wrapmsghead">
-                            <p class="username icon">Engineering Group</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle groupnumbers">
-                                Users: (8)
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">Programming Group</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle groupnumbers">
-                                    Users: (21)
-                            </p>
-                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">Social Group</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle groupnumbers">
-                                Users: (13)
-                            </p>
-                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">Culture Group</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle groupnumbers">
-                                Users: (8)
-                            </p>
-                            <p class="msgcontent">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">Music Group</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle groupnumbers">
-                                    Users: (21)
-                            </p>
-                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
-                        <div class="wrapmsghead">
-                            <p class="username icon">Football Group</p><p class="msgdate icon">Feb 20 2019</p>
-                            <p class="msgtitle groupnumbers">
-                                Users: (13)
-                            </p>
-                            <p class="msgcontent groupusers">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Molestiae distinctio tempora expedita soluta, voluptatibus </p>
-                            <span class="arrow icon"></span>
-                        </div>
+                            <p class="empty">No Groups available</p>
                     </div>
                  </div> 
             </div>
             
         </div>
         <div class="chats">
-            <div class="composewrapper">
-                
-                    <div class="container ">
-                       <div class="newmsg icon">New Group <div class="cutmsg icon"></div></div>
-                       <span class="composefrom">From</span>
-                       <span class="composesender">Admin</span>
-                       <span class="composeto icon">Group</span>
-                       <div class="addContacts groupcontacts">
-                            <input type="text" class="newmsgsearch" placeholder="Enter Group Name">
-                       </div>
-                       <input id="composesubject" type="text" placeholder="Subjects" class="composesubject">
-                       <textarea name="" id="composemessage" class="composemessage adminmessage" cols="30" rows="10"></textarea>
-                       <button class="composesend icon">Add Group</button>
-                    </div>
+                <div class="creategrp">    
+                    <div class="newmsg grouphead icon">Create A New Group <div class="cutmsg icon"></div></div>
+                    <form id = "newgroupform" class="newgroupform">
+                        <input type="text" class="nameofnewgrp" placeholder="Enter Group Name" required>
+                        <div class="addUsersdiv">
+                            <input  type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
+                            <span class="plus icon addUsers"></span>
+                        </div>
+                       
+                       <div class="userscontain"></div>
+                       <button class="createnewgrpbtn">Create</button>
+                    </form>
                 </div>
                 <div class="thread">
                         <div class="chatcontent">
@@ -246,9 +182,17 @@
                      </div> 
                      </div>
             
+                             
         </div>
-        
+        <div class="newmsgbtn newgrpbtn">
+                <div class="plus icon">
+                </div>
+        </div>  
     </div>
     <script src="JS/admin-page.js"></script>
+    <script src="JS/helpers.js"></script>
+    <script src="JS/admin-page2.js"></script>
+    <script src="JS/manageGroupUtils.js"></script>
+    <script src="JS/manageGroup.js"></script>
   </body>
 </html>

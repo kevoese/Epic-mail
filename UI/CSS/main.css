@@ -1,12 +1,12 @@
 :root {
-  --myPurple:  rgba(15, 2, 116, 0.9);
-  --myTransPurple: rgba(25, 13, 117, 0.9);
-  --myLightPurple: rgba(40, 14, 236, 0.9);
-  --mygrey: rgb(94, 94, 94);
-  --mywhite: rgb(250, 250, 250);
-  --myColor: rgba(53, 38, 170, 0.9);
-  --myColorTrans: rgba(53, 38, 170, 0.3);
-  --myLightcolor: rgba(72, 60, 168, 0.5);
+  --myfadegrey:  #c0bcbc;
+  --mygrey: #c9c9c9;
+  --mywhite: #f5f6f8;
+  --myColor: rgba(14, 56, 170, 0.9);
+  --myColorTrans: rgba(117, 109, 179, 0.205);
+  --myLightcolor: rgba(58, 47, 161, 0.5);
+  --myOtherColor: orange;
+  --myLightorange: rgba(255, 190, 70, 0.705);
 }
 
 .vcenter {
@@ -14,6 +14,7 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
 
 @font-face {
   font-family: myfont;
@@ -45,7 +46,7 @@ body {
   margin: 0;
   min-height: 100vh;
   height: 100%;
-  background-color: rgb(130, 130, 130);
+  background-color: #fcfcfa;
   position: relative;
 }
 
@@ -72,7 +73,7 @@ body::before {
 }
 
 nav {
-  background-color: var(--myPurple);
+  background-color: #fcfcfa;
   width: 96.4%;
   position: fixed;
   height: 10%;
@@ -80,7 +81,7 @@ nav {
   margin-top: 0;
   right: 1.7%;
   z-index: 4;
-  
+  border: 1px solid var(--mygrey);
 }
 .menulist ul{
     list-style: none;
@@ -89,7 +90,7 @@ nav {
 }
 
 .logo {
-  color: white;
+  color: var(--myColor);
   font-family: myfont;
   font-weight: 100;
   font-size: 1.8em;
@@ -109,31 +110,35 @@ nav {
 }
 
 .searchbar {
-  background-color: whitesmoke;
+  background-color: transparent;
   height: 2.5em;
-  width: 98%;
+  width: 30%;
   font-size: 0.9em;
   font-family: cambria;
   padding: 5px 3%;
-  color: var(--myPurple);
-  transition: all 0.2s linear;
+  padding-left: 2em;
+  color: var(--myColor);
+  border: none;
+  border-bottom: 2px solid transparent;
+ 
 }
 
 .searchbar:focus {
-  background-color: white;
+ border-color: var(--mygrey);
+ width: 98%;
 }
 
 .search:hover::after {
-  font-size: 1.7em;
+  font-size: 1em;
 }
 
 .search::after {
   content: "\f002";
-  right: 11%;
+  left: 1%;
   top: 15%;
-  font-size: 1.5em;
+  font-size: 1.2em;
   position: absolute;
-  color: var(--myPurple);
+  color: var(--myColor);
   transition: all 0.2s linear;
 }
 
@@ -145,30 +150,28 @@ nav {
     margin: 0 0.5em;
 }
 .profile {
-    display: grid;
-    grid-template-rows: 10% 50% 40%;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profileimg {
-    grid-row: 2/3;
   border-radius: 100%;
-    position: relative;
-  width: 2em;
-  height: 2em;
-left: 50%;
- transform: translateX(-50%);
+  width: 3em;
+  height: 3em;
   object-fit: cover;
   object-position: center right;
   align-self: center;
-  margin-bottom: 0.2em;
+  margin: 0 0.5em;
 }
 
 .profilename {
-    grid-row: 3/4;
-  color: white;
+  color: rgb(59, 59, 59);
+  text-transform: capitalize;
   text-align: center;
+  font-weight: bold;
   margin: 0.4em 0.2em 0;
-  font-size: 0.9em;
+  font-size: 1.1em;
    position: relative;
 }
 
@@ -196,7 +199,7 @@ left: 50%;
   opacity: 0;
   padding: 5px;
   transition: opacity 0.5s ease;
-  background-color: var(--myPurple);
+  background-color: var(--myColor);
 } */
 
 .editprofile:hover::before {
@@ -206,16 +209,17 @@ left: 50%;
 .signout {
   color: white;
   text-align: center;
-  padding: 0.5em 0.3em;
+  padding: 0.7em 1em;
+  border-radius: 3em;
   font-size: 1em;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s linear;
     white-space: nowrap;
+    background-color: var(--myColor);
 }
 
 .signout:hover {
-  border-bottom: 1px solid white;
+  box-shadow: 2px 2px 7px var(--myLightcolor); 
 }
 
 .wrapper {
@@ -232,7 +236,7 @@ left: 50%;
 }
 
 .inbox button {
-  color: var(--myPurple);
+  color: var(--myColor);
 }
 
 .inbox {
@@ -243,7 +247,7 @@ left: 50%;
   background-color: var(--mywhite);
   padding: 0em;
   margin: 0 0.2em 0 0;
-  border: 1px solid darkslategray;
+  border: 1px solid var(--mygrey);
   min-height: 350px;
   height: 85.5vh;
 }
@@ -253,8 +257,8 @@ left: 50%;
   justify-content: space-around;
   align-items: center;
   padding: 0.3em 20%;
-  background-color: white;
-  border-bottom: 1px solid var(--myColor);
+  background-color: #fcfcfa;
+  border-bottom: 1px solid var(--mygrey);
 }
 
 .togglepage span{
@@ -293,60 +297,6 @@ left: 50%;
 .viewgrps:hover::after {
  color: white;
 }
-/* .inboxcontent {
-  display: grid;
-  width: 99%;
-  grid-row: 1/3;
-  grid-template-columns: 50% 49.7%;
-  grid-gap: 1px;
-  margin: 0 auto;
-  padding: 1px;
-  background-color: var(--myPurple);
-     max-height: 4em;
-} */
-
-/* .inboxcontent button:hover {
-  background-color: var(--myPurple);
-  color: white;
-}
-
-.createMessage,
-.createGroup {
-  text-align: center;
-  padding: 0.8em;
-  padding-left: 35%;
-  background-color: var(--mywhite);
-  font-size: 0.9em;
-  font-weight: 700;
-  font-family: cambria;
-  height: 100%;
-  position: relative;
-  transition: all 0.2s linear;
-  box-shadow: 2px 2px 2px var(--mygrey);
-}
-
-
-
-.createMessage::after,
-.createGroup::after {
-  position: absolute;
-  left: 18%;
-  top: 30%;
-}
-
-.createMessage::after {
-  content: "\f14b";
-  font-size: 1.4em;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.createGroup::after {
-  content: "\f0c0";
-  font-size: 1.2em;
-       top: 50%;
-    transform: translateY(-50%);
-} */
 
 .msgbuttons {
   display: grid;
@@ -378,7 +328,7 @@ a {
   text-align: center;
   font-size: 0.9em;
   font-weight: bold;
-  color: var(--myPurple);
+  color: var(--myfadegrey);
   padding: 1em;
   height: 3.5em;
   background-color: white;
@@ -405,18 +355,20 @@ a {
 .draftbutton::before,
 .sentbutton::before,
 .allbutton::before {
-  content: attr(box);
-  right: 10%;
+  /* content: attr(box); */
+  right: 20%;
+  border: 1px solid;
+  padding: 0.2em 0.4em;
   transform: translate(50%, -50%);
   top: 50%;
   font-weight: light;
-  border-radius: 5px;
   position: absolute;
     font-size: 1em;
 }
 
 .btncheck input:checked + label {
   outline: none;
+  color: var(--myColor);
  border-bottom-color: var(--myColor);
 }
 
@@ -431,7 +383,7 @@ a {
 
 .msgcontain {
   width: 100%;
-  height: 93%;
+  height: 100%;
   display: grid;
   left: 0;
   grid-template-columns: 100% 100% 100%;
@@ -454,7 +406,7 @@ a {
     width: 100%;
     padding: 0.2em;
     margin: 0em;
-    border-bottom: 1px solid darkslategrey;
+    border-bottom: 1px solid var(--mygrey);
     justify-content: space-between;
 }
 
@@ -497,7 +449,7 @@ a {
 }
 
 .unreadmsg {
-  background-color: rgb(230, 230, 230);
+  background-color: var(--mywhite);
 }
 
 .unreadmsg p {
@@ -518,7 +470,7 @@ a {
 
  .checkbox div label:hover::before,
  .saveDraft label:hover::before{
-    border-color: var(--myPurple);
+    border-color: var(--myColor);
 }
 
 .checkbox div label::before,
@@ -556,13 +508,15 @@ a {
   grid-template-rows: 33% 33% 34%;
   padding: 5px;
   margin-right: 2px;
-  border-left: 0.4em solid var(--myColorTrans);
+  border-left: 0.4em solid rgb(215, 215, 255);
   border-bottom: 1px solid var(--mygrey);
   position: relative;
+  background-color: white;
+  cursor: pointer;
 }
 
 .wrapmsghead:hover {
-  background-color: white;
+  background-color: var(--mywhite);
 }
 
 .wrapmsghead p {
@@ -577,7 +531,7 @@ a {
   font-size: 0.95em;
   position: relative;
   padding: 10px 23px 0;
-  color: rgba(23, 4, 43, 0.856);
+  color: #747579;
 }
 
 .username::after {
@@ -585,7 +539,19 @@ a {
   left: 0;
   top: 35%;
   font-size: 0.9em;
-  color: rgba(70, 70, 70, 0.8);
+  color: #747579;
+}
+
+.groupname {
+  font-size: 1.2em;
+  padding-left: 1.7em;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.groupname::after {
+  content: "\f0c0";
+  font-size: 1em;
 }
 
 .msgtitle {
@@ -595,7 +561,7 @@ a {
   overflow: hidden;
   white-space: nowrap;
   padding: 10px 10px 0;
-  color: rgba(70, 70, 70, 0.8);
+  color: #747579;
   font-size: 1.1em;
   font-weight: bold;
 }
@@ -631,7 +597,7 @@ a {
 
 .delete::after {
   content: "\f2ed";
-  color: var(--myLightPurple);
+  color: var(--myLightcolor);
   top: 60%;
   right: 0%;
   font-size: 1.1em;
@@ -639,7 +605,7 @@ a {
 }
 
 .delete:hover::after {
-  color: var(--myPurple);
+  color: var(--myColor);
 }
 
 
@@ -650,9 +616,13 @@ a {
 .newmsgbtn {
   position: absolute;
   bottom: 5%;
-  right: 5%;
+  right: 0%;
   overflow: hidden;
-  z-index: 2;
+}
+
+.newgrpbtn {
+  right:5%;
+  padding:0.5em;
 }
 
 .wrapall {
@@ -668,6 +638,8 @@ a {
   border: 1px solid var(--myLightcolor);
   box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
   background-color: white;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .plus::after {
@@ -867,6 +839,7 @@ a {
   color: rgb(51, 51, 51, 0.9);
   font-weight: 800;
   font-family: cambria;
+  text-transform: capitalize;
 }
 
 .from {
@@ -907,6 +880,7 @@ a {
   font-weight: 600;
   margin: 0;
   font-family: cambria;
+  text-transform: capitalize;
 }
 
 .receiver {
@@ -916,6 +890,7 @@ a {
   font-size: 1em;
   color: rgb(95, 95, 95);
   margin: 0;
+  text-transform: capitalize;
 }
 
 .msgP {
@@ -924,9 +899,9 @@ a {
   color: #404040;
   margin: 0;
   padding: 1em;
-  border-top: 1px solid grey;
+  border-top: 1px solid var(--mygrey);
   font-family: cambria;
-  font-size: 0.85em;
+  font-size: 1.05em;
     line-height: 1.6em;
   font-weight: 100;
   text-align: justify;
@@ -1001,11 +976,11 @@ background-color: transparent;
 }
 
 .chats::-webkit-scrollbar-thumb {
-  background: var(--myPurple);
+  background: var(--myColor);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: grey;
+  background: var(--mygrey);
 }
 
 .msgcontain div::-webkit-scrollbar {
@@ -1036,7 +1011,8 @@ background-color: transparent;
   grid-template-columns: repeat(9, minmax(auto));
   grid-gap: 4px;
   background-color: white;
-  box-shadow: 5px 5px 5px grey;
+  border: 1px solid grey;
+  box-shadow: 2px 2px 20px var(--myColorTrans);
   padding-bottom: 0.4em;
   overflow-x: scroll;
 }
@@ -1052,7 +1028,7 @@ background-color: transparent;
   grid-column: 1/11;
   grid-row: 1/2;
   height: 3em;
-  background-color: var(--myPurple);
+  background-color: var(--myColor);
   padding: 1em 0.6em;
   color: white;
   font-family: cambria;
@@ -1066,6 +1042,7 @@ background-color: transparent;
   color: white;
   top: 20%;
   right: 10%;
+  cursor: pointer;
 }
 
 .cutmsg::after {
@@ -1074,9 +1051,6 @@ background-color: transparent;
   z-index: 1;
 }
 
-.cutmsg:hover {
-  color: rgb(197, 151, 250);
-}
 
 .newmsgsearch {
   height: 2.3em;
@@ -1137,22 +1111,30 @@ background-color: transparent;
   grid-column: 8/11;
   grid-row: 2/3;
   padding: 0.7em;
-  width: 10em;
+  min-width: 10em;
   font-size: 0.9em;
-  margin: 0.6em 0;
+  margin: 0.6em 1em;
+  background-color: var(--mywhite);
+}
+
+.container option {
+  height: 2em;
+  white-space: nowrap;
+  font-size: 0.9em;
+  background-color: var(--mywhite);
 }
 
 .composesubject {
-  grid-column: 1/10;
+  grid-column: 1/11;
   grid-row: 4/5;
   padding: 5px 0.7em;
   font-size: 0.9em;
   height: 3.2em;;
-  margin: 0.7em;
-  width: 90%;
+  margin: 0.7em 1em;
+  width: 92%;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid var(--mygrey);
 }
 
 input:focus,
@@ -1163,33 +1145,36 @@ select:focus {
 }
 
 .composemessage {
-  grid-column: 1/10;
+  grid-column: 1/11;
   grid-row: 5/9;
-  max-width: 98%;
-  min-width: 98%;
+  max-width: 92%;
+  min-width: 92%;
   max-height: auto;
   min-height: 12em;
   background-color: transparent;
-  border: none;
+  border: 1px solid var(--mygrey);
   padding: 5px 1.3em;
+  font-size: 1.05em;
   resize: none;
+  margin: 0 1em;
 }
 
 .composesend {
-  grid-column: 1/3;
+  grid-column: 9/11;
   grid-row: 9/10;
-  background-color: var(--myPurple);
+  background-color: var(--myColor);
   color: white;
   font-family: cambria;
   font-size: 1em;
   height: 3em;
-  margin: 0.5em;
+  margin: 0.5em 1em;
   width: 7em;
   padding-right: 10%;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
   white-space: nowrap;
+  z-index: 5;
 }
 
 .composesend::after {
@@ -1200,7 +1185,7 @@ select:focus {
 }
 
 .saveDraft {
-  grid-column: 9/11;
+  grid-column: 1/3;
   grid-row: 9/10;
   display: flex;
   justify-content: center;
@@ -1214,7 +1199,7 @@ select:focus {
 }
 
 .currentmsg{
-  border-left: 0.4em solid var(--myColor);
+  border-left-color: var(--myColor);
   background-color: white;
 }
 
@@ -1225,7 +1210,7 @@ select:focus {
   font-weight: bold;
   left:50%;
   top: 40%;
-  color: rgb(95, 95, 95);
+  color: #b5b6ba;
 }
 
 .refresh
@@ -1286,6 +1271,7 @@ select:focus {
   border-radius: 50%;
   animation: load 1s 0.5s linear infinite;
   position: absolute;
+  z-index: 2;
 }
 
 .loader::after {
@@ -1295,7 +1281,7 @@ select:focus {
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(182, 59, 59, 0);
+    background-color: white;
 }
 
 .successmsg::before {
@@ -1303,8 +1289,8 @@ select:focus {
   content: 'Sent succesfully';
   font-size: 1.2em;
   font-family: Cambria;
-  padding-left: 1.5em;
-  left: 3%;
+  padding-right: 1.5em;
+  right: 3%;
   bottom: 5%;
   color: var(--myColor);
 }
@@ -1312,7 +1298,7 @@ select:focus {
 .successmsg::after {
   position: absolute;
   content: "\f00c";
-  left: 3%;
+  right: 3%;
   bottom: 5%;
   color: var(--myColor);
 }
@@ -1353,8 +1339,43 @@ select:focus {
   color: red;
 }
 
+.grpnameErr::before {
+  position: absolute;
+  content: 'Group name already exists';
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  font-size: 1.1em;
+  font-family: Cambria;
+  padding-left: 1.5em;
+  color: red;
+}
+
+.successgrpmsg::before {
+  position: absolute;
+  content: 'Created';
+  font-size: 1.2em;
+  font-family: Cambria;
+  padding-right: 1.5em;
+  right: 3%;
+  bottom: 5%;
+  color: var(--myColor);
+}
+
+.successgrpmsg::after {
+  content: "\f00c";
+  position: absolute;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  right: 3%;
+  bottom: 5%;
+  color: var(--myColor);
+}
+
 .wrongemail {
-  border: 1px solid red;
+  border: 1px solid red !important;
   animation: wrong 0.4s 0.2s linear backwards;
   color: red;
 }
@@ -1376,21 +1397,6 @@ select:focus {
 .groupnumbers {
     font-style: italic;
 }
-
-.groupcontent {
-  width: 99%;
-  grid-row: 1/3;
-  margin: 0 auto;
-  padding: 1px;
-  background-color: var(--myPurple);
-     max-height: 4em;
-}
-
-.groupcontent button:hover {
-  background-color: var(--myPurple);
-  color: white;
-}
-
 .admincreategroup {
     width: 100%;
     padding-left: 0.8em
@@ -1403,15 +1409,130 @@ select:focus {
   grid-row: 3/5;
 }
 
-.allgroupbutton {
-    width: 100%;
+.adminname {
+grid-row: 3/4;
+grid-column: 1/21;
+white-space: nowrap;
+color: rgba(70, 70, 70, 0.8);
+font-size: 1em;
+text-transform: capitalize;
+padding: 10px 10px 0;
 }
 
-.allgroupbutton::after{
-  content: '';
-  left: 18%;
+.hideEdit {
+  transform: scale(0);
 }
 
+.edit {
+  position: relative;
+  grid-row: 2/3;
+  grid-column: 18/20; 
+  right: 0;
+}
+
+.edit::after {
+  content: "\f044";
+  color: var(--myLightcolor);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1em;
+  opacity: 1;
+}
+
+.grpdetails {
+  padding: 0;
+}
+
+.edit:hover::after {
+  color: var(--myColor);
+}
+
+.creategrp {
+  display: none;
+  width: 98%;
+  margin: 1% auto;
+  min-height: 50%;
+  flex-flow: column;
+  position: absolute;
+  background-color: white;
+  z-index: 2;
+  border: 1px solid grey;
+  box-shadow: 2px 2px 20px var(--myColorTrans);
+}
+
+.newgroupform {
+  width: 100%;
+  flex-grow: 1;
+  padding: 1em;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+}
+
+.grouphead {
+ width: 100%;
+ padding: 0.8em;
+ text-align: center;
+}
+
+.nameofnewgrp {
+  margin: 1em 0;
+  padding: 0.2em 0.5em;
+  height: 3em;
+  font-family: cambria;
+  min-width: 20em;
+  font-size: 1em;
+  width: 70%;
+  color: var(--myColor);
+  border-bottom: 2px solid var(--myLightcolor); 
+}
+
+.nameofnewgrp::placeholder {
+  color: var(--myColor);
+}
+
+.addUsers {
+   color: white;
+   background-color: var(--myColor);
+   width: 2em;
+   height: 2em;
+   z-index: 0;
+}
+
+.addUsersdiv {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.memberEmail {
+  width: auto;
+  width: 40%;
+  min-width: 15em;
+  margin-right: 1em;
+  border-color: var(--myLightcolor);
+}
+
+.addUsers::after {
+  color: white;
+  font-size: 0.8em;
+}
+
+.userscontain {
+  flex-grow: 1;
+}
+
+.createnewgrpbtn {
+  padding: 0.6em 1em;
+  border: 1px solid var(--myColor);
+  color: var(--myColor);
+  font-size: 1em;
+  font-family: cambria;
+  width: 7em;
+  background-color: transparent;
+  box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
+  cursor: pointer;
+}
 
 @media screen and (max-width: 950px) { 
 
@@ -1470,11 +1591,12 @@ select:focus {
 
     .menu {
         float: right;
-        background-color: red;
+        cursor: pointer;
+        z-index: 3;
     }
     
     .menu::after {
-        color: white;
+        color: lightslategray;
         content: "\f0c9";
         right: 1em;
         font-size: 1.7em;
@@ -1484,7 +1606,7 @@ select:focus {
     
     .openinbox::after{
         content: '\f142';
-        color: var(--mywhite);
+        color: lightslategray;
         font-size: 1.5em;
         left: 1em;
         top: 50%;

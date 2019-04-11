@@ -18,10 +18,6 @@ const getDateStr = (str) => {
   return `${monthStr} ${day} ${year}`;
 };
 
-const emptyMsgBox = message => `<p class="empty">
-${message}
-</p>`;
-
 
 const messagepanel = (msgObj) => {
   const {

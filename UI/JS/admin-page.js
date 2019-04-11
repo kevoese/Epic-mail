@@ -17,13 +17,12 @@ const inboxCard = (status) => {
 
 slider.addEventListener('click', (event) => {
   let status = event.target.id;
-
   if (status === 'close') {
     inboxCard('show');
-    status = 'open';
+    event.target.id = 'open';
   } else {
     inboxCard('hide');
-    status = 'close';
+    event.target.id = 'close';
   }
 });
 
@@ -42,12 +41,12 @@ modal.addEventListener('click', (event) => {
 
 navIcon.addEventListener('click', (event) => {
   let status = event.target.id;
-
+  console.log('here bro');
   if (status === 'navhide') {
     menuList.style.transform = 'scale(1)';
-    status = 'navshow';
+    event.target.id = 'navshow';
   } else {
     menuList.style.transform = 'scale(0)';
-    status = 'navhide';
+    event.target.id = 'navhide';
   }
 });

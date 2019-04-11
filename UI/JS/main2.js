@@ -102,7 +102,6 @@ createMsgGrp.addEventListener('submit', async (event) => {
   const thisForm = event.target;
   const details = getGrpMsgInfo();
   const url = `${appurl}groups/${details.id}/messages`;
-  console.log(thisForm);
   const buttons = thisForm.querySelectorAll('button');
   addClass(thisForm, 'loader');
   buttons.forEach(button => hide(button));
@@ -115,7 +114,7 @@ createMsgGrp.addEventListener('submit', async (event) => {
     addClass(thisForm, 'successmsg');
     thisForm.reset();
   } else if (statusCode === 400 && responseObj.error === 'Bad request') {
-    addClass(thisForm, 'receiverErr');
+    addClass(thisForm, 'groupErr');
     const grpselect = thisForm.querySelector('#grpcontacts');
     addClass(grpselect, 'wrongemail');
   } else if (statusCode === 400 && responseObj.error === 'invalid parent message') {
