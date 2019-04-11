@@ -43,7 +43,9 @@ class EpicGroup {
         const { id, name, admin } = group;
         let role;
         (userId === admin) ? role = 'admin' : role = 'member';
-        results.push({ id, name, role });
+        results.push({
+          id, name, role, admin,
+        });
       });
       return res.status(200).send({
         status: 'Successful',
@@ -54,6 +56,22 @@ class EpicGroup {
       status: 'Empty',
       data: 'No groups available',
     });
+  }
+
+  static async getMembers(req, res) {
+    const userId = req.decoded;
+    const groupId = req.params.id;
+    const getMembership = await pool.query(groupsQuery.getMember, [groupId, userId]);
+    if (getMembership.rows[0] !== undefined) {
+      const allMembers = await pool.query(groupsQuery.getAllMembers, [groupId]);
+      if (allMembers.rows[0] !== undefined) {
+        return res.status(200).send({
+          status: 'Successful',
+          data: allMembers.rows,
+        });
+      }
+    }
+    return errorResponse(404, 'Group not found', res);
   }
 
   static async updateName(req, res) {
@@ -149,9 +167,9 @@ class EpicGroup {
         [id, subject, message, userId, groupId, parentMessageId, status]);
 
       const { rows } = await pool.query(`SELECT member FROM joint WHERE group_id = ${groupId}`);
-      const newarr = rows.filter(row => row.member !== userId);
-      if (newarr[0] !== undefined) {
-        const insertStr = multiInsert(newarr, {
+      // const newarr = rows.filter(row => row.member !== userId);
+      if (rows[0] !== undefined) {
+        const insertStr = multiInsert(rows, {
           id, subject, message, userId, groupId, parentMessageId, readStatus,
         });
         await pool.query(`INSERT INTO inbox (user_id, message_id, subject, message, sender_id, group_id, parent_message_id, read_status) VALUES ${insertStr}`);

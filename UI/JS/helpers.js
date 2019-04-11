@@ -30,6 +30,10 @@ const getUser = async (id = false) => {
   return false;
 };
 
+const emptyMsgBox = message => `<p class="empty">
+${message}
+</p>`;
+
 const checkclass = (element, className) => {
   const index = element.classList.length;
   if (element.classList[index - 1] === className) return true;
