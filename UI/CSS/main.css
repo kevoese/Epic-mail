@@ -352,12 +352,11 @@ a {
   left: 15%;
 }
 
-.draftbutton::before,
-.sentbutton::before,
+/* .draftbutton::before,
+.sentbutton::before, */
 .allbutton::before {
-  /* content: attr(box); */
+  content: attr(box);
   right: 20%;
-  border: 1px solid;
   padding: 0.2em 0.4em;
   transform: translate(50%, -50%);
   top: 50%;
@@ -525,7 +524,7 @@ a {
 
 .username {
   grid-row: 1/2;
-  grid-column: 1/14;
+  grid-column: 1/7;
   white-space: nowrap;
   font-weight: 500;
   font-size: 0.95em;
@@ -534,8 +533,31 @@ a {
   color: #747579;
 }
 
+.groupname_msg {
+  grid-row: 1/2;
+  grid-column: 7/16;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 0.9em;
+  font-weight: bold;
+  position: relative;
+  padding: 10px 23px 0;
+  color: #747579;
+}
+
 .username::after {
   content: "\f007";
+  left: 0;
+  top: 35%;
+  font-size: 0.9em;
+  color: #747579;
+}
+
+.groupname_msg::after {
+  content: "\f0c0";
   left: 0;
   top: 35%;
   font-size: 0.9em;
@@ -578,7 +600,7 @@ a {
 
 .msgdate {
   grid-row: 1/2;
-  grid-column: 12/21;
+  grid-column: 16/21;
   text-align: right;
   padding: 10px 0 0;
   color: var(--mygrey);
@@ -1036,7 +1058,7 @@ background-color: transparent;
   position: relative;
 }
 
-.cutmsg {
+.cutmsg, .cutmsgedit {
   position: absolute;
   z-index: 2;
   color: white;
@@ -1045,7 +1067,7 @@ background-color: transparent;
   cursor: pointer;
 }
 
-.cutmsg::after {
+.cutmsg::after, .cutmsgedit::after {
   content: "\f00d";
   font-size: 1.5em;
   z-index: 1;
@@ -1107,7 +1129,7 @@ background-color: transparent;
   margin: 0.6em 0px;
 }
 
-.container select {
+.container select, .editgroup select {
   grid-column: 8/11;
   grid-row: 2/3;
   padding: 0.7em;
@@ -1205,6 +1227,8 @@ select:focus {
 
 .empty {
   position: absolute;
+  text-transform: capitalize;
+  white-space: nowrap;
   transform: translate(-50%, -50%);
   font-size: 1.2em;
   font-weight: bold;
@@ -1303,75 +1327,24 @@ select:focus {
   color: var(--myColor);
 }
 
-.receiverErr::before {
+.errorResponse, .successResponse {
+  position: relative;
+}
+
+.errorResponse::before, .successResponse::before {
   position: absolute;
-  content: 'Email does not exist';
+  content: attr(message);
   left: 50%;
   bottom: 5%;
+  white-space: nowrap;
   transform: translateX(-50%);
-  font-size: 1.1em;
+  font-size: 1.05em;
   font-family: Cambria;
-  padding-left: 1.5em;
   color: red;
 }
 
-.parentmsgErr::before {
-  position: absolute;
-  content: 'Message you are replying to does not exist';
-  left: 50%;
-  bottom: 5%;
-  transform: translateX(-50%);
-  font-size: 1.1em;
-  font-family: Cambria;
-  padding-left: 1.5em;
-  color: red;
-}
-
-.groupErr::before {
-  position: absolute;
-  content: 'Group no longer exists';
-  left: 50%;
-  bottom: 5%;
-  transform: translateX(-50%);
-  font-size: 1.1em;
-  font-family: Cambria;
-  padding-left: 1.5em;
-  color: red;
-}
-
-.grpnameErr::before {
-  position: absolute;
-  content: 'Group name already exists';
-  left: 50%;
-  bottom: 5%;
-  transform: translateX(-50%);
-  font-size: 1.1em;
-  font-family: Cambria;
-  padding-left: 1.5em;
-  color: red;
-}
-
-.successgrpmsg::before {
-  position: absolute;
-  content: 'Created';
-  font-size: 1.2em;
-  font-family: Cambria;
-  padding-right: 1.5em;
-  right: 3%;
-  bottom: 5%;
-  color: var(--myColor);
-}
-
-.successgrpmsg::after {
-  content: "\f00c";
-  position: absolute;
-  display: inline-block;
-  -webkit-font-smoothing: antialiased;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  right: 3%;
-  bottom: 5%;
-  color: var(--myColor);
+.successResponse::before {
+  color: green;
 }
 
 .wrongemail {
@@ -1447,7 +1420,7 @@ padding: 10px 10px 0;
   color: var(--myColor);
 }
 
-.creategrp {
+.creategrp, .editgroup{
   display: none;
   width: 98%;
   margin: 1% auto;
@@ -1458,6 +1431,12 @@ padding: 10px 10px 0;
   z-index: 2;
   border: 1px solid grey;
   box-shadow: 2px 2px 20px var(--myColorTrans);
+}
+
+.editgroup {
+   display: none;
+   position: relative;
+   min-height: 70%;
 }
 
 .newgroupform {
@@ -1473,9 +1452,10 @@ padding: 10px 10px 0;
  width: 100%;
  padding: 0.8em;
  text-align: center;
+ text-transform: capitalize;
 }
 
-.nameofnewgrp {
+.nameofnewgrp, .newName {
   margin: 1em 0;
   padding: 0.2em 0.5em;
   height: 3em;
@@ -1488,6 +1468,86 @@ padding: 10px 10px 0;
 }
 
 .nameofnewgrp::placeholder {
+  color: var(--myColor);
+}
+
+.editgroup form {
+  margin: 0.5em 1em;
+  padding: 0 0.5em;
+}
+
+.newName{
+    border: none;
+    background-color: transparent;
+    margin: 0.5em 1em;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.updategrpname, .savegrpname, .deletegroupuser {
+  padding: 0.7em 1em;
+  background-color: var(--myColor);
+  color: white;
+  font-family: cambria;
+  margin: 0.2em;
+  width: 10em;
+    white-space: nowrap;
+  text-align: center;
+  box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
+}
+
+.savegrpname {
+  width: 5em;
+  font-size: 1em;
+  display: none;
+}
+
+.deletegroupuser {
+  color: var(--myColor);
+  background-color: transparent;
+  border-color: 1px solid var(--myLightcolor);
+  padding: 0.5em 0.5em;
+  padding-left: 1.5em;
+  font-size: 1em;
+  position: relative; 
+  margin-left: 0.1em !important;
+  cursor: pointer;
+  /* display: none; */
+}
+
+.deleteUser {
+   margin-right: 0.1em !important;
+}
+
+.deletegroupuser::after {
+  content: '\f00d'; 
+  left: 5%;;
+  top:50%;
+  font-size: 0.9em;
+  transform: translateY( -50%);
+}
+
+.deletegrp {
+   position: absolute;
+   border-radius: 50%;
+   background-color: transparent;
+   cursor: pointer;
+   margin-bottom: 0.5em;
+   right: 5%;
+   bottom: 5%;
+}
+
+.deletegrp::after {
+  content: '\f2ed';
+   top:50%;
+   left: 50%;
+   font-size: 2em;
+   transform: translate(-50%, -50%);
+   color: var(--myfadegrey);
+}
+
+.deletegrp:hover::after {
   color: var(--myColor);
 }
 
@@ -1522,7 +1582,7 @@ padding: 10px 10px 0;
   flex-grow: 1;
 }
 
-.createnewgrpbtn {
+.createnewgrpbtn, .editgroupbtn {
   padding: 0.6em 1em;
   border: 1px solid var(--myColor);
   color: var(--myColor);

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import errorResponse from '../../helper/errorResponse';
 import pool from '../../helper/db_query/queryMethod';
@@ -149,36 +150,42 @@ class EpicMessage {
   static async specificMessage(req, res) {
     const messageId = req.params.id;
     const userId = req.decoded;
-    const { rows } = await pool
-      .query(msgQuery.getSpecificMsg, [messageId, userId]);
-    if (rows[0] === undefined) {
+    let thisMessage;
+    try {
+      const result = await pool.query(msgQuery.getMessageUsers, [messageId]);
+      const { sender_id } = result.rows[0];
+      let specificmsg;
+      if (sender_id === userId) {
+        specificmsg = await pool.query(msgQuery.getFromSent, [messageId, userId]);
+      } else {
+        specificmsg = await pool.query(msgQuery.getFromInbox, [messageId, userId]);
+        await pool.query(msgQuery.updateReadStat, [messageId, userId]);
+      }
+      [thisMessage] = specificmsg.rows;
+      if (!thisMessage.read_status && thisMessage.group_id) await pool.query(msgQuery.updateReadStat, [messageId, userId]);
+    } catch (err) {
       return errorResponse(404, 'Message does not exist', res);
-    }
-    const { user_id } = rows[0];
-    if (user_id === userId) {
-      await pool.query(msgQuery.updateReadStat, [messageId, userId]);
     }
     return res.status(200).json({
       status: 'Successful',
-      data: rows[0],
+      data: thisMessage,
     });
   }
 
   static async deleteMessage(req, res) {
     const messageId = req.params.id;
     const userId = req.decoded;
-    const { rows } = await pool
-      .query(msgQuery.getDelUsers, [messageId, userId]);
-
-    if (rows[0] === undefined) {
+    try {
+      const { rows } = await pool.query(msgQuery.getMessageUsers, [messageId]);
+      const { sender_id } = rows[0];
+      if (sender_id === userId) {
+        await pool.query(msgQuery.delSentMsg, [messageId]);
+      } else {
+        await pool.query(msgQuery.delInboxMsg, [messageId]);
+      }
+    } catch (err) {
       return errorResponse(404, 'Message does not exist', res);
     }
-
-    const { user_id, sender_id } = rows[0];
-
-    if (sender_id === userId) await pool.query(msgQuery.delSentMsg, [messageId]);
-    if (user_id === userId) await pool.query(msgQuery.delInboxMsg, [messageId]);
-
     return res.status(200).json({
       status: 'Successful',
       data: 'Message successfully deleted',

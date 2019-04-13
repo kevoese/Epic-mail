@@ -612,7 +612,7 @@ describe('Epic Test', () => {
         .set('token', userAToken)
         .send({ email: 'great@epicmail.com' })
         .end((err, res) => {
-          expect(res.statusCode).to.equal(400);
+          expect(res.statusCode).to.equal(404);
           expect(res.body.status).to.equal('Failure');
           done();
         });
