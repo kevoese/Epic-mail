@@ -22,6 +22,7 @@ const loadUserInfo = async () => {
   senderemail.textContent = email;
   senderemailGrp.textContent = email;
   profileimg.src = profile_pic;
+  await populateInbox('unread');
   await populateInbox();
   await populateOutbox('sent');
   await populateOutbox('draft');
@@ -89,11 +90,11 @@ createMsg.addEventListener('submit', async (event) => {
     addClass(thisForm, 'successmsg');
     thisForm.reset();
   } else if (statusCode === 404) {
-    addClass(thisForm, 'receiverErr');
+    errorResponse(thisForm, 'Email does not exist');
     const email = thisForm.querySelector('#receiverEmail');
     addClass(email, 'wrongemail');
   } else if (statusCode === 400) {
-    addClass(thisForm, 'parentmsgErr');
+    errorResponse(thisForm, 'message you are replying to does not exist');
   }
 });
 
@@ -114,11 +115,11 @@ createMsgGrp.addEventListener('submit', async (event) => {
     addClass(thisForm, 'successmsg');
     thisForm.reset();
   } else if (statusCode === 400 && responseObj.error === 'Bad request') {
-    addClass(thisForm, 'groupErr');
+    errorResponse(thisForm, 'Invalid Request');
     const grpselect = thisForm.querySelector('#grpcontacts');
     addClass(grpselect, 'wrongemail');
   } else if (statusCode === 400 && responseObj.error === 'invalid parent message') {
-    addClass(thisForm, 'parentmsgErr');
+    errorResponse(thisForm, 'message you are replying to does not exist');
   }
 });
 

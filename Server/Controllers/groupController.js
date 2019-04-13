@@ -190,7 +190,7 @@ class EpicGroup {
     const getAdmin = await pool.query(groupsQuery.getAdmin, [groupId, userId]);
     const result = await pool.query(userQuery.getEmail, [email]);
     if (result.rows[0] === undefined) {
-      return errorResponse(400, 'Email does not exist', res);
+      return errorResponse(404, 'Email does not exist', res);
     }
     const memberId = result.rows[0].id;
     if (memberId === userId) {

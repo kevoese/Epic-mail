@@ -50,16 +50,35 @@
         <div class="chats">
                 <div class="creategrp">    
                     <div class="newmsg grouphead icon">Create A New Group <div class="cutmsg icon"></div></div>
-                    <form id = "newgroupform" class="newgroupform">
+                    <form id = "newgroupform" class="newgroupform" >
                         <input type="text" class="nameofnewgrp" placeholder="Enter Group Name" required>
-                        <div class="addUsersdiv">
+                        <!-- <div class="addUsersdiv">
                             <input  type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
                             <span class="plus icon addUsers"></span>
                         </div>
                        
-                       <div class="userscontain"></div>
+                       <div class="userscontain"></div> -->
                        <button class="createnewgrpbtn">Create</button>
                     </form>
+                </div>
+                <div id = "1_editgroup" class="editgroup">    
+                    <div class="newmsg grouphead icon">Group<div class="cutmsgedit icon"></div></div>
+                    <form id ="deleteUserForm" class="addContacts">
+                            <select id = "deleteuser" class="deleteuser" name="gender" >
+                                    <option  disabled selected>Choose User</option>
+                            </select>
+                            <span class="deletegroupuser icon">Delete user</span>
+                    </form>
+                    <form id = "changegroupname" class="changegroupname">
+                        <input id = "editgrpname" type="text" class="newName" value="Engineering" disabled >
+                        <span class="updategrpname">Change Group Name</span>
+                        <button class="savegrpname">Save</button>
+                    </form> 
+                    <form id = "addUserForm" class="addUsersdiv">
+                        <input  type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
+                        <button class="plus icon addUsers"></button>
+                    </form>
+                    <button class=" deletegrp icon"></button>
                 </div>
                 <div class="thread">
                         <div class="chatcontent">
