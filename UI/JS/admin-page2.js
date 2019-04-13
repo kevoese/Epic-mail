@@ -3,6 +3,7 @@ const newGroup = document.querySelector('.creategrp');
 const inboxes = document.querySelector('.thread');
 const newGroupbtn = document.querySelector('.newgrpbtn');
 
+
 hideCompose.addEventListener('click', () => {
   newGroup.style.display = 'none';
   inboxes.style.display = 'block';
@@ -10,6 +11,7 @@ hideCompose.addEventListener('click', () => {
 
 newGroupbtn.addEventListener('click', () => {
   newGroup.style.display = 'flex';
+  editGroup.style.display = 'none';
   inboxes.style.display = 'none';
   inboxCard('hide');
 });

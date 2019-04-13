@@ -17,7 +17,6 @@ const fetchCall = async (url, method, body = undefined) => {
   const response = await fetch(url, object);
   const statusCode = response.status;
   const responseObj = await response.json();
-  //  console.log(responseObj);
   return { responseObj, statusCode };
 };
 
@@ -35,8 +34,7 @@ ${message}
 </p>`;
 
 const checkclass = (element, className) => {
-  const index = element.classList.length;
-  if (element.classList[index - 1] === className) return true;
+  if (element.classList.contains(className)) return true;
   return false;
 };
 
@@ -54,4 +52,20 @@ const hide = (element) => {
 
 const unhide = (element) => {
   if (checkclass(element, 'hideElement')) element.classList.remove('hideElement');
+};
+
+const errorResponse = (thisclass, message) => {
+  if (checkclass(thisclass, 'errorResponse')) {
+    removeClass(thisclass, 'errorResponse');
+  }
+  thisclass.setAttribute('message', message);
+  addClass(thisclass, 'errorResponse');
+};
+
+const successResponse = (element, message) => {
+  if (checkclass(element, 'successResponse')) {
+    removeClass(element, 'successResponse');
+  }
+  element.setAttribute('message', message);
+  addClass(element, 'successResponse');
 };
