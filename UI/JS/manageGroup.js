@@ -2,8 +2,9 @@
 /* eslint-disable camelcase */
 const newGrpform = document.querySelector('.newgroupform');
 const grpname = document.querySelector('.nameofnewgrp');
-const newNameInput = document.querySelector('.newName');
-const updateNewName = document.querySelector('.updategrpname');
+// const newNamehead = document.querySelector('');
+// const updateNewName = document.querySelector('.updategrpname');
+// const saveNewName = document.querySelector('.savegrpname');
 const refresh = document.querySelector('.refresh');
 const wrapper = document.querySelector('.wrapper');
 
@@ -25,7 +26,7 @@ window.addEventListener('load', async () => {
   removeClass(wrapper, 'loader');
 });
 
-document.addEventListener('click', () => {
+document.addEventListener('click', (thisevent) => {
   const inputs = document.querySelectorAll('input');
   inputs.forEach((input) => {
     input.addEventListener('focus', (event) => {
@@ -43,6 +44,18 @@ document.addEventListener('click', () => {
       if (checkclass(parentDiv, 'successResponse')) removeClass(parentDiv, 'successResponse');
     });
   });
+
+
+  if (thisevent.target.id === 'updategrpname') {
+    const newNameInput = document.querySelector('#editgrpname');
+    const saveNewName = document.querySelector('.savegrpname');
+    const changeGrpName = thisevent.target;
+    changeGrpName.style.display = 'none';
+    saveNewName.style.display = 'initial';
+    newNameInput.disabled = false;
+    addClass(newNameInput, 'newNameEdit');
+    newNameInput.focus();
+  }
 });
 
 
@@ -128,7 +141,21 @@ editGroup.addEventListener('submit', async (event) => {
 
   }
   if (checkclass(target, 'changegroupname')) {
-
+    const newNameInput = document.querySelector('#editgrpname');
+    const saveNewName = document.querySelector('.savegrpname');
+    const changeNewNane = document.querySelector('.updategrpname');
+    saveNewName.style.display = 'none';
+    changeNewNane.style.display = 'initial';
+    const name = newNameInput.value.trim();
+    const id = targetId.slice(0, targetId.indexOf('_'));
+    addClass(target, 'loader');
+    const { statusCode } = await fetchCall(`${appurl}groups/${id}/name`, 'PATCH', { name });
+    if (statusCode === 200) {
+      await populateEditform(id);
+      await populateGroups();
+      successResponse(Formwrapper, 'Name changed successfully');
+    } else if (statusCode === 400) {
+      errorResponse(Formwrapper, 'Error changing name');
+    }
   }
-
 });

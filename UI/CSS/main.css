@@ -1485,6 +1485,10 @@ padding: 10px 10px 0;
     text-transform: capitalize;
 }
 
+.newNameEdit {
+  border: 1px solid var(--myColor);
+}
+
 .updategrpname, .savegrpname, .deletegroupuser {
   padding: 0.7em 1em;
   background-color: var(--myColor);
@@ -1495,6 +1499,7 @@ padding: 10px 10px 0;
     white-space: nowrap;
   text-align: center;
   box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
+  cursor: pointer;
 }
 
 .savegrpname {
