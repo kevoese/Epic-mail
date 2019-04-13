@@ -41,7 +41,7 @@ const editgrouphtml = (details) => {
     </form>
     <form id = "${id}_changegroupname" class="changegroupname">
         <input id = "editgrpname" type="text" class="newName" value="${name}" disabled >
-        <span class="updategrpname">Change Group Name</span>
+        <span id="updategrpname" class="updategrpname">Change Group Name</span>
         <button class="savegrpname">Save</button>
     </form> 
     <form id = "${id}_addUserForm" class="addUserForm">
@@ -83,13 +83,6 @@ const populateEditform = async (groupId) => {
   const { responseObj } = await fetchCall(`${appurl}groups/${groupId}/users`, 'GET');
   const { name, id } = responseObj.data[0];
   let memberOptions = '';
-  // // eslint-disable-next-line no-restricted-syntax
-  // for (element of responseObj.data) {
-  //   const { member, admin } = element;
-  //   // eslint-disable-next-line no-await-in-loop
-  //   const { email } = await getUser(member);
-  //   if (thisUser.email !== email) memberOptions += groupUsersSelect(email);
-  // }
   const { data } = responseObj;
   memberOptions = await data.reduce(async (promise_acc, element) => {
     let acc = await promise_acc;
