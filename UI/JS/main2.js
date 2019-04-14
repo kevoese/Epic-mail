@@ -168,7 +168,6 @@ messageContainer.addEventListener('click', async (event) => {
   const thisElement = event.target;
   const thisMsg = thisElement.parentElement;
   const thisMsgId = thisMsg.id;
-
   if (thisMsg.classList[0] === 'wrapmsghead') {
     const allmsgs = document.querySelectorAll('.wrapmsghead');
     const msgId = thisMsgId.slice(0, thisMsgId.indexOf('_'));

@@ -165,9 +165,7 @@ class EpicGroup {
       const { id } = newData;
       await pool.query(groupsQuery.insertNewSentMsg,
         [id, subject, message, userId, groupId, parentMessageId, status]);
-
       const { rows } = await pool.query(`SELECT member FROM joint WHERE group_id = ${groupId}`);
-      // const newarr = rows.filter(row => row.member !== userId);
       if (rows[0] !== undefined) {
         const insertStr = multiInsert(rows, {
           id, subject, message, userId, groupId, parentMessageId, readStatus,
@@ -206,6 +204,21 @@ class EpicGroup {
       });
     }
     return errorResponse(400, 'Not an admin of the group', res);
+  }
+
+  static async getGroupMessages(req, res) {
+    const userId = req.decoded;
+    const { id } = req.params;
+    const getMembership = await pool.query(groupsQuery.getMember, [id, userId]);
+    if (getMembership.rows[0] !== undefined) {
+      const results = await pool.query(groupsQuery.getGroupMsgs, [id]);
+      const newData = results.rows;
+      return res.status(200).send({
+        status: 'Successful',
+        data: newData,
+      });
+    }
+    return errorResponse(400, 'Bad request', res);
   }
 }
 
