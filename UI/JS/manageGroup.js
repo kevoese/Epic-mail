@@ -9,6 +9,7 @@ const refresh = document.querySelector('.refresh');
 const wrapper = document.querySelector('.wrapper');
 let userDeleteId;
 let userDeleteGroupId;
+let deletetypeEvent;
 
 const loadUserInfo = async () => {
   thisUser = await getUser();
@@ -109,6 +110,13 @@ editGroup.addEventListener('click', (event) => {
     editGroup.style.display = 'none';
     inboxes.style.display = 'block';
   }
+  if (checkclass(target, 'deletegrp')) {
+    userDeleteGroupId = target.id.slice(0, target.id.indexOf('_'));
+    deletetypeEvent = 'group';
+    editGroup.style.display = 'none';
+    inboxes.style.display = 'block';
+    deleteModal.showModal();
+  }
 });
 
 editGroup.addEventListener('submit', async (event) => {
@@ -146,7 +154,7 @@ editGroup.addEventListener('submit', async (event) => {
     const groupId = targetId.slice(0, targetId.indexOf('_'));
     userDeleteId = id.slice(0, id.indexOf('_'));
     userDeleteGroupId = groupId;
-
+    deletetypeEvent = 'user';
     deleteModal.showModal();
   }
   if (checkclass(target, 'changegroupname')) {
@@ -175,15 +183,30 @@ deleteModal.addEventListener('click', async (event) => {
   if (btnTypeId === 'closebox' || btnTypeId === 'cancel') deleteModal.close();
   else if (btnTypeId === 'yes') {
     deleteModal.close();
-    addClass(editGroup, 'loader');
-    const { statusCode } = await fetchCall(`${appurl}groups/${userDeleteGroupId}/users/${userDeleteId}`, 'DELETE');
-    if (statusCode === 200) {
-      await populateEditform(userDeleteGroupId);
-      await populateGroups();
-    } else {
-      deleteresponse.showModal();
+    if (deletetypeEvent === 'user') {
+      addClass(editGroup, 'loader');
+      const { statusCode } = await fetchCall(`${appurl}groups/${userDeleteGroupId}/users/${userDeleteId}`, 'DELETE');
+      if (statusCode === 200) {
+        await populateEditform(userDeleteGroupId);
+        await populateGroups();
+      } else {
+        deleteresponse.showModal();
+      }
+      removeClass(editGroup, 'loader');
+    } else if (deletetypeEvent === 'group') {
+      const element = document.getElementById(`${userDeleteGroupId}_small`);
+      const { statusCode } = await fetchCall(`${appurl}groups/${userDeleteGroupId}`, 'DELETE');
+      if (statusCode === 200) {
+        inboxCard('show');
+        slider.id = 'open';
+        addClass(element, 'deleteAni');
+        setTimeout(() => {
+          groupwrap.removeChild(element);
+        }, 600);
+      } else {
+        deleteresponse.showModal();
+      }
     }
-    removeClass(editGroup, 'loader');
   }
 });
 
