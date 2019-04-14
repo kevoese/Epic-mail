@@ -48,7 +48,7 @@ const editgrouphtml = (details) => {
         <input id ="newUserEmail" required type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
         <button class="plus icon addUsers"></button>
     </form>
-    <button id = "${id}_deletegrp" class=" deletegrp icon"></button>`;
+    <button id = "${id}_deletegrp" class="deletegrp icon"></button>`;
 
   return edithtml;
 };
@@ -75,7 +75,7 @@ const populateGroups = async () => {
       return Promise.resolve(acc);
     }, Promise.resolve(''));
   } else if (responseObj.status === 'Empty') {
-    empty.innerHTML = emptyMsgBox('No groups available');
+    groupwrap.innerHTML = emptyMsgBox('No groups available');
   }
 };
 
