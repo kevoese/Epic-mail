@@ -2,11 +2,13 @@
 /* eslint-disable camelcase */
 const newGrpform = document.querySelector('.newgroupform');
 const grpname = document.querySelector('.nameofnewgrp');
-// const newNamehead = document.querySelector('');
-// const updateNewName = document.querySelector('.updategrpname');
-// const saveNewName = document.querySelector('.savegrpname');
+const deleteModal = document.querySelector('.sureDelete');
+const deleteresponse = document.querySelector('.deleteresponse');
+const closeDeleteErr = document.querySelector('#closeDeleteErr');
 const refresh = document.querySelector('.refresh');
 const wrapper = document.querySelector('.wrapper');
+let userDeleteId;
+let userDeleteGroupId;
 
 const loadUserInfo = async () => {
   thisUser = await getUser();
@@ -138,7 +140,14 @@ editGroup.addEventListener('submit', async (event) => {
     removeClass(target, 'loader');
   }
   if (checkclass(target, 'addContacts')) {
+    const memberSelect = document.querySelector('#deleteuser');
+    const index = memberSelect.selectedIndex;
+    const { id } = memberSelect.children[index];
+    const groupId = targetId.slice(0, targetId.indexOf('_'));
+    userDeleteId = id.slice(0, id.indexOf('_'));
+    userDeleteGroupId = groupId;
 
+    deleteModal.showModal();
   }
   if (checkclass(target, 'changegroupname')) {
     const newNameInput = document.querySelector('#editgrpname');
@@ -155,7 +164,27 @@ editGroup.addEventListener('submit', async (event) => {
       await populateGroups();
       successResponse(Formwrapper, 'Name changed successfully');
     } else if (statusCode === 400) {
-      errorResponse(Formwrapper, 'Error changing name');
+      errorResponse(Formwrapper, 'Invalid Request');
     }
+    removeClass(target, 'loader');
   }
 });
+
+deleteModal.addEventListener('click', async (event) => {
+  const btnTypeId = event.target.id;
+  if (btnTypeId === 'closebox' || btnTypeId === 'cancel') deleteModal.close();
+  else if (btnTypeId === 'yes') {
+    deleteModal.close();
+    addClass(editGroup, 'loader');
+    const { statusCode } = await fetchCall(`${appurl}groups/${userDeleteGroupId}/users/${userDeleteId}`, 'DELETE');
+    if (statusCode === 200) {
+      await populateEditform(userDeleteGroupId);
+      await populateGroups();
+    } else {
+      deleteresponse.showModal();
+    }
+    removeClass(editGroup, 'loader');
+  }
+});
+
+closeDeleteErr.addEventListener('click', () => deleteresponse.close());

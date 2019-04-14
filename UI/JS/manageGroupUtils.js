@@ -24,8 +24,8 @@ const groupDetails = (details) => {
   return grouphtml;
 };
 
-const groupUsersSelect = (email) => {
-  const optionTaghtml = ` <option>${email}</option>`;
+const groupUsersSelect = (email, id) => {
+  const optionTaghtml = ` <option id = '${id}_user'>${email}</option>`;
   return optionTaghtml;
 };
 
@@ -45,7 +45,7 @@ const editgrouphtml = (details) => {
         <button class="savegrpname">Save</button>
     </form> 
     <form id = "${id}_addUserForm" class="addUserForm">
-        <input id ="newUserEmail"  type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
+        <input id ="newUserEmail" required type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
         <button class="plus icon addUsers"></button>
     </form>
     <button id = "${id}_deletegrp" class=" deletegrp icon"></button>`;
@@ -88,7 +88,7 @@ const populateEditform = async (groupId) => {
     let acc = await promise_acc;
     const { member } = element;
     const { email } = await getUser(member);
-    acc = (thisUser.email !== email) ? acc.concat(groupUsersSelect(email)) : '';
+    acc = (thisUser.email !== email) ? acc.concat(groupUsersSelect(email, member)) : '';
     return Promise.resolve(acc);
   }, Promise.resolve(''));
   editGroup.innerHTML = editgrouphtml({ name, id, memberOptions });
