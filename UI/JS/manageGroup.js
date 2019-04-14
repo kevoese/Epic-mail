@@ -211,3 +211,20 @@ deleteModal.addEventListener('click', async (event) => {
 });
 
 closeDeleteErr.addEventListener('click', () => deleteresponse.close());
+
+groupwrap.addEventListener('click', async (event) => {
+  const thisElement = event.target;
+  const thisMsg = thisElement.parentElement;
+  const thisMsgId = thisMsg.id;
+  if (checkclass(thisMsg, 'wrapmsghead')) {
+    const msgId = thisMsgId.slice(0, thisMsgId.indexOf('_'));
+    addClass(view, 'loader');
+    await populateGroupView(msgId);
+    removeClass(view, 'loader');
+    const allGroups = groupwrap.querySelectorAll('.wrapmsghead');
+    allGroups.forEach((element) => {
+      if (checkclass(element, 'currentmsg')) removeClass(element, 'currentmsg');
+    });
+    addClass(thisMsg, 'currentmsg');
+  }
+});

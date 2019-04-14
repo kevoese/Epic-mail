@@ -38,6 +38,7 @@ const queries = {
     updateGroupName: 'UPDATE groups SET name = $1 WHERE id = $2 RETURNING name',
     deleteGroup: 'DELETE FROM groups WHERE (id = $1 AND admin = $2) RETURNING *',
     deleteMember: 'DELETE FROM joint WHERE (member = $1 AND group_id =$2) RETURNING *',
+    getGroupMsgs: 'SELECT * FROM messages WHERE group_id = $1',
     getMember: 'SELECT * FROM joint WHERE (group_id = $1 AND member = $2)',
     getAllMembers: 'SELECT * FROM groups JOIN joint ON groups.id = joint.group_id WHERE (group_id = $1)',
     insertNewMsg: 'INSERT INTO messages (subject, message, group_id, sender_id, parent_message_id) VALUES($1, $2, $3, $4, $5) RETURNING *',

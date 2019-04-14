@@ -30,4 +30,5 @@ router.delete('/groups/:groupId/users/:userToDeleteId', Validator.validateUserDe
 router.post('/groups/:groupId/messages', Auth, Validator.validateGroupMsg, groupController.msgGroup);
 router.post('/groups/:groupId/users', Auth, Validator.validateAddGroupUsers, groupController.addGroupUser);
 router.get('/groups/:id/users', Auth, Validator.validateJustId, groupController.getMembers);
+router.get('/groups/:id/messages', Auth, Validator.validateJustId, groupController.getGroupMessages);
 export default router;

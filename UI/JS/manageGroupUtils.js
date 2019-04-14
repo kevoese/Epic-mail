@@ -3,6 +3,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
 const groupwrap = document.querySelector('.allgroups');
+const view = document.querySelector('.chatcontent');
 const editGroup = document.querySelector('.editgroup');
 let thisUser;
 
@@ -53,6 +54,29 @@ const editgrouphtml = (details) => {
   return edithtml;
 };
 
+const grpMessageView = (msgObj) => {
+  const {
+    senderName, name, message_id, subject, message, profileImg, datestr,
+  } = msgObj;
+  const msghtml = ` <div id = "${message_id}_big" class="messagewrap">
+  <div class="msginfo">
+      <span class="subject">${subject}</span>
+      <span class="sender">${senderName}</span>
+      <span class="from">From:</span>
+      <span class="to icon">to</span>
+      <span class="receiver">${name}</span>
+      <span class="reply icon"></span>
+      <img src="${profileImg}" class="senderimg">
+      <span class="messageDate icon">(${datestr})</span> 
+  </div>
+  <p class = "msgP">
+      ${message}
+  </p> 
+  </div>`;
+
+  return msghtml;
+};
+
 const populateGroups = async () => {
   const empty = document.querySelector('.empty');
   const getgroupUrl = `${appurl}groups`;
@@ -92,4 +116,37 @@ const populateEditform = async (groupId) => {
     return Promise.resolve(acc);
   }, Promise.resolve(''));
   editGroup.innerHTML = editgrouphtml({ name, id, memberOptions });
+};
+
+const populateGroupView = async (groupId) => {
+  const url = `${appurl}groups/${groupId}/messages`;
+  const { responseObj, statusCode } = await fetchCall(url, 'GET');
+
+  if (statusCode === 200) {
+    const { data } = responseObj;
+    if (data.length < 1) {
+      view.innerHTML = emptyMsgBox('No message has been posted to this group');
+      return true;
+    }
+    view.innerHTML = await data.reduce(async (promise_acc, dataObj) => {
+      let acc = await promise_acc;
+      const {
+        message_id, subject, message, created_on, sender_id, group_id,
+      } = dataObj;
+      const groupDetail = await fetchCall(`${appurl}groups/${group_id}/users`, 'GET');
+      const { name } = groupDetail.responseObj.data[0];
+      const datestr = getDateStr(created_on);
+      const sender = await getUser(sender_id);
+      const senderName = (thisUser.email === sender.email) ? 'You' : `${sender.firstname} ${sender.lastname}`;
+      const profileImg = sender.profile_pic;
+      const msgObj = {
+        senderName, name, message_id, subject, message, profileImg, datestr,
+      };
+      acc = acc.concat(grpMessageView(msgObj));
+      return Promise.resolve(acc);
+    }, Promise.resolve(' '));
+  }
+  if (statusCode === 400) {
+    console.log('bad request');
+  }
 };
