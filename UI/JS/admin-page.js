@@ -16,7 +16,7 @@ const inboxCard = (status) => {
 };
 
 slider.addEventListener('click', (event) => {
-  let status = event.target.id;
+  const status = event.target.id;
   if (status === 'close') {
     inboxCard('show');
     event.target.id = 'open';
