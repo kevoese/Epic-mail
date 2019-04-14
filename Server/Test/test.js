@@ -520,7 +520,28 @@ describe('Epic Test', () => {
           done();
         });
     });
+   
+    it('should allow a member(UserA) get all messages from the group', (done) => {
+      chai.request(app)
+        .get('/api/v2/groups/1/messages')
+        .set('token', userAToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
 
+    it('should not allow a member(UserB) get all messages from the group', (done) => {
+      chai.request(app)
+        .get('/api/v2/groups/1/messages')
+        .set('token', userBToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
 
     it('should not allow a non-member(UserB) to post a message to a group', (done) => {
       chai.request(app)
@@ -572,6 +593,7 @@ describe('Epic Test', () => {
           done();
         });
     });
+
 
     it('should allow a member(UserA) get all members in a group', (done) => {
       chai.request(app)

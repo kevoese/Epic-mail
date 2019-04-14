@@ -5,19 +5,6 @@
 const readLabel = document.querySelector('#readLabel');
 const unreadLabel = document.querySelector('#unreadLabel');
 
-const getDateStr = (str) => {
-  const end = str.indexOf('T');
-  const rawDate = str.slice(0, end);
-  const firstHyphen = rawDate.indexOf('-');
-  const lastHyphen = rawDate.lastIndexOf('-');
-  const year = rawDate.slice(0, firstHyphen);
-  const month = rawDate.slice(firstHyphen + 1, lastHyphen);
-  const day = rawDate.slice(lastHyphen + 1);
-  const monthStrArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const monthStr = monthStrArr[Number(month) - 1];
-  return `${monthStr} ${day} ${year}`;
-};
-
 
 const messagepanel = (msgObj) => {
   const {
@@ -161,9 +148,7 @@ const populateOutbox = async (type) => {
 
 const populateView = async (msgId) => {
   const url = `${appurl}messages/${msgId}`;
-
   const { responseObj } = await fetchCall(url, 'GET');
-  // view.innerHTML = ' ';
   if (responseObj.status === 'Successful') {
     const { data } = responseObj;
     const {
@@ -185,7 +170,7 @@ const populateView = async (msgId) => {
     const msgObj = {
       senderName, receiverName, message_id, subject, message, profileImg, datestr,
     };
-    view.innerHTML += messageView(msgObj);
+    view.innerHTML = messageView(msgObj);
   }
   if (responseObj.status === 'Failure') {
     console.log('bad request');
