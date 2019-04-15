@@ -171,14 +171,12 @@
   
   .changepic input {
     position: absolute;
-    height: 3.8em;
-    cursor: pointer;
-    top: 30%;
-    left: 20%;
-    height: 100%;
-    translate: translateX(-50%);
+    height: 3.8em !important;
+    cursor: pointer !important;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
     opacity: 0;
-    cursor: pointer;
   }
   
   .addphoto {
@@ -200,7 +198,7 @@
     font-size: 1.1em;
     font-family: cambria;
     position: absolute;
-    transform: translateX(-50%) scale(0);
+    transform: translateX(-50%) scale(1);
     left: 50%;
     transition: transform 0.3s ease-out;
     color: var(--myColor);
@@ -272,7 +270,11 @@
 
   .hide {
     display: none;
-}
+  }
+
+  .hideElement {
+    transform: scale(0);
+  }
 
   @media screen and (max-width: 700px) {
     body {

@@ -402,7 +402,7 @@ form h2 {
   z-index: 3;
   padding: 0.8em 1.3em;
   border: 1px solid whitesmoke;
-  background: rgba(15, 0, 32, 0.486);
+  background: transparent;
   color: whitesmoke;
   font-size: 1em;
   font-family: cambria;

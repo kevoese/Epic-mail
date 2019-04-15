@@ -7,6 +7,8 @@ const deleteresponse = document.querySelector('.deleteresponse');
 const closeDeleteErr = document.querySelector('#closeDeleteErr');
 const refresh = document.querySelector('.refresh');
 const wrapper = document.querySelector('.wrapper');
+const signout = document.querySelector('.signout');
+const viewWrapper = document.querySelector('.chats');
 let userDeleteId;
 let userDeleteGroupId;
 let deletetypeEvent;
@@ -34,20 +36,9 @@ document.addEventListener('click', (thisevent) => {
   inputs.forEach((input) => {
     input.addEventListener('focus', (event) => {
       const thisInput = event.target;
-      const thisForm = thisInput.parentElement;
-      const parentDiv = thisForm.parentElement;
-      const buttons = thisForm.parentElement.querySelectorAll('button');
-      if (checkclass(thisInput, 'wrongemail')) removeClass(thisInput, 'wrongemail');
-      if (checkclass(buttons[0], 'hideElement')) {
-        buttons.forEach(button => unhide(button));
-      }
-      if (checkclass(thisForm, 'errorResponse')) removeClass(thisForm, 'errorResponse');
-      if (checkclass(thisForm, 'successResponse')) removeClass(thisForm, 'successResponse');
-      if (checkclass(parentDiv, 'errorResponse')) removeClass(parentDiv, 'errorResponse');
-      if (checkclass(parentDiv, 'successResponse')) removeClass(parentDiv, 'successResponse');
+      removeClass(thisInput, 'wrongemail');
     });
   });
-
 
   if (thisevent.target.id === 'updategrpname') {
     const newNameInput = document.querySelector('#editgrpname');
@@ -61,6 +52,15 @@ document.addEventListener('click', (thisevent) => {
   }
 });
 
+viewWrapper.addEventListener('click', () => {
+  const buttons = viewWrapper.querySelectorAll('button');
+  buttons.forEach(button => unhide(button));
+  const myforms = viewWrapper.querySelectorAll('.errorCover');
+  myforms.forEach((form) => {
+    removeClass(form, 'errorResponse');
+    removeClass(form, 'successResponse');
+  });
+});
 
 newGrpform.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -149,13 +149,17 @@ editGroup.addEventListener('submit', async (event) => {
   }
   if (checkclass(target, 'addContacts')) {
     const memberSelect = document.querySelector('#deleteuser');
-    const index = memberSelect.selectedIndex;
-    const { id } = memberSelect.children[index];
-    const groupId = targetId.slice(0, targetId.indexOf('_'));
-    userDeleteId = id.slice(0, id.indexOf('_'));
-    userDeleteGroupId = groupId;
-    deletetypeEvent = 'user';
-    deleteModal.showModal();
+    if (memberSelect.value === 'Choose User') {
+      errorResponse(Formwrapper, 'Choose a user to delete from the group');
+    } else {
+      const index = memberSelect.selectedIndex;
+      const { id } = memberSelect.children[index];
+      const groupId = targetId.slice(0, targetId.indexOf('_'));
+      userDeleteId = id.slice(0, id.indexOf('_'));
+      userDeleteGroupId = groupId;
+      deletetypeEvent = 'user';
+      deleteModal.showModal();
+    }
   }
   if (checkclass(target, 'changegroupname')) {
     const newNameInput = document.querySelector('#editgrpname');
@@ -227,4 +231,9 @@ groupwrap.addEventListener('click', async (event) => {
     });
     addClass(thisMsg, 'currentmsg');
   }
+});
+
+signout.addEventListener('click', () => {
+  localStorage.setItem('token', ' ');
+  window.location.replace(`${website}/epic-mail.html`);
 });

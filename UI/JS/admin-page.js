@@ -40,13 +40,12 @@ modal.addEventListener('click', (event) => {
 
 
 navIcon.addEventListener('click', (event) => {
-  let status = event.target.id;
-  console.log('here bro');
+  const status = event.target.id;
   if (status === 'navhide') {
-    menuList.style.transform = 'scale(1)';
+    menuList.classList.add('menushow');
     event.target.id = 'navshow';
   } else {
-    menuList.style.transform = 'scale(0)';
+    menuList.classList.remove('menushow');
     event.target.id = 'navhide';
   }
 });
