@@ -20,6 +20,7 @@ router.get('/messages/read', Auth, DBMsgController.readMessage);
 router.get('/messages/sent', Auth, DBMsgController.sentMessage);
 router.get('/messages/draft', Auth, DBMsgController.draftMessage);
 router.get('/messages/:id', Auth, Validator.validateJustId, DBMsgController.specificMessage);
+router.get('/messages/thread/:id', Auth, Validator.validateJustId, DBMsgController.msgThread);
 router.delete('/messages/:id', Auth, Validator.validateJustId, DBMsgController.deleteMessage);
 router.put('/user/update', Auth, Validator.validateProfile, DBUserController.updateProfile);
 router.post('/groups', Auth, Validator.validateNewGroup, groupController.newGroup);

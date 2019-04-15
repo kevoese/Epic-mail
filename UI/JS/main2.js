@@ -3,12 +3,15 @@
 const createMsg = document.querySelector('#newMessage');
 const createMsgGrp = document.querySelector('#groupform');
 const viewWrapper = document.querySelector('.chats');
+const wrapper = document.querySelector('.wrapper');
 const inputs = viewWrapper.querySelectorAll('input');
 const refresh = document.querySelector('.refresh');
 const myinbox = document.querySelector('.all');
 const inboxbtn = document.querySelector('#radioall');
 const signout = document.querySelector('.signout');
 let thisUser;
+let reply_stat = false;
+let parentMsgId = null;
 
 const loadUserInfo = async () => {
   thisUser = await getUser();
@@ -31,10 +34,12 @@ const loadUserInfo = async () => {
 };
 
 window.addEventListener('load', async () => {
+  addClass(wrapper, 'loader');
   await loadUserInfo();
+  removeClass(wrapper, 'loader');
 });
 
-const getMsgInfo = () => {
+const getMsgInfo = (pMsgId = false) => {
   const receiverEmail = document.querySelector('#receiverEmail').value.trim();
   const message = document.querySelector('#composemessage').value.trim();
   const subject = document.querySelector('#composesubject').value.trim();
@@ -43,6 +48,7 @@ const getMsgInfo = () => {
   const obj = {
     receiverEmail, message, subject, status,
   };
+  if (pMsgId) obj.parentMessageId = pMsgId;
   return obj;
 };
 
@@ -67,7 +73,7 @@ inputs.forEach((input) => {
   });
 });
 
-viewWrapper.addEventListener('click', () => {
+viewWrapper.addEventListener('click', (event) => {
   const buttons = viewWrapper.querySelectorAll('button');
   buttons.forEach(button => unhide(button));
   const myforms = viewWrapper.querySelectorAll('form');
@@ -76,18 +82,42 @@ viewWrapper.addEventListener('click', () => {
     removeClass(form, 'successmsg');
     removeClass(form, 'parentmsgErr');
   });
+
+  if (event.target.id === 'replybtn') {
+    composeNewMsg();
+    const msgBody = event.target.parentElement;
+    const raw = msgBody.querySelector('.sEmail').textContent.trim();
+    const email = raw.slice(2, -2);
+    document.querySelector('#receiverEmail').value = email;
+    reply_stat = true;
+    parentMsgId = msgBody.id.slice(0, msgBody.id.indexOf('_'));
+  }
+
+  if (event.target.id === 'fwdbtn') {
+    composeNewMsg();
+    const msgBody = event.target.parentElement;
+    const copytext = msgBody.querySelector('.msgP').textContent.trim();
+    document.querySelector('#composemessage').value = copytext;
+  }
+
+  if (checkclass(event.target, 'viewthread')) {
+    const raw = event.target.id;
+    const threadId = raw.slice(0, raw.indexOf('_'));
+    populateThread(threadId);
+  }
 });
 
 createMsg.addEventListener('submit', async (event) => {
   event.preventDefault();
   const thisForm = event.target;
-  const details = getMsgInfo();
+  const details = (reply_stat) ? getMsgInfo(parentMsgId) : getMsgInfo();
+  reply_stat = false;
+  parentMsgId = null;
   const url = `${appurl}messages`;
   const buttons = thisForm.querySelectorAll('button');
   addClass(thisForm, 'loader');
   buttons.forEach(button => hide(button));
   const { statusCode } = await fetchCall(url, 'POST', details);
-  removeClass(thisForm, 'loader');
   if (statusCode === 200) {
     await populateOutbox('sent');
     await populateOutbox('draft');
@@ -100,6 +130,7 @@ createMsg.addEventListener('submit', async (event) => {
   } else if (statusCode === 400) {
     errorResponse(thisForm, 'message you are replying to does not exist');
   }
+  removeClass(thisForm, 'loader');
 });
 
 createMsgGrp.addEventListener('submit', async (event) => {
@@ -111,7 +142,6 @@ createMsgGrp.addEventListener('submit', async (event) => {
   addClass(thisForm, 'loader');
   buttons.forEach(button => hide(button));
   const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
-  removeClass(thisForm, 'loader');
   if (statusCode === 200) {
     await populateOutbox('sent');
     await populateOutbox('draft');
@@ -125,6 +155,7 @@ createMsgGrp.addEventListener('submit', async (event) => {
   } else if (statusCode === 400 && responseObj.error === 'invalid parent message') {
     errorResponse(thisForm, 'message you are replying to does not exist');
   }
+  removeClass(thisForm, 'loader');
 });
 
 refresh.addEventListener('click', async () => {
@@ -212,6 +243,6 @@ deleteModal.addEventListener('click', async (event) => {
 closeDeleteErr.addEventListener('click', () => deleteresponse.close());
 
 signout.addEventListener('click', () => {
-  localStorage.setItem('token', ' ');
+  localStorage.removeItem('token');
   window.location.replace(`${website}/epic-mail.html`);
 });

@@ -4,6 +4,7 @@ const dropUsersTable = 'DROP TABLE IF EXISTS users';
 const dropMessagesTable = 'DROP TABLE IF EXISTS messages';
 const dropGroupsTable = 'DROP TABLE IF EXISTS groups';
 const dropJointTable = 'DROP TABLE IF EXISTS joint';
+const dropThreadsTable = 'DROP TABLE IF EXISTS threads';
 const dropInboxTable = 'DROP TABLE IF EXISTS inbox';
 const dropSentTable = 'DROP TABLE IF EXISTS sent';
 
@@ -16,6 +17,7 @@ async function dropTables() {
     await pool.query(dropUsersTable);
     await pool.query(dropMessagesTable);
     await pool.query(dropGroupsTable);
+    await pool.query(dropThreadsTable);
     console.log('tables deleted');
   } catch (error) {
     console.log(error);

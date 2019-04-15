@@ -45,6 +45,18 @@ describe('Epic Test', () => {
         });
     });
 
+    it('should signup a mailer on correct input', (done) => {
+      chai.request(app)
+        .post('/api/v2/auth/signup')
+        .send(users[11])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(201);
+          expect(res.body.status).to.equal('Successful');
+          userAToken = res.body.data.Token;
+          done();
+        });
+    });
+
     it('should signup a user A on correct input', (done) => {
       chai.request(app)
         .post('/api/v2/auth/signup')
@@ -170,6 +182,17 @@ describe('Epic Test', () => {
         });
     });
 
+    it('UserA should delete a message on valid message id', (done) => {
+      chai.request(app)
+        .delete('/api/v2/messages/2')
+        .set('token', userAToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
     it('UserA should respond with an empty inbox', (done) => {
       chai.request(app)
         .get('/api/v2/messages')
@@ -266,7 +289,7 @@ describe('Epic Test', () => {
 
     it('UserA should get a specific message on valid message id as a sender', (done) => {
       chai.request(app)
-        .get('/api/v2/messages/1')
+        .get('/api/v2/messages/4')
         .set('token', userAToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
@@ -337,7 +360,7 @@ describe('Epic Test', () => {
 
     it('UserB should get a specific message on valid message id', (done) => {
       chai.request(app)
-        .get('/api/v2/messages/1')
+        .get('/api/v2/messages/4')
         .set('token', userBToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
@@ -361,7 +384,7 @@ describe('Epic Test', () => {
 
     it('UserA should delete a message on valid message id', (done) => {
       chai.request(app)
-        .delete('/api/v2/messages/1')
+        .delete('/api/v2/messages/4')
         .set('token', userAToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
@@ -385,8 +408,19 @@ describe('Epic Test', () => {
 
     it('UserB should delete a message on valid message id', (done) => {
       chai.request(app)
-        .delete('/api/v2/messages/1')
+        .delete('/api/v2/messages/4')
         .set('token', userBToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('UserA should get his conversation thread on valid thread id', (done) => {
+      chai.request(app)
+        .get('/api/v2/messages/thread/1')
+        .set('token', userAToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal('Successful');
@@ -520,7 +554,7 @@ describe('Epic Test', () => {
           done();
         });
     });
-   
+
     it('should allow a member(UserA) get all messages from the group', (done) => {
       chai.request(app)
         .get('/api/v2/groups/1/messages')
@@ -585,7 +619,7 @@ describe('Epic Test', () => {
         .post('/api/v2/groups/1/messages')
         .set('token', userAToken)
         .send({
-          subject: 'subject', message: 'message', status: 'sent', parentMessageId: 4,
+          subject: 'subject', message: 'message', status: 'sent', parentMessageId: 7,
         })
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
@@ -653,7 +687,7 @@ describe('Epic Test', () => {
 
     it('Member/Non-member should not delete a user from the group', (done) => {
       chai.request(app)
-        .delete('/api/v2/groups/1/users/2')
+        .delete('/api/v2/groups/1/users/3')
         .set('token', userBToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(403);
@@ -664,7 +698,7 @@ describe('Epic Test', () => {
 
     it('Only an admin(UserA) should delete a user from a group', (done) => {
       chai.request(app)
-        .delete('/api/v2/groups/1/users/2')
+        .delete('/api/v2/groups/1/users/3')
         .set('token', userAToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);

@@ -8,26 +8,36 @@ const { userQuery, msgQuery } = queries;
 
 class EpicMessage {
   static async newMessage(req, res) {
-    let { parentMessageId } = req.body;
     const senderId = req.decoded;
+    let {
+      subject, message, status, receiverEmail, parentMessageId,
+    } = req.body;
+    subject = subject.trim();
+    message = message.trim();
+    status = status.trim();
+    receiverEmail = receiverEmail.trim();
+    let threadId = null;
+    const receiver = await pool.query(userQuery.getEmail, [receiverEmail]);
+    if (receiver.rows[0] === undefined) return errorResponse(404, 'Receiver email does not exist', res);
+    const receiverId = receiver.rows[0].id;
+    if (senderId === receiverId) return errorResponse(400, 'Unable to create email', res);
+
     if (parentMessageId === undefined) parentMessageId = null;
     else {
       const checkParentMsg = await pool.query(msgQuery.getParentMsg, [parentMessageId, senderId]);
       if (checkParentMsg.rows[0] === undefined) {
         return errorResponse(400, 'Invalid parent message', res);
       }
+      threadId = checkParentMsg.rows[0].thread_id;
+      if (!threadId) {
+        const thread = await pool.query(msgQuery.insertNewThread, [receiverId, senderId]);
+        threadId = thread.rows[0].id;
+        await pool.query(msgQuery.updateParentMsg, [threadId, parentMessageId]);
+        await pool.query(msgQuery.updateParentMsgInbox, [threadId, parentMessageId]);
+        await pool.query(msgQuery.updateParentMsgSent, [threadId, parentMessageId]);
+      }
     }
-    let {
-      subject, message, status, receiverEmail,
-    } = req.body;
-    subject = subject.trim();
-    message = message.trim();
-    status = status.trim();
-    receiverEmail = receiverEmail.trim();
-    const receiver = await pool.query(userQuery.getEmail, [receiverEmail]);
-    if (receiver.rows[0] === undefined) return errorResponse(404, 'Receiver email does not exist', res);
-    const receiverId = receiver.rows[0].id;
-    if (senderId === receiverId) return errorResponse(400, 'Unable to create email', res);
+
     const read_status = 'unread';
     const msgArray = [
       subject,
@@ -35,6 +45,7 @@ class EpicMessage {
       receiverId,
       senderId,
       parentMessageId,
+      threadId,
     ];
     try {
       const { rows } = await pool.query(msgQuery.insertNewMsg, msgArray);
@@ -48,6 +59,7 @@ class EpicMessage {
         receiverId,
         parentMessageId,
         status,
+        threadId,
       ];
       const inboxArray = [
         id,
@@ -57,6 +69,7 @@ class EpicMessage {
         senderId,
         parentMessageId,
         read_status,
+        threadId,
       ];
       await pool.query(msgQuery.insertNewSentMsg, sentArray);
       if (status === 'sent') {
@@ -98,6 +111,20 @@ class EpicMessage {
     return res.status(200).send({
       status: 'Successful',
       data: unread.rows,
+
+    });
+  }
+
+  static async msgThread(req, res) {
+    const userId = req.decoded;
+    const { id } = req.params;
+    const thread = await pool.query(msgQuery.getThread, [id, userId]);
+    if (thread.rows[0] === undefined) {
+      return errorResponse(400, 'Bad request', res);
+    }
+    return res.status(200).send({
+      status: 'Successful',
+      data: thread.rows,
 
     });
   }
