@@ -49,6 +49,12 @@ const users = [
     email: 'kevoesegs@epicmail.com',
     password: 'kevos',
   },
+  {
+    email: 'epicmail@epicmail.com',
+    firstname: 'Epicmail',
+    lastname: 'Welcome',
+    password: 'kevoese',
+  },
 ];
 
 export default users;

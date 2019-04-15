@@ -17,17 +17,21 @@ const inboxes = document.querySelector('.thread');
 const plus = document.querySelector('.plus');
 const plusbtns = document.querySelector('.plusbtns');
 
+const composeNewMsg = () => {
+  addClass(plusbtns, 'hideplusbtns');
+  newMsg.style.display = 'block';
+  inboxes.style.display = 'none';
+  newGroup.style.display = 'none';
+  inboxCard('hide');
+};
+
 plus.addEventListener('click', () => {
   if (checkclass(plusbtns, 'hideplusbtns')) removeClass(plusbtns, 'hideplusbtns');
   else addClass(plusbtns, 'hideplusbtns');
 });
 
 composeBtns.addEventListener('click', () => {
-  addClass(plusbtns, 'hideplusbtns');
-  newMsg.style.display = 'block';
-  inboxes.style.display = 'none';
-  newGroup.style.display = 'none';
-  inboxCard('hide');
+  composeNewMsg();
 });
 
 createGroup.addEventListener('click', () => {

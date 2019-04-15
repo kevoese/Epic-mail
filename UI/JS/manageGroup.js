@@ -234,6 +234,6 @@ groupwrap.addEventListener('click', async (event) => {
 });
 
 signout.addEventListener('click', () => {
-  localStorage.setItem('token', ' ');
+  localStorage.removeItem('token');
   window.location.replace(`${website}/epic-mail.html`);
 });

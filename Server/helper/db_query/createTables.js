@@ -20,7 +20,9 @@ const messages = `CREATE TABLE IF NOT EXISTS
           group_id integer ,
           sender_id integer ,
           parent_message_id integer,
-          FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+          thread_id integer,
+          FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
+          FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
         );`;
 
 
@@ -40,6 +42,13 @@ const groupJoin = `CREATE TABLE IF NOT EXISTS
           FOREIGN KEY (member) REFERENCES users(id) ON DELETE CASCADE
         );`;
 
+const threads = `CREATE TABLE IF NOT EXISTS
+        threads (
+          id serial PRIMARY KEY,
+          receiver_id integer NOT NULL,
+          sender_id integer NOT NULL
+        );`;
+
 const sent = `CREATE TABLE IF NOT EXISTS
         sent(
           id serial PRIMARY KEY,
@@ -52,9 +61,11 @@ const sent = `CREATE TABLE IF NOT EXISTS
           message text NOT NULL,
           status text,
           parent_message_id integer,
+          thread_id integer,
           FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
           FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE,
-          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+          FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
         );`;
 
 const inbox = `CREATE TABLE IF NOT EXISTS
@@ -69,13 +80,15 @@ const inbox = `CREATE TABLE IF NOT EXISTS
           message text NOT NULL,
           read_status text,
           parent_message_id integer,
+          thread_id integer,
           FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
           FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE,
-          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+          FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
         );`;
 
 
-const create = `${users}${groups}${groupJoin}${messages}${sent}${inbox}`;
+const create = `${users}${groups}${groupJoin}${threads}${messages}${sent}${inbox}`;
 const createTables = async () => {
   await pool.query(create);
 };
