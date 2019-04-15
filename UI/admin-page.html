@@ -16,19 +16,19 @@
      <nav class="navbar">
             <div id ="close" class="icon openinbox"></div>
          <div id="navhide" class="menu icon"></div>
-         <a href="https://kevoese.github.io/Epic-mail/UI/admin-page.html" class="vcenter logo">Epic mail</a>
-         <div class="vcenter search icon">
+         <a href="https://kevoese.github.io/Epic-mail/UI/admin-page.html" class="logo">Epic mail</a>
+         <div class="search icon">
              <input type="text" placeholder="Search Groups..." class="searchbar">
          </div> 
-         <div class="vcenter menulist">
+         <div class="menulist">
             <ul class="navmenu">
             <li>
-                <div class="profile vcenter">
+                <div class="profile">
                     <img src="images/userprofile.png" alt="" class="profileimg">
                     <span class="profilename"></span>
                 </div>  
             </li> 
-                <li> <a href="https://kevoese.github.io/Epic-mail/UI/epic-mail.html" class="vcenter signout icon">Sign out</a></li> 
+                <li> <a href="https://kevoese.github.io/Epic-mail/UI/epic-mail.html" class="signout icon">Sign out</a></li> 
              </ul>
                 
          </div>
@@ -48,7 +48,11 @@
                     <p class = 'icon' >Error deleting</p>
                 </dialog>
             <div id = "inbox" class="inbox">
-            <div id= "close" class="show icon"></div>
+            <!-- <div id= "close" class="show icon"></div> -->
+            <div  class="togglepage">
+                    <span>Back to Inbox</span>
+                    <a href = "https://kevoese.github.io/Epic-mail/UI/main.html" class="viewinbox icon"></a>
+            </div>
             <div class="messages grpdetails">
                <div class="refresh icon"></div>
                <div class="msgcontain">
@@ -62,7 +66,7 @@
         <div class="chats">
                 <div class="creategrp">    
                     <div class="newmsg grouphead icon">Create A New Group <div class="cutmsg icon"></div></div>
-                    <form id = "newgroupform" class="newgroupform" >
+                    <form id = "newgroupform" class="newgroupform errorCover" >
                         <input type="text" class="nameofnewgrp" placeholder="Enter Group Name" required>
                         <!-- <div class="addUsersdiv">
                             <input  type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
@@ -73,7 +77,7 @@
                        <button class="createnewgrpbtn">Create</button>
                     </form>
                 </div>
-                <div id = "1_editgroup" class="editgroup">    
+                <div id = "editgroup" class="editgroup errorCover">    
                     <div class="newmsg grouphead icon">Group<div class="cutmsgedit icon"></div></div>
                     <form id ="deleteUserForm" class="addContacts">
                             <select id = "deleteuser" class="deleteuser" name="gender" >
@@ -87,7 +91,7 @@
                         <button class="savegrpname">Save</button>
                     </form> 
                     <form id = "addUserForm" class="addUsersdiv">
-                        <input  type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
+                        <input  type="text" placeholder="Enter email to add user" class="memberEmail">
                         <button class="plus icon addUsers"></button>
                     </form>
                     <button class=" deletegrp icon"></button>

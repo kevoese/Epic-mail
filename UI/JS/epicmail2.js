@@ -28,6 +28,7 @@ container.addEventListener('submit', async (event) => {
   if (thisFormId === 'loginform') details = getLoginInfo();
   else details = getSignUpInfo();
   const url = (thisFormId === 'loginform') ? `${appurl}auth/login` : `${appurl}auth/signup`;
+  const webpage = (thisFormId === 'loginform') ? `${website}/main.html` : `${website}/uploadProfile.html`;
   thisForm.classList.add('loader');
   const error = thisForm.querySelector('.invalid');
   buttons.forEach(button => hide(button));
@@ -36,6 +37,7 @@ container.addEventListener('submit', async (event) => {
   if (statusCode === 200 || statusCode === 201) {
     const { Token } = responseObj.data;
     localStorage.setItem('token', Token);
+    window.location.replace(webpage);
   } else if (statusCode === 400) {
     unhide(error);
   } else if (statusCode === 409) {

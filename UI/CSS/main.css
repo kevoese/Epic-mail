@@ -73,6 +73,8 @@ body::before {
 }
 
 nav {
+  display: flex;
+  align-items: center;
   background-color: #fcfcfa;
   width: 96.4%;
   position: fixed;
@@ -86,6 +88,7 @@ nav {
 .menulist ul{
     list-style: none;
     display: inline-flex;
+    align-items: center;
     margin: 0;
 }
 
@@ -98,6 +101,7 @@ nav {
   margin-left: 2em;
   align-self: center;
   letter-spacing: 0.05em;
+  white-space: nowrap;
   float: left;
   cursor: pointer;
 }
@@ -105,8 +109,7 @@ nav {
 .search {
   align-self: center;
   position: relative;
-  width: 45%;
-  float: left;
+  flex-grow: 1;
 }
 
 .searchbar {
@@ -157,10 +160,11 @@ nav {
 
 .profileimg {
   border-radius: 100%;
+  border: 1px solid var(--mygrey);
   width: 3em;
   height: 3em;
   object-fit: cover;
-  object-position: center right;
+  object-position: center;
   align-self: center;
   margin: 0 0.5em;
 }
@@ -168,6 +172,7 @@ nav {
 .profilename {
   color: rgb(59, 59, 59);
   text-transform: capitalize;
+  white-space: nowrap;
   text-align: center;
   font-weight: bold;
   margin: 0.4em 0.2em 0;
@@ -269,19 +274,20 @@ nav {
   color: var(--myColor);
 }
 
-.viewgrps {
+.viewgrps, .viewinbox {
   padding:  1.7em;
   font-size: 1em;
   color: var(--myColor) !important;
   border: 2px solid var(--myColor);
   font-family: cambria;
+  letter-spacing: 0.1em;
   border-radius: 50%;
   position: relative;
   background-color: white;
   box-shadow: 0px 1px 5px rgba(31, 30, 30, 0.5); 
 }
 
-.viewgrps::after {
+.viewgrps::after, .viewinbox::after {
   content: '\f0c0';
   top:50%;
   left: 50%;
@@ -290,12 +296,16 @@ nav {
   color: var(--myColor);
 }
 
-.viewgrps:hover {
+.viewgrps:hover, .viewinbox:hover {
   background-color: var(--myColor);
 }
 
-.viewgrps:hover::after {
+.viewgrps:hover::after, .viewinbox:hover::after{
  color: white;
+}
+
+.viewinbox::after {
+  content: '\f0e0';
 }
 
 .msgbuttons {
@@ -524,8 +534,8 @@ a {
 
 .username {
   grid-row: 1/2;
-  grid-column: 1/7;
-  white-space: nowrap;
+  grid-column: 1/9;
+
   font-weight: 500;
   font-size: 0.95em;
   position: relative;
@@ -535,7 +545,7 @@ a {
 
 .groupname_msg {
   grid-row: 1/2;
-  grid-column: 7/16;
+  grid-column: 9/16;
   text-overflow: ellipsis;
   text-transform: capitalize;
   overflow: hidden;
@@ -565,6 +575,7 @@ a {
 }
 
 .groupname {
+  grid-column: 1/20;
   font-size: 1.2em;
   padding-left: 1.7em;
   font-weight: bold;
@@ -578,7 +589,7 @@ a {
 
 .msgtitle {
   grid-row: 2/3;
-  grid-column: 1/16;
+  grid-column: 1/17;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -609,8 +620,8 @@ a {
 }
 
 .deletediv {
-  grid-row: 2/3;
-  grid-column: 20/21;
+  grid-row: 3/4;
+  grid-column: 19/21;
   
 }
 .delete {
@@ -656,6 +667,8 @@ a {
   position: relative;
   height: 3.5em;
   width: 3.5em;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 50%;
   border: 1px solid var(--myLightcolor);
   box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
@@ -839,7 +852,7 @@ a {
 
 .messagewrap {
   display: block;
-    margin: 10px 5px;
+  margin: 0px 5px;
   background-color: white;
   box-shadow: 2px 2px 3px var(--mygrey);
   padding-top: 1em;
@@ -937,7 +950,7 @@ a {
   width: 5em;
   height: 5em;
   object-fit: cover;
-  object-position: center right;
+  object-position: center;
   border-radius: 100%;
   position: relative;
   right: -1.2em;
@@ -1074,14 +1087,14 @@ background-color: transparent;
 }
 
 
-.newmsgsearch {
+/* .newmsgsearch {
   height: 2.3em;
   border: 1px solid grey;
   padding-left: 0.7em;
   width: 19em;
   font-family: cambria;
   font-size: 1em;
-}
+} */
 
 .composeto {
   grid-column: 1/2;
@@ -1137,6 +1150,10 @@ background-color: transparent;
   font-size: 0.9em;
   margin: 0.6em 1em;
   background-color: var(--mywhite);
+}
+
+.editgroup select {
+  margin-left: 0;
 }
 
 .container option {
@@ -1473,7 +1490,7 @@ padding: 10px 10px 0;
 }
 
 .editgroup form {
-  margin: 0.5em 1em;
+  margin: 1em;
   padding: 0 0.5em;
 }
 
@@ -1481,9 +1498,11 @@ padding: 10px 10px 0;
     border: none;
     background-color: transparent;
     margin: 0.5em 1em;
+    margin-left: 0;
     font-size: 1.1em;
     font-weight: bold;
     text-transform: capitalize;
+    min-width: 10em;
 }
 
 .newNameEdit {
@@ -1563,6 +1582,9 @@ padding: 10px 10px 0;
    width: 2em;
    height: 2em;
    z-index: 0;
+   left: 0;
+   top: 50%;
+   transform: scale(1);
 }
 
 .addUsersdiv {
@@ -1572,11 +1594,15 @@ padding: 10px 10px 0;
 }
 
 .memberEmail {
-  width: auto;
-  width: 40%;
+  width: 60%;
   min-width: 15em;
   margin-right: 1em;
-  border-color: var(--myLightcolor);
+  border:1px solid var(--myLightcolor);
+  height: 2.3em;
+  padding-left: 0.7em;
+  font-family: cambria;
+  font-size: 1em;
+  margin: 0.6em 0.3em;
 }
 
 .addUsers::after {
@@ -1632,8 +1658,8 @@ padding: 10px 10px 0;
        display: block;
         position: absolute;
         padding: 0;
-        top: 1.5em;
-        right: 20%;
+        top: 4em;
+        right: 2%;
         background-color: rgba(0, 0, 0, 0.8);
         transform: scale(0);
         transition: transform 0.2s ease-out;
@@ -1687,6 +1713,10 @@ padding: 10px 10px 0;
         right: 0;
         bottom: 0;
         background-color: rgba(20,20,20, 0.7);
+    }
+
+    .menushow {
+      transform: scale(1) !important;
     }
 }
 
@@ -1775,11 +1805,32 @@ padding: 10px 10px 0;
     .wrapmsghead {
         grid-template-rows: 25% 25% 30% 20%;
     }
+
+    .msgbuttons{
+      font-size: 1.1em;
+    }
+
+    .msgbuttons label::after {
+      left: 5%;
+    }
+
+    .deletediv {
+      grid-row: 4/5;
+    }
+
+    .groupname_msg {
+      grid-column: 11/21;
+    }
     
+    .username {
+      grid-column: 1/11;
+    }
+
     .msgdate {
         grid-row: 4/5;
-        grid-column: 1/20;
+        grid-column: 1/19;
         text-align: left;
+        padding-left: 10px;
     }
     
     .open {
