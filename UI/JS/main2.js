@@ -7,6 +7,7 @@ const inputs = viewWrapper.querySelectorAll('input');
 const refresh = document.querySelector('.refresh');
 const myinbox = document.querySelector('.all');
 const inboxbtn = document.querySelector('#radioall');
+const signout = document.querySelector('.signout');
 let thisUser;
 
 const loadUserInfo = async () => {
@@ -62,15 +63,18 @@ const getGrpMsgInfo = () => {
 inputs.forEach((input) => {
   input.addEventListener('keyup', (event) => {
     const thisInput = event.target;
-    const thisForm = thisInput.parentElement;
-    const buttons = thisForm.parentElement.querySelectorAll('button');
-    if (checkclass(thisInput, 'wrongemail')) removeClass(thisInput, 'wrongemail');
-    if (checkclass(buttons[0], 'hideElement')) {
-      buttons.forEach(button => unhide(button));
-      if (checkclass(thisForm, 'receiverErr')) removeClass(thisForm, 'receiverErr');
-      if (checkclass(thisForm, 'successmsg')) removeClass(thisForm, 'successmsg');
-      if (checkclass(thisForm, 'parentmsgErr')) removeClass(thisForm, 'parentmsgErr');
-    }
+    removeClass(thisInput, 'wrongemail');
+  });
+});
+
+viewWrapper.addEventListener('click', () => {
+  const buttons = viewWrapper.querySelectorAll('button');
+  buttons.forEach(button => unhide(button));
+  const myforms = viewWrapper.querySelectorAll('form');
+  myforms.forEach((form) => {
+    removeClass(form, 'errorResponse');
+    removeClass(form, 'successmsg');
+    removeClass(form, 'parentmsgErr');
   });
 });
 
@@ -206,3 +210,8 @@ deleteModal.addEventListener('click', async (event) => {
 });
 
 closeDeleteErr.addEventListener('click', () => deleteresponse.close());
+
+signout.addEventListener('click', () => {
+  localStorage.setItem('token', ' ');
+  window.location.replace(`${website}/epic-mail.html`);
+});

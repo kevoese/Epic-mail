@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const imageInput = document.querySelector('.createimgfile');
 const skipbtn = document.querySelector('#skip');
 const savebtn = document.querySelector('#save');
@@ -8,6 +9,9 @@ const loading = document.querySelector('.loading');
 const errormsg = document.querySelector('.error');
 let pictureFile = null;
 
+window.addEventListener('load', async () => {
+  await getUser();
+});
 
 const getImglink = async (imageFile) => {
   const imgForm = new FormData();
@@ -26,14 +30,17 @@ const getImglink = async (imageFile) => {
     const response = await fetch(imgurApiUrl, dataform);
     const result = await response.json();
     const imgUrl = result.data.link;
-    loading.classList.add('hide');
-    saved.style.transform = 'translateX(-50%) scale(1)';
+    const { statusCode } = await fetchCall(`${appurl}user/update`, 'PUT', { profilePic: imgUrl });
+    addClass(loading, 'hide');
+    removeClass(skipbtn, 'hide');
+    if (statusCode !== 200) throw new Error('error updating image');
+    removeClass(saved, 'hideElement');
     profileImage.src = imgUrl;
-    skipbtn.classList.remove('hide');
     skipbtn.textContent = 'Go';
   } catch (err) {
-    loading.classList.add('hide');
-    errormsg.classList.remove('hide');
+    addClass(loading, 'hide');
+    removeClass(skipbtn, 'hide');
+    removeClass(errormsg, 'hide');
   }
 };
 
@@ -43,8 +50,8 @@ const loadFilePath = (file) => {
   readPath.addEventListener('load', (event) => {
     const path = event.target.result;
     profileImage.src = path;
-    skipbtn.classList.add('hide');
-    savebtn.classList.remove('hide');
+    addClass(skipbtn, 'hide');
+    removeClass(savebtn, 'hide');
   });
 };
 
@@ -53,10 +60,20 @@ imageInput.addEventListener('change', () => {
   loadFilePath(pictureFile);
 });
 
-savebtn.addEventListener('click', () => {
-  savebtn.classList.add('hide');
-  loading.classList.remove('hide');
-  errormsg.classList.add('hide');
-  getImglink(pictureFile);
-  imageInputBtn.style.transform = 'translateX(-50%) scale(0)';
+savebtn.addEventListener('click', async () => {
+  addClass(savebtn, 'hide');
+  removeClass(loading, 'hide');
+  addClass(errormsg, 'hide');
+  addClass(imageInputBtn, 'hideElement');
+  await getImglink(pictureFile);
+});
+
+const container = document.querySelector('.container');
+
+container.addEventListener('click', () => {
+  if (!checkclass(errormsg, 'hide')) {
+    profileImage.src = 'images/userprofile.png';
+    addClass(errormsg, 'hide');
+    removeClass(imageInputBtn, 'hideElement');
+  }
 });

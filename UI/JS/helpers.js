@@ -2,6 +2,9 @@
 const { token } = localStorage;
 const app = 'https://epicmailappbykelvin.herokuapp.com/api/v2/';
 const applocal = 'http://localhost:3000/api/v2/';
+const githubPage = 'https://kevoese.github.io/Epic-mail/UI/';
+const localPage = 'file:///C:/Users/Kelvin%20Esegbona/Documents/Programming/webDev/andela/bootcamper/Epic-mail/UI/';
+const website = githubPage;
 const appurl = app;
 
 
@@ -17,6 +20,7 @@ const fetchCall = async (url, method, body = undefined) => {
   const response = await fetch(url, object);
   const statusCode = response.status;
   const responseObj = await response.json();
+  console.log(responseObj);
   return { responseObj, statusCode };
 };
 
@@ -26,6 +30,7 @@ const getUser = async (id = false) => {
   if (statusCode === 200) {
     return responseObj.data;
   }
+  window.location.replace(`${website}/epic-mail.html`);
   return false;
 };
 
@@ -52,11 +57,11 @@ const checkclass = (element, className) => {
 };
 
 const addClass = (element, thisclass) => {
-  element.classList.add(thisclass);
+  if (!checkclass(element, thisclass)) element.classList.add(thisclass);
 };
 
 const removeClass = (element, thisclass) => {
-  element.classList.remove(thisclass);
+  if (checkclass(element, thisclass)) element.classList.remove(thisclass);
 };
 
 const hide = (element) => {

@@ -46,7 +46,7 @@ const editgrouphtml = (details) => {
         <button class="savegrpname">Save</button>
     </form> 
     <form id = "${id}_addUserForm" class="addUserForm">
-        <input id ="newUserEmail" required type="text" placeholder="Enter email to add user" class="newmsgsearch memberEmail">
+        <input id ="newUserEmail" required type="email" placeholder="Enter email to add user" class="memberEmail">
         <button class="plus icon addUsers"></button>
     </form>
     <button id = "${id}_deletegrp" class="deletegrp icon"></button>`;
