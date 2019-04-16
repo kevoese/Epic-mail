@@ -1,4 +1,8 @@
 /* eslint-disable no-undef */
+window.addEventListener('load', async () => {
+  if (localStorage.token) window.location.replace(`${website}/main.html`);
+});
+
 const container = document.querySelector('.container');
 const buttons = document.querySelectorAll('button');
 

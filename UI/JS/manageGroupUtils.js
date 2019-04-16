@@ -137,7 +137,7 @@ const populateGroupView = async (groupId) => {
       const { name } = groupDetail.responseObj.data[0];
       const datestr = getDateStr(created_on);
       const sender = await getUser(sender_id);
-      const senderName = (thisUser.email === sender.email) ? 'You' : `${sender.firstname} ${sender.lastname}`;
+      const senderName = (thisUser.email === sender.email) ? 'You' : `${sender.firstname} ${sender.lastname}  <p> < ${sender.email} > </p>`;
       const profileImg = sender.profile_pic;
       const msgObj = {
         senderName, name, message_id, subject, message, profileImg, datestr,

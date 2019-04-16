@@ -4,7 +4,7 @@ import errorResponse from '../../helper/errorResponse';
 import pool from '../../helper/db_query/queryMethod';
 import queries from '../../helper/db_query/queries';
 
-const { userQuery } = queries;
+const { userQuery, msgQuery } = queries;
 
 class userControllers {
   static welcome(req, res) {
@@ -26,6 +26,13 @@ class userControllers {
       ];
       const user = await pool.query(userQuery.insertNewUser, userArray);
       const { id } = user.rows[0];
+      const msgArray = ['WELCOME', `Welcome to epic mail. Experience fast, smooth and easy exchange of information with Epic Mail.
+                        Get started with epicmail. Create a message or click on 'view groups' to create a new group`, id, 1, null, null];
+      const newmsg = await pool.query(msgQuery.insertNewMsg, msgArray);
+      const msgId = newmsg.rows[0].id;
+      const InboxMsgArray = [msgId, 'WELCOME', `Welcome to epic mail. Experience fast, smooth and easy exchange of information with Epic Mail.
+                              Get started with epicmail. Create a message or click on 'view groups' to create a new group`, id, 1, null, 'unread', null];
+      await pool.query(msgQuery.insertNewInboxMsg, InboxMsgArray);
       return res.status(201).send({
         status: 'Successful',
         data: { Token: token.createtoken({ id }) },

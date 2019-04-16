@@ -27,10 +27,12 @@ const messagepanel = (msgObj) => {
   return msghtml;
 };
 
-const messageView = (msgObj) => {
+const messageView = (msgObj, thread = false) => {
   const {
     senderName, receiverName, message_id, subject, message, profileImg, datestr,
   } = msgObj;
+  const threadbtnhtml = (thread) ? `<button id = '${thread}_thread' class="viewthread">View thread</button>` : ' ';
+  const replybtnhtml = (receiverName === 'You') ? '<button id = "replybtn" class="replybtn icon">Reply</button>' : ' ';
   const msghtml = ` <div id = "${message_id}_big" class="messagewrap">
   <div class="msginfo">
       <span class="subject">${subject}</span>
@@ -38,15 +40,15 @@ const messageView = (msgObj) => {
       <span class="from">From:</span>
       <span class="to icon">to</span>
       <span class="receiver">${receiverName}</span>
-      <span class="reply icon"></span>
+      ${threadbtnhtml}
       <img src="${profileImg}" class="senderimg">
       <span class="messageDate icon">(${datestr})</span> 
   </div>
   <p class = "msgP">
       ${message}
   </p>
-  <button class="replybtn icon">Reply</button>
-  <button class="fwdbtn icon">Forward</button> 
+  ${replybtnhtml}
+  <button id = "fwdbtn" class="fwdbtn icon">Forward</button> 
   </div>`;
 
   return msghtml;
@@ -152,8 +154,15 @@ const populateView = async (msgId) => {
   if (responseObj.status === 'Successful') {
     const { data } = responseObj;
     const {
-      message_id, subject, message, created_on, sender_id, user_id, group_id,
+      message_id, subject, message, created_on, sender_id, receiver_id, user_id, group_id, status, thread_id,
     } = data;
+    if (status) {
+      receiverId = receiver_id;
+      senderId = user_id;
+    } else {
+      receiverId = user_id;
+      senderId = sender_id;
+    }
     let group_name = false;
     if (group_id) {
       const groupDetail = await fetchCall(`${appurl}groups/${group_id}/users`, 'GET');
@@ -161,16 +170,18 @@ const populateView = async (msgId) => {
       group_name = name;
     }
     const datestr = getDateStr(created_on);
-    const sender = await getUser(sender_id);
-    const receiver = await getUser(user_id);
-    const senderName = (thisUser.email === sender.email) ? 'You' : `${sender.firstname} ${sender.lastname}`;
-    let receiverName = (thisUser.email === receiver.email) ? 'You' : `${receiver.firstname} ${receiver.lastname}`;
+    const sender = await getUser(senderId);
+    const receiver = await getUser(receiverId);
+    const senderEmail = sender.email;
+    const receiverEmail = receiver.email;
+    const senderName = (thisUser.email === senderEmail) ? 'You' : `${sender.firstname} ${sender.lastname} <p class = 'sEmail'> < ${senderEmail} > </p>`;
+    let receiverName = (thisUser.email === receiverEmail) ? 'You' : `${receiver.firstname} ${receiver.lastname} <p> < ${receiverEmail} > </p>`;
     if (group_id) receiverName = group_name;
-    const profileImg = (thisUser.email === sender.email) ? receiver.profile_pic : sender.profile_pic;
+    const profileImg = (thisUser.email === senderEmail) ? receiver.profile_pic : sender.profile_pic;
     const msgObj = {
       senderName, receiverName, message_id, subject, message, profileImg, datestr,
     };
-    view.innerHTML = messageView(msgObj);
+    view.innerHTML = messageView(msgObj, thread_id);
   }
   if (responseObj.status === 'Failure') {
     console.log('bad request');
@@ -191,5 +202,37 @@ const populateGrpContact = async () => {
     addGrpContact.innerHTML = groupContacts(responseObj.data);
   } else if (responseObj.status === 'Empty') {
     addGrpContact.innerHTML = groupContacts([]);
+  }
+};
+
+const populateThread = async (threadId) => {
+  const url = `${appurl}messages/thread/${threadId}`;
+  const { responseObj, statusCode } = await fetchCall(url, 'GET');
+
+  if (statusCode === 200) {
+    const { data } = responseObj;
+    view.innerHTML = await data.reduce(async (promise_acc, dataObj) => {
+      let acc = await promise_acc;
+      const {
+        id, subject, message, created_on, sender_id, receiver_id,
+      } = dataObj;
+      const message_id = id;
+      const datestr = getDateStr(created_on);
+      const sender = await getUser(sender_id);
+      const receiver = await getUser(receiver_id);
+      const senderEmail = sender.email;
+      const receiverEmail = receiver.email;
+      const senderName = (thisUser.email === senderEmail) ? 'You' : `${sender.firstname} ${sender.lastname} <p class = 'sEmail'> < ${senderEmail} > </p>`;
+      const receiverName = (thisUser.email === receiverEmail) ? 'You' : `${receiver.firstname} ${receiver.lastname} <p> < ${receiverEmail} > </p>`;
+      const profileImg = (thisUser.email === senderEmail) ? receiver.profile_pic : sender.profile_pic;
+      const msgObj = {
+        senderName, receiverName, message_id, subject, message, profileImg, datestr,
+      };
+      acc = acc.concat(messageView(msgObj));
+      return Promise.resolve(acc);
+    }, Promise.resolve(' '));
+  }
+  if (statusCode === 400) {
+    console.log('bad request');
   }
 };
