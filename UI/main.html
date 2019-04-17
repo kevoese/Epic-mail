@@ -109,15 +109,12 @@
                             <input id = "receiverEmail"  type="text" class="newmsgsearch" 
                             placeholder="Enter Contact Email" pattern="^\w+@epicmail.com$" 
                             required title= "Email must be a valid epic email e.g john@epicmail.com">
-                               <select id = "contacts" class="contactselect" name="gender" >
+                               <select id = "contacts" class="contactselect" >
                                    <option  disabled selected>Add contacts</option>
-                                   <option >John Doe</option>
-                                   <option >Amos Doe</option>
-                                   <option >Nonso Jude</option>
                                </select>
                        
                        <input required id="composesubject" type="text" placeholder="Subjects" class="composesubject">
-                       <textarea required  name="" id="composemessage" class="composemessage" cols="30" rows="10"></textarea>
+                       <textarea required  id="composemessage" class="composemessage" ></textarea>
                        <button class="composesend icon">Send</button>
                        <div class="saveDraft icon">
                             <input id = "insavedraft"  type="checkbox"  class="incheckbox">
@@ -133,12 +130,13 @@
                            <span class="composesender"></span>
                            <span class="composeto icon">to</span>
                            <div class="addContacts">
-                                <select id = "grpcontacts" class="contactselect" name="gender" >
+                                <select id = "grpcontacts" class="contactselect" required>
                                        <option  disabled selected>Choose Groups</option>
                                    </select>
+                                   <div class="refreshGrp icon"></div>
                            </div>
-                           <input id="composesubjectgrp" type="text" placeholder="Subjects" class="composesubject">
-                           <textarea name="" id="composemessagegrp" class="composemessage" cols="30" rows="10"></textarea>
+                           <input id="composesubjectgrp" type="text" placeholder="Subjects" class="composesubject" required>
+                           <textarea name="" id="composemessagegrp" class="composemessage" cols="30" rows="10" required></textarea>
                            <button class="composesend icon">Send</button>
                            <div class="saveDraft icon">
                                 <input id = "insavedraftgrp"  type="checkbox"  class="incheckbox">

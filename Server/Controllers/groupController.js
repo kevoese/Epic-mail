@@ -157,6 +157,7 @@ class EpicGroup {
       groupId,
       userId,
       parentMessageId,
+      status,
     ];
     const getMembership = await pool.query(groupsQuery.getMember, [groupId, userId]);
     if (getMembership.rows[0] !== undefined) {

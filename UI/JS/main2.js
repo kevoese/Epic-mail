@@ -6,9 +6,13 @@ const viewWrapper = document.querySelector('.chats');
 const wrapper = document.querySelector('.wrapper');
 const inputs = viewWrapper.querySelectorAll('input');
 const refresh = document.querySelector('.refresh');
+const refreshGrp = document.querySelector('.refreshGrp');
 const myinbox = document.querySelector('.all');
 const inboxbtn = document.querySelector('#radioall');
 const signout = document.querySelector('.signout');
+const newmsgEmailInput = document.querySelector('#receiverEmail');
+const newmsgTextInput = document.querySelector('#composemessage');
+const newmsgSubjectInput = document.querySelector('#composesubject');
 let thisUser;
 let reply_stat = false;
 let parentMsgId = null;
@@ -27,10 +31,12 @@ const loadUserInfo = async () => {
   senderemailGrp.textContent = email;
   profileimg.src = profile_pic;
   await populateInbox('unread');
+  await populateInbox('read');
   await populateInbox();
   await populateOutbox('sent');
   await populateOutbox('draft');
   await populateGrpContact();
+  await populateContacts();
 };
 
 window.addEventListener('load', async () => {
@@ -40,9 +46,9 @@ window.addEventListener('load', async () => {
 });
 
 const getMsgInfo = (pMsgId = false) => {
-  const receiverEmail = document.querySelector('#receiverEmail').value.trim();
-  const message = document.querySelector('#composemessage').value.trim();
-  const subject = document.querySelector('#composesubject').value.trim();
+  const receiverEmail = newmsgEmailInput.value.trim();
+  const message = newmsgTextInput.value.trim();
+  const subject = newmsgSubjectInput.value.trim();
   const savedraft = document.querySelector('#insavedraft').checked;
   const status = (savedraft) ? 'draft' : 'sent';
   const obj = {
@@ -55,6 +61,9 @@ const getMsgInfo = (pMsgId = false) => {
 const getGrpMsgInfo = () => {
   const groups = Groupwrap.querySelector('#grpcontacts');
   const index = groups.selectedIndex;
+  if (index === 0) {
+    return false;
+  }
   const { id } = groups.children[index];
   const message = Groupwrap.querySelector('#composemessagegrp').value.trim();
   const subject = Groupwrap.querySelector('#composesubjectgrp').value.trim();
@@ -87,8 +96,10 @@ viewWrapper.addEventListener('click', (event) => {
     composeNewMsg();
     const msgBody = event.target.parentElement;
     const raw = msgBody.querySelector('.sEmail').textContent.trim();
+    const copysubject = msgBody.querySelector('.subject').textContent.trim();
     const email = raw.slice(2, -2);
-    document.querySelector('#receiverEmail').value = email;
+    newmsgEmailInput.value = email;
+    newmsgSubjectInput.value = `Reply: ${copysubject}`;
     reply_stat = true;
     parentMsgId = msgBody.id.slice(0, msgBody.id.indexOf('_'));
   }
@@ -97,7 +108,21 @@ viewWrapper.addEventListener('click', (event) => {
     composeNewMsg();
     const msgBody = event.target.parentElement;
     const copytext = msgBody.querySelector('.msgP').textContent.trim();
-    document.querySelector('#composemessage').value = copytext;
+    const copysubject = msgBody.querySelector('.subject').textContent.trim();
+    newmsgTextInput.value = copytext;
+    newmsgSubjectInput.value = `Forward: ${copysubject}`;
+  }
+
+  if (event.target.id === 'draftbtn') {
+    composeNewMsg();
+    const msgBody = event.target.parentElement;
+    const copytext = msgBody.querySelector('.msgP').textContent.trim();
+    const copysubject = msgBody.querySelector('.subject').textContent.trim();
+    const raw = msgBody.querySelector('.rEmail').textContent.trim();
+    const email = raw.slice(2, -2);
+    newmsgEmailInput.value = email;
+    newmsgTextInput.value = copytext;
+    newmsgSubjectInput.value = copysubject;
   }
 
   if (checkclass(event.target, 'viewthread')) {
@@ -121,6 +146,7 @@ createMsg.addEventListener('submit', async (event) => {
   if (statusCode === 200) {
     await populateOutbox('sent');
     await populateOutbox('draft');
+    await populateContacts();
     addClass(thisForm, 'successmsg');
     thisForm.reset();
   } else if (statusCode === 404) {
@@ -133,29 +159,37 @@ createMsg.addEventListener('submit', async (event) => {
   removeClass(thisForm, 'loader');
 });
 
+contacts.addEventListener('change', () => {
+  newmsgEmailInput.value = contacts.value;
+});
+
 createMsgGrp.addEventListener('submit', async (event) => {
   event.preventDefault();
   const thisForm = event.target;
   const details = getGrpMsgInfo();
-  const url = `${appurl}groups/${details.id}/messages`;
-  const buttons = thisForm.querySelectorAll('button');
-  addClass(thisForm, 'loader');
-  buttons.forEach(button => hide(button));
-  const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
-  if (statusCode === 200) {
-    await populateOutbox('sent');
-    await populateOutbox('draft');
-    await populateInbox();
-    addClass(thisForm, 'successmsg');
-    thisForm.reset();
-  } else if (statusCode === 400 && responseObj.error === 'Bad request') {
-    errorResponse(thisForm, 'Invalid Request');
-    const grpselect = thisForm.querySelector('#grpcontacts');
-    addClass(grpselect, 'wrongemail');
-  } else if (statusCode === 400 && responseObj.error === 'invalid parent message') {
-    errorResponse(thisForm, 'message you are replying to does not exist');
+  if (details) {
+    const url = `${appurl}groups/${details.id}/messages`;
+    const buttons = thisForm.querySelectorAll('button');
+    addClass(thisForm, 'loader');
+    buttons.forEach(button => hide(button));
+    const { responseObj, statusCode } = await fetchCall(url, 'POST', details);
+    if (statusCode === 200) {
+      await populateOutbox('sent');
+      await populateOutbox('draft');
+      await populateInbox('unread');
+      await populateInbox();
+      addClass(thisForm, 'successmsg');
+      thisForm.reset();
+    } else if (statusCode === 400 && responseObj.error === 'Bad request') {
+      errorResponse(thisForm, 'Invalid Request');
+      const grpselect = thisForm.querySelector('#grpcontacts');
+      addClass(grpselect, 'wrongemail');
+    } else if (statusCode === 400 && responseObj.error === 'invalid parent message') {
+      errorResponse(thisForm, 'Message does not exist');
+    }
+    removeClass(thisForm, 'loader');
   }
-  removeClass(thisForm, 'loader');
+  else errorResponse(thisForm, 'Please select a group');
 });
 
 refresh.addEventListener('click', async () => {
@@ -166,6 +200,12 @@ refresh.addEventListener('click', async () => {
   await populateOutbox('sent');
   await populateOutbox('draft');
   removeClass(refresh, 'refreshing');
+});
+
+refreshGrp.addEventListener('click', async () => {
+  addClass(refreshGrp, 'refreshing');
+  await populateGrpContact();
+  removeClass(refreshGrp, 'refreshing');
 });
 
 checkbox.addEventListener('click', async (event) => {
@@ -215,6 +255,7 @@ messageContainer.addEventListener('click', async (event) => {
       if (checkclass(element, 'currentmsg')) removeClass(element, 'currentmsg');
     });
     addClass(thisMsg, 'currentmsg');
+    await populateInbox('unread');
   }
 
   if (thisMsg.classList[0] === 'deletediv') {
