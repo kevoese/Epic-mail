@@ -30,6 +30,7 @@ const getUser = async (id = false) => {
   if (statusCode === 200) {
     return responseObj.data;
   }
+  localStorage.removeItem('token');
   window.location.replace(`${website}/epic-mail.html`);
   return false;
 };

@@ -45,6 +45,7 @@ class EpicMessage {
       receiverId,
       senderId,
       parentMessageId,
+      status,
       threadId,
     ];
     try {
@@ -74,6 +75,11 @@ class EpicMessage {
       await pool.query(msgQuery.insertNewSentMsg, sentArray);
       if (status === 'sent') {
         await pool.query(msgQuery.insertNewInboxMsg, inboxArray);
+      }
+
+      const contact = await pool.query(msgQuery.getContacts, [senderId, receiverEmail]);
+      if (contact.rows[0] === undefined) {
+        await pool.query(msgQuery.insertContact, [senderId, receiverEmail]);
       }
       return res.status(200).send({
         status: 'Successful',
@@ -125,6 +131,19 @@ class EpicMessage {
     return res.status(200).send({
       status: 'Successful',
       data: thread.rows,
+
+    });
+  }
+
+  static async getContacts(req, res) {
+    const userId = req.decoded;
+    const contact = await pool.query(userQuery.getContacts, [userId]);
+    if (contact.rows[0] === undefined) {
+      return errorResponse(201, 'No content', res);
+    }
+    return res.status(200).send({
+      status: 'Successful',
+      data: contact.rows,
 
     });
   }

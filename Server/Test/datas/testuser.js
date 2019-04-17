@@ -40,7 +40,7 @@ const users = [
     profilePic: 'https://i.com/wtjaVfi.png',
   },
   {
-    firstname: 'Paul',
+    firstname: 'Erute',
   },
   {
     lastname: 'Tommy',
@@ -50,9 +50,9 @@ const users = [
     password: 'kevos',
   },
   {
-    email: 'epicmail@epicmail.com',
-    firstname: 'Epicmail',
-    lastname: 'Welcome',
+    email: 'kelvin@epicmail.com',
+    firstname: 'Kelvin',
+    lastname: 'Esegbona',
     password: 'kevoese',
   },
 ];

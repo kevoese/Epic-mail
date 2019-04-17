@@ -427,6 +427,17 @@ describe('Epic Test', () => {
           done();
         });
     });
+
+    it('UserA should get his contacts', (done) => {
+      chai.request(app)
+        .get('/api/v2/user/contacts')
+        .set('token', userAToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
   });
 
   describe('UPDATE user', () => {
