@@ -96,9 +96,11 @@ groupwrap.addEventListener('click', async (event) => {
     newGroup.style.display = 'none';
     inboxes.style.display = 'none';
     inboxCard('hide');
-    const groupId = thisGroupId.slice(0, thisGroupId.indexOf('_'));
-    populateEditform(groupId);
     editGroup.style.display = 'flex';
+    addClass(editGroup, 'loader');
+    const groupId = thisGroupId.slice(0, thisGroupId.indexOf('_'));
+    await populateEditform(groupId);
+    removeClass(editGroup, 'loader');
   }
 });
 

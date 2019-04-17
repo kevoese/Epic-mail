@@ -20,6 +20,7 @@ const messages = `CREATE TABLE IF NOT EXISTS
           group_id integer ,
           sender_id integer ,
           parent_message_id integer,
+          status text,
           thread_id integer,
           FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
           FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
@@ -87,10 +88,17 @@ const inbox = `CREATE TABLE IF NOT EXISTS
           FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
         );`;
 
+const contacts = `CREATE TABLE IF NOT EXISTS
+        contacts(
+          id serial PRIMARY KEY,
+          user_id integer,
+          contact_email text NOT NULL
+        );`;
 
-const create = `${users}${groups}${groupJoin}${threads}${messages}${sent}${inbox}`;
+const create = `${users}${groups}${groupJoin}${threads}${messages}${sent}${inbox}${contacts}`;
 const createTables = async () => {
   await pool.query(create);
+  await pool.query('INSERT INTO users (firstname, lastname, email, passwordhash) VALUES(\'Epic\', \'Mail\', \'epicteam@epicmail.com\', \'$2b$10$eVRkMNC6j3K74rA9HoixNeZ0P9y.uWWv6poyIideJP7bw6BqCzcMa\')');
 };
 
 createTables();

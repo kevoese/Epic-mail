@@ -76,14 +76,15 @@ nav {
   display: flex;
   align-items: center;
   background-color: #fcfcfa;
-  width: 96.4%;
+  width: 96%;
   position: fixed;
   height: 10%;
     min-height: 3em;
   margin-top: 0;
-  right: 1.7%;
-  z-index: 4;
+  right: 2%;
+  z-index: 10;
   border: 1px solid var(--mygrey);
+  padding-right: 0.5em;
 }
 .menulist ul{
     list-style: none;
@@ -236,7 +237,7 @@ nav {
   max-height: 86vh;
   min-height: 500px;
   width: 96%;
-  grid-gap: 0.3em;
+  grid-gap: 0em;
   background-color: white;
 }
 
@@ -251,7 +252,7 @@ nav {
   width: 100%;
   background-color: var(--mywhite);
   padding: 0em;
-  margin: 0 0.2em 0 0;
+  margin: 0;
   border: 1px solid var(--mygrey);
   min-height: 350px;
   height: 85.5vh;
@@ -392,7 +393,7 @@ a {
 
 .msgcontain {
   width: 100%;
-  height: 100%;
+  height: 92%;
   display: grid;
   left: 0;
   grid-template-columns: 100% 100% 100%;
@@ -827,6 +828,7 @@ a {
     height: 99%;
   overflow-y: scroll;
   position: relative;
+  width: calc(100% - 5px);
 }
 
 .chats p {
@@ -852,9 +854,8 @@ a {
 
 .messagewrap {
   display: block;
-  margin: 0px 5px 0.5em;
+  margin: 0px 0px 0.5em;
   background-color: white;
-  box-shadow: 2px 2px 3px var(--mygrey);
   padding-top: 1em;
   padding-bottom: 0.5em;
   border-bottom: 2px solid var(--myfadegrey);
@@ -868,9 +869,9 @@ a {
 }
 
 .subject {
-  padding: 0.4em 1.2em;
+  padding: 0.5em;
   grid-row: 1/2;
-  grid-column: 2/11;
+  grid-column: 2/9;
   font-size: 1.2em;
   color: rgb(51, 51, 51, 0.9);
   font-weight: 800;
@@ -881,12 +882,13 @@ a {
 .from {
   display: flex;
   align-items: center;
+  justify-content: center;
   grid-row: 2/3;
   grid-column: 2/3;
   color: darkgrey;
   font-weight: lighter;
   font-size: 1.2em;
-  padding: 0.7em 0em 0.4em 2em;
+  padding: 0.7em;
   margin: 0;
   font-family: monospace;
   font-style: italic;
@@ -895,12 +897,13 @@ a {
 .to {
   display: flex;
   align-items: center;
+  justify-content: center;
   grid-row: 3/4;
   grid-column: 2/3;
   color: darkgrey;
   font-weight: lighter;
   font-size: 1.1em;
-  padding: 0.7em 0em 0.4em 2em;
+  padding: 0.7em;
   margin: 0;
   font-family: monospace;
   font-style: italic;
@@ -917,18 +920,20 @@ a {
   align-items: center;
   padding: 0.7em 0.3em;
   grid-row: 2/3;
-  grid-column: 3/8;
+  grid-column: 3/11;
   color: rgb(51, 51, 51, 0.9);
   font-size: 1em;
   margin: 0;
   font-family: cambria;
   text-transform: capitalize;
+  flex-wrap: wrap;
 }
 .sender p, .receiver p {
   font-style: italic;
   font-size: 0.9em;
   text-transform: lowercase;
   margin-left: 0.5em;
+  white-space: nowrap;
 }
 
 .receiver {
@@ -941,6 +946,7 @@ a {
   font-size: 1em;
   color: rgb(95, 95, 95);
   margin: 0;
+  flex-wrap: wrap;
 }
 
 
@@ -969,8 +975,7 @@ a {
   object-position: center;
   border-radius: 100%;
   position: relative;
-  right: -1.2em;
-  margin: 1em 0;
+  margin: 1em 0.3em;
 }
 
 .messagewrap button {
@@ -1000,9 +1005,16 @@ background-color: transparent;
 .fwdbtn {
   grid-row: 10/11;
   grid-column: 3/4;
-  padding: 0.7em 1.7em 0.7em 0.6em;
   padding: 0.5em 2.8em 0.5em 1.2em;
   position: relative;
+}
+
+.draftbtn {
+  grid-row: 10/11;
+  grid-column: 4/5;
+  padding: 0.5em;
+  position: relative;
+  border: none !important;
 }
 
 .fwdbtn::after {
@@ -1011,29 +1023,44 @@ background-color: transparent;
   right: 15%;
 }
 
+.draftbtn::after {
+  content: "\f303";
+  position: relative;
+  font-size: 1.5em;
+}
+
 .messageDate {
-  grid-row: 2/3;
-  grid-column: 6/11;
+  grid-row: 1/2;
+  grid-column: 9/11;
   text-align: center;
   font-family: cambria;
   color: rgb(95, 95, 95);
   padding: 0.7em 0.5em;
     padding-right: 2em;
     text-align: right;
+    white-space: nowrap;
 }
 
 
 .chats::-webkit-scrollbar {
-  width: 0.5em;
+  width: 5px;
+  height: 5px;
+}
+
+.chats::-webkit-scrollbar-track {
+  background-color: #fcfcfa;
+  border-left: 1px solid var(--mygrey);
 }
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
   width: 5px;
+  height: 5px;
 }
 
 .chats::-webkit-scrollbar-thumb {
   background: var(--myColor);
+
 }
 
 ::-webkit-scrollbar-thumb {
@@ -1056,7 +1083,7 @@ background-color: transparent;
   z-index: 2;
   position: relative;
   width: 100%;
-  padding: 1% 2%;
+  padding: 0;
   display: none;
 }
 
@@ -1068,7 +1095,6 @@ background-color: transparent;
   grid-template-columns: repeat(9, minmax(auto));
   grid-gap: 4px;
   background-color: white;
-  border: 1px solid grey;
   box-shadow: 2px 2px 20px var(--myColorTrans);
   padding-bottom: 0.4em;
   overflow-x: scroll;
@@ -1091,6 +1117,7 @@ background-color: transparent;
   font-family: cambria;
   font-size: 1em;
   position: relative;
+  text-align: center;
 }
 
 .cutmsg, .cutmsgedit {
@@ -1098,7 +1125,7 @@ background-color: transparent;
   z-index: 2;
   color: white;
   top: 20%;
-  right: 10%;
+  right: 2em;
   cursor: pointer;
 }
 
@@ -1150,6 +1177,8 @@ background-color: transparent;
   grid-row: 2/3;
   flex-wrap: wrap;
   margin: 0.6em 0px;
+  display: flex;
+  align-items: center;
 }
 
 .newmsgsearch {
@@ -1188,11 +1217,11 @@ background-color: transparent;
 .composesubject {
   grid-column: 1/11;
   grid-row: 4/5;
-  padding: 5px 0.7em;
+  padding: 5px 1em;
   font-size: 0.9em;
   height: 3.2em;;
-  margin: 0.7em 1em;
-  width: 92%;
+  margin: 0.7em 0.5%;
+  width: 99%;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid var(--mygrey);
@@ -1208,17 +1237,18 @@ select:focus {
 .composemessage {
   grid-column: 1/11;
   grid-row: 5/9;
-  max-width: 92%;
+  width: 99%;
   min-width: 92%;
   max-height: auto;
   min-height: 12em;
   background-color: transparent;
-  border: 1px solid var(--mygrey);
-  padding: 5px 1.3em;
+  border: none;
+  border-bottom: 1px solid var(--mygrey);
+  padding: 5px 0.7em;
   font-size: 1em;
   font-family: arial;
   resize: none;
-  margin: 0 1em;
+  margin: 0 0.5%;
 }
 
 .composesend {
@@ -1277,7 +1307,7 @@ select:focus {
   color: #b5b6ba;
 }
 
-.refresh
+.refresh, .refreshGrp
 {
   position: relative;
   padding: 0.6em;
@@ -1285,8 +1315,14 @@ select:focus {
   cursor: pointer;
 }
 
+.refreshGrp {
+   background-color: transparent;
+   width: 1em;
+   position: relative;
+   margin: 0 0 0 0.5em !important;
+}
 
-.refresh::after {
+.refresh::after, .refreshGrp::after {
   position: absolute;
   content: '\f01e';
   left: 50%;
@@ -1295,13 +1331,17 @@ select:focus {
   transform: translate(-50%, -50%);
 }
 
+.refreshGrp::after {
+  left: 0%;
+}
+
 .refreshing {
   height: 1em;
   width: 1em;
   margin: 5px auto;
   padding: 0px;
   border: 3px solid var(--myColor);
-  border-right: 4px solid var(--mywhite);
+  border-right: 4px solid transparent;
   border-radius: 50%;
   overflow: hidden;
   animation: load 2s 0.5s linear infinite;
@@ -1346,6 +1386,7 @@ select:focus {
     bottom: 0;
     right: 0;
     background-color: white;
+    z-index: 4;
 }
 
 .successmsg::before {
@@ -1603,13 +1644,23 @@ padding: 10px 10px 0;
    background-color: var(--myColor);
    width: 2em;
    height: 2em;
-   z-index: 0;
-   left: 0;
-   top: 50%;
-   transform: scale(1);
+   position: relative;
+   border-radius: 50%;
+   border: 1px solid var(--myLightcolor);
+   box-shadow: 0px 2px 5px rgba(31, 30, 30, 0.5); 
+   cursor: pointer;
+
 }
 
-.addUsersdiv {
+.addUsers::after {
+  content: '\f067';
+  top:50%;
+  left: 50%;
+  font-size: 1.2em;
+  transform: translate(-50%, -50%);
+}
+
+.addUserForm {
   display: flex;
   justify-content: flex-start;
   align-items: center;

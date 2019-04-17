@@ -27,7 +27,7 @@ class userControllers {
       const user = await pool.query(userQuery.insertNewUser, userArray);
       const { id } = user.rows[0];
       const msgArray = ['WELCOME', `Welcome to epic mail. Experience fast, smooth and easy exchange of information with Epic Mail.
-                        Get started with epicmail. Create a message or click on 'view groups' to create a new group`, id, 1, null, null];
+                        Get started with epicmail. Create a message or click on 'view groups' to create a new group`, id, 1, null, 'sent', null];
       const newmsg = await pool.query(msgQuery.insertNewMsg, msgArray);
       const msgId = newmsg.rows[0].id;
       const InboxMsgArray = [msgId, 'WELCOME', `Welcome to epic mail. Experience fast, smooth and easy exchange of information with Epic Mail.

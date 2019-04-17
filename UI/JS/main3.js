@@ -29,8 +29,9 @@ const messagepanel = (msgObj) => {
 
 const messageView = (msgObj, thread = false) => {
   const {
-    senderName, receiverName, message_id, subject, message, profileImg, datestr,
+    senderName, receiverName, message_id, subject, message, profileImg, datestr, status,
   } = msgObj;
+  const draftbtn = (status === 'draft') ? '<button id = "draftbtn" class="draftbtn icon"></button>' : ' ';
   const threadbtnhtml = (thread) ? `<button id = '${thread}_thread' class="viewthread">View thread</button>` : ' ';
   const replybtnhtml = (receiverName === 'You') ? '<button id = "replybtn" class="replybtn icon">Reply</button>' : ' ';
   const msghtml = ` <div id = "${message_id}_big" class="messagewrap">
@@ -49,6 +50,7 @@ const messageView = (msgObj, thread = false) => {
   </p>
   ${replybtnhtml}
   <button id = "fwdbtn" class="fwdbtn icon">Forward</button> 
+  ${draftbtn}
   </div>`;
 
   return msghtml;
@@ -57,13 +59,23 @@ const messageView = (msgObj, thread = false) => {
 const groupContacts = (grpArr) => {
   let optiontags = '';
   grpArr.forEach((group) => {
-    optiontags += ` <option id = "${group.id}" class= "group.name" >${group.name}</option>`;
+    optiontags += ` <option id = "${group.id}"  >${group.name}</option>`;
   });
-  grpContacthtml = ` <select id = "grpcontacts" class="contactselect" name="gender" >
-   <option  disabled selected>Choose Groups</option>
-   ${optiontags}
-</select>`;
+  grpContacthtml = `<option  disabled selected>Choose Groups</option>
+   ${optiontags}`;
   return grpContacthtml;
+};
+
+const getContacts = (contactArr) => {
+  let optiontags = '';
+  contactArr.forEach((contact) => {
+    optiontags += ` <option id = "${contact.user_id}" >${contact.contact_email}</option>`;
+  });
+  Contacthtml = `
+   <option  disabled selected>Select contact</option>
+   ${optiontags}
+`;
+  return Contacthtml;
 };
 
 const populateInbox = async (type = false) => {
@@ -83,7 +95,7 @@ const populateInbox = async (type = false) => {
   if (responseObj.status === 'Successful') {
     const { data } = responseObj;
     if (type === 'read') readLabel.textContent = `Read(${data.length})`;
-    else if (type === 'unread') {
+    if (type === 'unread') {
       unreadLabel.textContent = `Unread(${data.length})`;
       const notif = (data.length < 1) ? ' ' : data.length;
       inboxNum.setAttribute('box', notif);
@@ -112,8 +124,11 @@ const populateInbox = async (type = false) => {
   }
   if (responseObj.status === 'Empty') {
     if (type === 'read') readLabel.textContent = `Read(${0})`;
-    else if (type === 'unread') unreadLabel.textContent = `Unread(${0})`;
-    inboxhtml.innerHTML = emptyMsgBox(empty);
+    else if (type === 'unread') {
+      unreadLabel.textContent = `Unread(${0})`;
+      inboxNum.setAttribute('box', ' ');
+    }
+    else inboxhtml.innerHTML = emptyMsgBox(empty);
   }
 };
 
@@ -175,11 +190,11 @@ const populateView = async (msgId) => {
     const senderEmail = sender.email;
     const receiverEmail = receiver.email;
     const senderName = (thisUser.email === senderEmail) ? 'You' : `${sender.firstname} ${sender.lastname} <p class = 'sEmail'> < ${senderEmail} > </p>`;
-    let receiverName = (thisUser.email === receiverEmail) ? 'You' : `${receiver.firstname} ${receiver.lastname} <p> < ${receiverEmail} > </p>`;
+    let receiverName = (thisUser.email === receiverEmail) ? 'You' : `${receiver.firstname} ${receiver.lastname} <p class = 'rEmail'> < ${receiverEmail} > </p>`;
     if (group_id) receiverName = group_name;
     const profileImg = (thisUser.email === senderEmail) ? receiver.profile_pic : sender.profile_pic;
     const msgObj = {
-      senderName, receiverName, message_id, subject, message, profileImg, datestr,
+      senderName, receiverName, message_id, subject, message, profileImg, datestr, status,
     };
     view.innerHTML = messageView(msgObj, thread_id);
   }
@@ -234,5 +249,15 @@ const populateThread = async (threadId) => {
   }
   if (statusCode === 400) {
     console.log('bad request');
+  }
+};
+
+const populateContacts = async () => {
+  const url = `${appurl}user/contacts`;
+  const { responseObj, statusCode } = await fetchCall(url, 'GET');
+  if (statusCode === 200) {
+    contacts.innerHTML = getContacts(responseObj.data);
+  } else if (statusCode === 201) {
+    contacts.innerHTML = getContacts([]);
   }
 };

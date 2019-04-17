@@ -6,10 +6,11 @@ const queries = {
     updateFirstName: 'UPDATE users SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
     updateLastName: 'UPDATE users SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
     updateProfilePic: 'UPDATE users SET profile_pic = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
+    getContacts: 'SELECT * FROM contacts WHERE user_id = $1',
   },
 
   msgQuery: {
-    insertNewMsg: 'INSERT INTO messages (subject, message, receiver_id, sender_id, parent_message_id, thread_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
+    insertNewMsg: 'INSERT INTO messages (subject, message, receiver_id, sender_id, parent_message_id, status, thread_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
     insertNewSentMsg: 'INSERT INTO sent (message_id, subject, message, user_id, receiver_id, parent_message_id, status, thread_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
     insertNewInboxMsg: 'INSERT INTO inbox (message_id, subject, message, user_id, sender_id, parent_message_id, read_status, thread_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
     insertNewThread: 'INSERT INTO threads (receiver_id, sender_id) VALUES($1, $2) RETURNING *',
@@ -17,7 +18,7 @@ const queries = {
     updateParentMsgInbox: 'UPDATE inbox SET thread_id = $1 WHERE message_id = $2 RETURNING thread_id',
     updateParentMsgSent: 'UPDATE sent SET thread_id = $1 WHERE message_id = $2 RETURNING thread_id',
     getInbox: 'SELECT * FROM inbox WHERE user_id = $1',
-    getThread: 'SELECT * FROM messages WHERE thread_id = $1 AND (sender_id = $2 OR receiver_id = $2)',
+    getThread: 'SELECT * FROM messages WHERE (thread_id = $1 AND status = \'sent\') AND (sender_id = $2 OR receiver_id = $2)',
     getUnread: 'SELECT * FROM inbox WHERE (user_id = $1 AND read_status = \'unread\' )',
     getRead: 'SELECT * FROM inbox WHERE (user_id = $1 AND read_status = \'read\' )',
     getSent: 'SELECT * FROM sent WHERE (user_id = $1 AND status = \'sent\' )',
@@ -31,6 +32,8 @@ const queries = {
     getMessageUsers: 'SELECT * FROM messages WHERE id = $1',
     getFromInbox: 'SELECT * FROM inbox WHERE (message_id = $1) AND (user_id = $2)',
     getFromSent: 'SELECT * FROM sent WHERE (message_id = $1) AND (user_id = $2)',
+    getContacts: 'SELECT * FROM contacts WHERE (user_id = $1) AND (contact_email = $2)',
+    insertContact: 'INSERT INTO contacts (user_id, contact_email) VALUES($1, $2) RETURNING *',
   },
 
   groupsQuery: {
@@ -46,7 +49,7 @@ const queries = {
     getGroupMsgs: 'SELECT * FROM messages WHERE group_id = $1',
     getMember: 'SELECT * FROM joint WHERE (group_id = $1 AND member = $2)',
     getAllMembers: 'SELECT * FROM groups JOIN joint ON groups.id = joint.group_id WHERE (group_id = $1)',
-    insertNewMsg: 'INSERT INTO messages (subject, message, group_id, sender_id, parent_message_id) VALUES($1, $2, $3, $4, $5) RETURNING *',
+    insertNewMsg: 'INSERT INTO messages (subject, message, group_id, sender_id, parent_message_id, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
     insertNewSentMsg: 'INSERT INTO sent (message_id, subject, message, user_id, group_id, parent_message_id, status) VALUES($1, $2, $3, $4, $5, $6, $7)',
   },
 };
