@@ -12,45 +12,61 @@
     />
   </head>
   <body>
-    <div class="backgnd"></div>
-    
-    <div class="wrapper">
+    <div class="wrapper icon">
+      <a  href="https://kevoese.github.io/Epic-mail/UI/main.html" class="cut icon"></a>
       <div class="container">
-          <a
-          href="https://kevoese.github.io/Epic-mail/UI/main.html"
-          class="vcenter logo"
-          >Epic mail</a>
-        <img src="images/dummy2.png" class="profilepic" />
-        <div class="name">John Doe</div>
-        <div class="email icon">JohnDoe@epicmail.com</div>
+        <h2 class="username"></h2>
+        <img src="images/userprofile.png" class="profilepic" />
         <div class="changepic">
-          <button class="addphoto icon">Change photo</button>
+          <label for="upload" class="addphoto icon"></label>
           <input
             type="file"
+            id = "upload"
             name="file"
             class="createimgfile"
             accept="image/*"
             data-max-size="2000"
           />
         </div>
+        <div class="spanwrap">
+          <span class="saveimg hide">Save</span>
+          <span class="saved hide">Saved</span>
+          <div class="load"></div>
+        </div>
+    
       </div>
       <!-- <button class="editprofilebar">EDIT PROFILE</button> -->
         <div class="updateuser">
-            <div class="updatewrap changeFirstName">
-                    <input type="text" placeholder="Enter New First Name" class="fnameIn">
-              </div>
-              <div class="updatewrap changeLastName">
-                      <input type="text" placeholder="Enter New Last Name" class="lnameIn">
-              </div>
-              <div class="updatewrap changePassword">
-                      <input type="password" placeholder="New password" class="newpaswrd">
-                      <input type="password" placeholder="Confirm password" class="oldpaswrd">
-                      <button class="profilebuttons">Update</button>
-              </div>
+          <form id = "changefirstname" class="changegroupname ">
+            <label for="">FIRST-NAME</label>
+            <input id = "firstname" type="text" class="newName" value="" disabled = "disabled" required>
+            <span id="fname_icon" class="edit icon"></span>
+            <button class= 'hide'>Save</button>
+        </form> 
+        <form id = "changelastname" class="changegroupname">
+            <label for="">LAST-NAME</label>
+          <input id = "lastname" type="text" class="newName" value="" disabled = "disabled" required>
+          <span id="lname_icon" class="edit icon"></span>
+          <button  class= 'hide'>Save</button>
+      </form> 
+      <form id = "changephone_no" class="changegroupname">
+          <label for="">PHONE-NUMBER</label>
+          <input id = "mobileNo" type="integer" class="newName" value="+234" disabled = "disabled"
+           pattern ='^[\d]{12,20}$' title="Enter a valid mobile number" required>
+          <span id="phone_icon" class="edit icon"></span>
+          <button  class= 'hide'>Save</button>
+      </form> 
+      <form id = "changeAltEmail" class="changegroupname">
+          <label for="">ALTERNATIVE EMAIL (Email for password reset)</label>
+        <input id = "alternativeEmail" type="text" class="newName" value="" disabled = "disabled" required>
+        <span id="email_icon" class="edit icon"></span>
+        <button  class= 'hide'>Save</button>
+    </form>
         </div>
         
         
     </div>
-    <script src=""></script>
+    <script src="JS/helpers.js"></script>
+    <script src="JS/profile-edit.js"></script>
   </body>
 </html>
