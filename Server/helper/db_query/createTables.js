@@ -7,7 +7,9 @@ const users = `CREATE TABLE IF NOT EXISTS
         firstname text NOT NULL,
         lastname text NOT NULL,
         passwordhash text NOT NULL,
-        profile_pic text DEFAULT 'https://i.imgur.com/wtjaVfi.png'
+        profile_pic text DEFAULT 'https://i.imgur.com/wtjaVfi.png',
+        mobile_no numeric NULL,
+        alt_email text NULL
       );`;
 
 const messages = `CREATE TABLE IF NOT EXISTS

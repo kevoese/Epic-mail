@@ -65,7 +65,7 @@ class userControllers {
 
   static async updateProfile(req, res) {
     const {
-      firstname, lastname, profilePic,
+      firstname, lastname, profilePic, mobileNo, alternativeEmail,
     } = req.body;
     const id = req.decoded;
     let updated;
@@ -82,7 +82,14 @@ class userControllers {
       updated = await pool
         .query(userQuery.updateProfilePic, [profilePic, id]);
     }
-
+    if (mobileNo !== undefined) {
+      updated = await pool
+        .query(userQuery.updateMobileNo, [mobileNo, id]);
+    }
+    if (alternativeEmail !== undefined) {
+      updated = await pool
+        .query(userQuery.updateAltEmail, [alternativeEmail, id]);
+    }
     return res.status(200).send({
       status: 'Successful',
       data: updated.rows[0],

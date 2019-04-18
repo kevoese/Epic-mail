@@ -7,6 +7,7 @@ const dropJointTable = 'DROP TABLE IF EXISTS joint';
 const dropThreadsTable = 'DROP TABLE IF EXISTS threads';
 const dropInboxTable = 'DROP TABLE IF EXISTS inbox';
 const dropSentTable = 'DROP TABLE IF EXISTS sent';
+const dropContactTable = 'DROP TABLE IF EXISTS contacts';
 
 
 async function dropTables() {
@@ -18,6 +19,7 @@ async function dropTables() {
     await pool.query(dropMessagesTable);
     await pool.query(dropGroupsTable);
     await pool.query(dropThreadsTable);
+    await pool.query(dropContactTable);
     console.log('tables deleted');
   } catch (error) {
     console.log(error);
