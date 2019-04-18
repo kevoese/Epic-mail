@@ -29,6 +29,8 @@ const schemas = {
     firstname: Joi.string().trim().min(3).optional(),
     lastname: Joi.string().trim().min(3).optional(),
     profilePic: Joi.string().regex(/^https:\/\/i\.imgur\.com\/.+$/).trim().optional(),
+    mobileNo: Joi.number().optional(),
+    alternativeEmail: Joi.string().email().lowercase().optional(),
   }),
 
   groupschema:

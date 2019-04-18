@@ -1,11 +1,13 @@
 const queries = {
   userQuery: {
     getEmail: 'SELECT * FROM users WHERE email = $1',
-    getUser: 'SELECT firstname, lastname, email, profile_pic FROM users WHERE id = $1',
+    getUser: 'SELECT firstname, lastname, profile_pic, mobile_no, alt_email FROM users WHERE id = $1',
     insertNewUser: 'INSERT INTO users (firstname, lastname, email, passwordhash) VALUES ($1, $2, $3, $4) RETURNING *',
-    updateFirstName: 'UPDATE users SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
-    updateLastName: 'UPDATE users SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
-    updateProfilePic: 'UPDATE users SET profile_pic = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic',
+    updateFirstName: 'UPDATE users SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic, mobile_no, alt_email',
+    updateLastName: 'UPDATE users SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic, mobile_no, alt_email',
+    updateProfilePic: 'UPDATE users SET profile_pic = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic, mobile_no, alt_email',
+    updateMobileNo: 'UPDATE users SET mobile_no = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic, mobile_no, alt_email',
+    updateAltEmail: 'UPDATE users SET alt_email = $1 WHERE id = $2 RETURNING firstname, lastname, profile_pic, mobile_no, alt_email',
     getContacts: 'SELECT * FROM contacts WHERE user_id = $1',
   },
 
