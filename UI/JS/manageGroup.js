@@ -13,7 +13,7 @@ let userDeleteId;
 let userDeleteGroupId;
 let deletetypeEvent;
 
-const loadUserInfo = async () => {
+loadUserInfo = async () => {
   thisUser = await getUser();
   const profilename = document.querySelector('.profilename');
   const profileimg = document.querySelector('.profileimg');

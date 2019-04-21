@@ -7,12 +7,14 @@ const users = [
 
   {
     email: 'kevoese@epicmail.com',
+    alternativeEmail: 'epicmailteam@gmail.com',
     firstname: 'Kelvin',
     lastname: 'Esegbona',
     password: 'kevoese',
   },
   {
     email: 'joe@epicmail.com',
+    alternativeEmail: 'epicmailteam@gmail.com',
     firstname: 'Joe',
     lastname: 'Big',
     password: 'kevoese',
@@ -51,6 +53,7 @@ const users = [
   },
   {
     email: 'kelvin@epicmail.com',
+    alternativeEmail: 'epicmailteam@gmail.com',
     firstname: 'Kelvin',
     lastname: 'Esegbona',
     password: 'kevoese',

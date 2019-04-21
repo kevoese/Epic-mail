@@ -7,12 +7,20 @@ const schemas = {
       lastname: Joi.string().trim().min(3).required(),
       email: Joi.string().email().lowercase().required(),
       password: Joi.string().min(6).required(),
+      alternativeEmail: Joi.string().email().lowercase().required(),
     }),
 
   loginschema:
     Joi.object().keys({
       email: Joi.string().email().lowercase().required(),
       password: Joi.string().required(),
+    }),
+
+  passwordUpdate:
+    Joi.object().keys({
+      email: Joi.string().email().lowercase().required(),
+      newPassword: Joi.string().required(),
+      oldPassword: Joi.string().required(),
     }),
 
   messageschema:
@@ -62,6 +70,11 @@ const schemas = {
   onlyIdSchema:
   Joi.object().keys({
     id: Joi.number().integer().required(),
+  }),
+
+  onlyEmailSchema:
+  Joi.object().keys({
+    email: Joi.string().email().lowercase().required(),
   }),
 
   userDelete:

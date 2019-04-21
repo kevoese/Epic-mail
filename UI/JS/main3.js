@@ -127,8 +127,7 @@ const populateInbox = async (type = false) => {
     else if (type === 'unread') {
       unreadLabel.textContent = `Unread(${0})`;
       inboxNum.setAttribute('box', ' ');
-    }
-    else inboxhtml.innerHTML = emptyMsgBox(empty);
+    } else inboxhtml.innerHTML = emptyMsgBox(empty);
   }
 };
 
@@ -171,6 +170,7 @@ const populateView = async (msgId) => {
     const {
       message_id, subject, message, created_on, sender_id, receiver_id, user_id, group_id, status, thread_id,
     } = data;
+    console.log(responseObj);
     if (status) {
       receiverId = receiver_id;
       senderId = user_id;

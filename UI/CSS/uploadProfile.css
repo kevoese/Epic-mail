@@ -128,8 +128,22 @@
       color: rgba(36, 35, 35, 0.9);
       position: relative;
       box-shadow: 2px 2px 2px #050505;
+      position: relative;
   }
 
+   .container::after {
+     content: attr(message);
+     position: absolute;
+     bottom: 0;
+     text-align: center;
+     width: 100%;
+     padding: 0.5em;
+     font-size: 1.5em;
+     font-family: cambria;
+     left: 50%;
+     color: var(--myColor);
+     transform:translateX(-50%);
+   }
   
   .name {
     text-align: center;
@@ -274,6 +288,60 @@
 
   .hideElement {
     transform: scale(0);
+  }
+
+  .loader::before {
+    content: ' ';
+    height: 1.5em;
+    width: 1.5em;
+    padding: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--myColor);
+    border-left: 5px solid var(--myColor);
+    border-bottom: 5px solid var(--myColor);
+    border-radius: 50%;
+    animation: load 1s 0.5s linear infinite;
+    position: absolute;
+    z-index: 5;
+  }
+  
+  .loader::after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: white;
+      z-index: 4;
+  }
+  
+
+  .networkErr {
+    position: relative;
+  }
+  
+  .networkErr::after {
+    text-align: center;
+    position: absolute;
+    content: '! Error while connecting. Please click here to Reload';
+    z-index: 20;
+    left: 50%;
+    top: 2%;
+    width: fit-content;
+    height: 30px;
+    padding: 10px;
+    border: 1px solid rgba(255, 0, 0, 0.616);
+    background-color: white;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    font-size: 1.05em;
+    font-family: Cambria;
+    color: red;
+    cursor: pointer;
   }
 
   @media screen and (max-width: 700px) {

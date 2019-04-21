@@ -5,6 +5,7 @@ const forms = document.querySelector('.wrapper');
 const firstnameInput = document.querySelector('#firstname');
 const name = document.querySelector('.username');
 const lastnameInput = document.querySelector('#lastname');
+const userEmail = document.querySelector('.userEmail');
 const phoneInput = document.querySelector('#mobileNo');
 const altEmailInput = document.querySelector('#alternativeEmail');
 const profilePic = document.querySelector('.profilepic');
@@ -15,11 +16,10 @@ const saved = document.querySelector('.saved');
 const loaddiv = document.querySelector('.load');
 let pictureFile = null;
 
-const loadUserInfo = async () => {
+loadUserInfo = async () => {
   const thisUser = await getUser();
-  console.log(thisUser)
   const {
-    firstname, lastname, profile_pic, mobile_no, alt_email,
+    firstname, lastname, profile_pic, mobile_no, alt_email, email,
   } = thisUser;
   firstnameInput.value = firstname;
   lastnameInput.value = lastname;
@@ -27,6 +27,7 @@ const loadUserInfo = async () => {
   phoneInput.value = mobile_no;
   altEmailInput.value = alt_email;
   profilePic.src = profile_pic;
+  userEmail.textContent = email;
 };
 
 window.addEventListener('load', async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const messageBtns = document.querySelector('.msgbuttons');
@@ -17,6 +18,9 @@ const newGroup = document.querySelector('.Groupwrap');
 const inboxes = document.querySelector('.thread');
 const plus = document.querySelector('.plus');
 const plusbtns = document.querySelector('.plusbtns');
+
+let reply_stat = false;
+let parentMsgId = null;
 
 const composeNewMsg = () => {
   addClass(plusbtns, 'hideplusbtns');
@@ -47,6 +51,8 @@ hideCompose.addEventListener('click', () => {
   newMsg.style.display = 'none';
   inboxes.style.display = 'block';
   newGroup.style.display = 'none';
+  reply_stat = false;
+  parentMsgId = null;
 });
 
 hideGroup.addEventListener('click', () => {

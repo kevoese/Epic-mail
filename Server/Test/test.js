@@ -15,7 +15,7 @@ describe('Epic Test', () => {
       chai.request(app)
         .get('/')
         .end((err, res) => {
-          expect(res.body.message).to.equal('Welcome to EPic mail');
+          expect(res.body.message).to.equal('Welcome to Epic Mail');
           expect(res.statusCode).to.equal(200);
           done();
         });
@@ -736,6 +736,49 @@ describe('Epic Test', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+  });
+
+
+  describe('PASSWORD RESET', () => {
+    it('should update a password with correct old password', (done) => {
+      chai.request(app)
+        .put('/api/v2/update/password')
+        .send({ email: 'kelvin@epicmail.com', newPassword: 'kelvinese', oldPassword: 'kevoese' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+    it('should get the recovery email from a valid epic mail account', (done) => {
+      chai.request(app)
+        .get('/api/v2/reset/kelvin@epicmail.com')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should  send a reset password to a correct recovery mail', (done) => {
+      chai.request(app)
+        .get('/api/v2/resetMailer/2')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.status).to.equal('Successful');
+          done();
+        });
+    });
+
+    it('should not send a reset password to a wrong recovery mail', (done) => {
+      chai.request(app)
+        .get('/api/v2/resetMailer/278')
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
           done();
         });
     });
