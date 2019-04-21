@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const validClr = 'var(--myColor)';
 const invalidClr = 'var(--myLightcolor)';
-const inputs = document.querySelectorAll('input');
+const inputs = main.querySelectorAll('input');
 
 const regHere = document.querySelector('.regHere');
 const regbtn = document.querySelector('.regbtn');
@@ -14,6 +14,8 @@ const loginForm = document.querySelector('.Login');
 const signupForm = document.querySelector('.SignUp');
 const contactlink = document.querySelector('#contactlink');
 const closebox = document.querySelector('.closebox');
+const closereset = document.querySelector('.closereset');
+const forgetP = document.querySelector('.forgetp');
 
 const mediaBreakpoint1 = window.matchMedia('screen and (min-width: 900px)');
 mediaBreakpoint1.addListener(() => {
@@ -28,7 +30,7 @@ mediaBreakpoint1.addListener(() => {
 
 const required = {
   name: /^[\w]{3,20}$/,
-  email: /^\w+@epicmail.com$/i,
+  email: /^\w+@[\w]{2,20}.[a-z]{2,5}$/i,
   password: /^[\w@.]{7,20}$/,
 };
 
@@ -47,7 +49,7 @@ inputs.forEach((input) => {
       const errormsg = inputWrap.parentElement.querySelector('.invalid');
       hide(errormsg);
     }
-    const validate = isValid(thisInput.id, thisInput.value);
+    const validate = isValid(thisInput.getAttribute('testP'), thisInput.value);
     if (validate) inputWrap.style.color = validClr;
     else inputWrap.style.color = invalidClr;
   });
@@ -102,9 +104,20 @@ mobileReg.addEventListener('click', () => {
 });
 
 contactlink.addEventListener('click', () => {
-  document.querySelector('dialog').showModal();
+  document.querySelector('.contactdialog').showModal();
 });
 
 closebox.addEventListener('click', () => {
-  document.querySelector('dialog').close();
+  document.querySelector('.contactdialog').close();
+});
+
+forgetP.addEventListener('click', () => {
+  document.querySelector('.resetPass').showModal();
+});
+
+closereset.addEventListener('click', () => {
+  addClass(resetPasswordForm, 'hideElement');
+  addClass(resetMethodForm, 'hideElement');
+  removeClass(resetUsernameForm, 'hideElement');
+  document.querySelector('.resetPass').close();
 });

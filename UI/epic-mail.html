@@ -15,12 +15,37 @@
     <div class="back"> </div>
     <div class="wrapper"> 
       <div class="container">
-        <dialog> 
+        <dialog class = 'contactdialog'> 
           <div class="contact icon">
             <div class="closebox icon"></div>
             <p class="dname icon">Developer: Esegbona Kelvin</p>
             <p class="demail icon">kevoesegbona@gmail.com</p>
             <p class="dphone icon">+2347052648321</p>
+          </div>
+        </dialog>
+        <dialog class = "resetPass">
+          <div class="resetContain">
+              <div class="closereset icon"></div>
+            <form id="resetUsernameForm"  class = "">
+                <h2>Reset Password</h2>
+              <input type="text" class="resetUsername" placeholder="Enter Username">
+              <button>Send</button>
+            </form>
+            <form id="resetMethodForm" class = "hideElement">
+                <h2>Send Reset Password to this email?</h2>
+                  <div class="resetEmailDiv">
+                    <label class="resetEmail" for="radioEmail"></label>
+                  </div>                  
+                  <button>Send</button>
+              </form>
+            <form id="resetPasswordForm" class = "hideElement">
+                <h2>Change Password</h2>
+                <input type="password" id = 'resetPassword' class="resetPassword" placeholder="Enter Reset Password">
+                <input type="password" id = 'newPassword' class="resetPassword" placeholder="New Password">
+                <input type="password" id = 'confirmPassword' class="resetPassword" placeholder=" Confirm Password">
+                <button>Send</button>
+            </form>
+
           </div>
         </dialog>
         <nav class="navbar">
@@ -49,16 +74,16 @@
                 </div>
             <h2>Sign In</h2>
               <div class="icon emailicon linfo">
-                <input type="text" id="email" pattern="^\w+@epicmail.com$" class="email" placeholder="Email" required 
-                title = "Emter a valid Epic-mail email"
+                <input type="text"  testP = "email" pattern="^\w+@epicmail.com$" class="email" placeholder="Email" required 
+                title = "Enter a valid Epic-mail email"
                 />
               </div>
               <div class="icon passwrd linfo">
-                <input id="password" type="password" class="password" placeholder="Password" required/>
+                <input  testP = "password" type="password" class="password" placeholder="Password" required/>
               </div>
               <div class="buttonwrap">
                 <button class="submit">LOGIN</button>
-                <a href="" class="forgetp">Forgot password?</a>
+                <span class="forgetp">Forgot password?</span>
               </div>
               <p class="invalid icon hideElement">Invalid user name or password</p>
           </div>    
@@ -74,42 +99,51 @@
                 <div class="linfo icon fname">
                 <input
                     type="text"
-                    id="name"
+                    testP = "name"
                     pattern="^[\w]{3,20}$"
                     class="firstname"
-                    placeholder="First name"
+                    placeholder="Enter First name"
                     required
                     title= "name must contain 3 to 20 characters"
                 />
                 </div>
                 <div class="linfo icon lname">
                 <input
-                    id="name"
+                    testP = "name"
                     pattern="^[\w]{3,20}$"
                     type="text"
                     class="lastname"
-                    placeholder="Last name"
+                    placeholder="Enter Last name"
                     title = "name must contain 3 to 20 characters"
                     required
                 />
                 </div>
-                <div class="linfo icon emailicon">
+                <div class="linfo icon username">
                 <input
-                    value="@epicmail.com"
                     required
-                    pattern="^\w+@epicmail.com$"
+                    pattern="^[\w@]{3,20}$"
                     type="text"
-                    id="email"
-                    class="emailR"
-                    placeholder="Email"
-                    title= "Email must be a valid epic email e.g john@epicmail.com"
+                    testP = "name"
+                    class="usernameR"
+                    placeholder="Enter username"
+                    title= "Username must contain 3 to 20 characters"
                 />
               </div>
+              <div class="linfo icon emailicon">
+                  <input
+                      required
+                      type="email"
+                      testP = "email"
+                      class="emailR"
+                      placeholder="Enter Recovery Email"
+                      title= "Email must be a valid email e.g john@gmail.com"
+                  />
+                </div>
                 <div>
                   <div class="linfo icon passwrd">
                     <input
-                    id="password"
                     type="password"
+                    testP = "password"
                     class="passwordR"
                     pattern="^[\w@.]{7,20}$"
                     placeholder="Password"
@@ -120,7 +154,7 @@
                   
                 </div>
                 <button class="submit">SIGN UP NOW</button>
-                <p class="invalid icon hideElement">Email already exists</p>
+                <p class="invalid icon hideElement">Username already exists</p>
             </div>
                 
         </form>

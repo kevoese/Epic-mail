@@ -61,6 +61,10 @@ body::before {
   z-index: 1;
 }
 
+.errorDiv {
+  width: 100%;
+}
+
 .backgnd {
   position: absolute;
   top: 0;
@@ -1193,6 +1197,10 @@ background-color: transparent;
   margin: 0.6em 0.3em;
 }
 
+select, option {
+  cursor: pointer;
+}
+
 .container select, .editgroup select {
   grid-column: 8/11;
   grid-row: 2/3;
@@ -1408,7 +1416,7 @@ select:focus {
   color: var(--myColor);
 }
 
-.errorResponse, .successResponse {
+.errorResponse, .successResponse, .networkErr {
   position: relative;
 }
 
@@ -1426,6 +1434,26 @@ select:focus {
 
 .successResponse::before {
   color: green;
+}
+
+.networkErr::after {
+  text-align: center;
+  position: absolute;
+  content: '!!Error while connecting. Please click here to Reload';
+  z-index: 20;
+  left: 50%;
+  top: 2%;
+  width: fit-content;
+  height: 30px;
+  padding: 10px;
+  border: 1px solid rgba(255, 0, 0, 0.616);
+  background-color: white;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  font-size: 1.05em;
+  font-family: Cambria;
+  color: red;
+  cursor: pointer;
 }
 
 .wrongemail {

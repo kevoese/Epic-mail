@@ -4,10 +4,10 @@ import joiTest from '../helper/JoiTest';
 class Validate {
   static validateSignup(req, res, next) {
     const {
-      firstname, lastname, email, password,
+      firstname, lastname, email, password, alternativeEmail,
     } = req.body;
     const user = {
-      firstname, lastname, email, password,
+      firstname, lastname, email, password, alternativeEmail,
     };
     joiTest(user, schema.userschema, res, next);
   }
@@ -17,6 +17,13 @@ class Validate {
       email, password,
     } = req.body;
     joiTest({ email, password }, schema.loginschema, res, next);
+  }
+
+  static validatePasswordUpdate(req, res, next) {
+    const {
+      email, newPassword, oldPassword,
+    } = req.body;
+    joiTest({ email, newPassword, oldPassword }, schema.passwordUpdate, res, next);
   }
 
   static validateMessage(req, res, next) {
@@ -56,6 +63,11 @@ class Validate {
   static validateJustId(req, res, next) {
     const { id } = req.params;
     joiTest({ id }, schema.onlyIdSchema, res, next);
+  }
+
+  static validateJustEmail(req, res, next) {
+    const { email } = req.params;
+    joiTest({ email }, schema.onlyEmailSchema, res, next);
   }
 
   static validateUserDelete(req, res, next) {

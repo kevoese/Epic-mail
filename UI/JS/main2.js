@@ -14,10 +14,8 @@ const newmsgEmailInput = document.querySelector('#receiverEmail');
 const newmsgTextInput = document.querySelector('#composemessage');
 const newmsgSubjectInput = document.querySelector('#composesubject');
 let thisUser;
-let reply_stat = false;
-let parentMsgId = null;
 
-const loadUserInfo = async () => {
+loadUserInfo = async () => {
   thisUser = await getUser();
   const profilename = document.querySelector('.profilename');
   const senderemail = document.querySelector('.composesender');
@@ -188,8 +186,7 @@ createMsgGrp.addEventListener('submit', async (event) => {
       errorResponse(thisForm, 'Message does not exist');
     }
     removeClass(thisForm, 'loader');
-  }
-  else errorResponse(thisForm, 'Please select a group');
+  } else errorResponse(thisForm, 'Please select a group');
 });
 
 refresh.addEventListener('click', async () => {

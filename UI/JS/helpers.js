@@ -7,50 +7,7 @@ const localPage = 'file:///C:/Users/Kelvin%20Esegbona/Documents/Programming/webD
 const website = githubPage;
 const appurl = app;
 
-
-const fetchCall = async (url, method, body = undefined) => {
-  const object = {
-    method,
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      token,
-    }),
-    body: JSON.stringify(body),
-  };
-  const response = await fetch(url, object);
-  const statusCode = response.status;
-  const responseObj = await response.json();
-  // console.log(responseObj);
-  return { responseObj, statusCode };
-};
-
-const getUser = async (id = false) => {
-  const url = id ? `${appurl}user/${id}` : `${appurl}user`;
-  const { responseObj, statusCode } = await fetchCall(url, 'GET');
-  if (statusCode === 200) {
-    return responseObj.data;
-  }
-  localStorage.removeItem('token');
-  window.location.replace(`${website}/epic-mail.html`);
-  return false;
-};
-
-const getDateStr = (str) => {
-  const end = str.indexOf('T');
-  const rawDate = str.slice(0, end);
-  const firstHyphen = rawDate.indexOf('-');
-  const lastHyphen = rawDate.lastIndexOf('-');
-  const year = rawDate.slice(0, firstHyphen);
-  const month = rawDate.slice(firstHyphen + 1, lastHyphen);
-  const day = rawDate.slice(lastHyphen + 1);
-  const monthStrArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const monthStr = monthStrArr[Number(month) - 1];
-  return `${monthStr} ${day} ${year}`;
-};
-
-const emptyMsgBox = message => `<p class="empty">
-${message}
-</p>`;
+let loadUserInfo;
 
 const checkclass = (element, className) => {
   if (element.classList.contains(className)) return true;
@@ -88,3 +45,86 @@ const successResponse = (element, message) => {
   element.setAttribute('message', message);
   addClass(element, 'successResponse');
 };
+
+
+const networkErr = () => {
+  const thisclass = document.querySelector('.wrapper');
+  removeClass(thisclass, 'loader');
+  if (checkclass(thisclass, 'networkErr')) {
+    removeClass(thisclass, 'networkErr');
+  }
+  addClass(thisclass, 'networkErr');
+};
+
+const removeNetErr = () => {
+  const thisclass = document.querySelector('.wrapper');
+  removeClass(thisclass, 'networkErr');
+};
+
+
+const fetchCall = async (url, method, body = undefined) => {
+  removeNetErr();
+  const object = {
+    method,
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      token,
+    }),
+    body: JSON.stringify(body),
+  };
+  try {
+    const response = await fetch(url, object);
+    const statusCode = response.status;
+    const responseObj = await response.json();
+    // console.log(responseObj);
+    return { responseObj, statusCode };
+  } catch (err) {
+    networkErr();
+    const error = true;
+    return { error };
+  }
+};
+
+const getUser = async (id = false) => {
+  const url = id ? `${appurl}user/${id}` : `${appurl}user`;
+  const { responseObj, statusCode, error } = await fetchCall(url, 'GET');
+  if (!error) {
+    if (statusCode === 200) {
+      return responseObj.data;
+    }
+    localStorage.removeItem('token');
+    window.location.replace(`${website}/epic-mail.html`);
+    return false;
+  }
+};
+
+const getDateStr = (str) => {
+  const end = str.indexOf('T');
+  const rawDate = str.slice(0, end);
+  const firstHyphen = rawDate.indexOf('-');
+  const lastHyphen = rawDate.lastIndexOf('-');
+  const year = rawDate.slice(0, firstHyphen);
+  const month = rawDate.slice(firstHyphen + 1, lastHyphen);
+  const day = rawDate.slice(lastHyphen + 1);
+  const monthStrArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const monthStr = monthStrArr[Number(month) - 1];
+  return `${monthStr} ${day} ${year}`;
+};
+
+const emptyMsgBox = message => `<p class="empty">
+${message}
+</p>`;
+
+
+document.querySelector('body').addEventListener('click', async () => {
+  const errMsg = document.querySelector('.networkErr');
+  if (errMsg) {
+    errMsg.addEventListener('click', () => {
+      const loaders = document.querySelectorAll('.loader');
+      loaders.forEach((element) => {
+        removeClass(element, 'loader');
+      });
+    });
+    await loadUserInfo();
+  }
+});
