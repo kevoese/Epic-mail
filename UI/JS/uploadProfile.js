@@ -6,11 +6,23 @@ const saved = document.querySelector('.saved');
 const profileImage = document.querySelector('.profilepic');
 const imageInputBtn = document.querySelector('.changepic');
 const loading = document.querySelector('.loading');
+const container = document.querySelector('.container');
+const wrapper = document.querySelector('.wrapper');
 const errormsg = document.querySelector('.error');
 let pictureFile = null;
 
+loadUserInfo = async () => {
+  const thisUser = await getUser();
+  const { firstname, lastname } = thisUser;
+  const name = `${firstname} ${lastname}`;
+  container.setAttribute('message', `Welcome to Epic Mail ${name}`);
+};
+
 window.addEventListener('load', async () => {
+  addClass(wrapper, 'loader');
   await getUser();
+  loadUserInfo();
+  removeClass(wrapper, 'loader');
 });
 
 const getImglink = async (imageFile) => {
@@ -67,8 +79,6 @@ savebtn.addEventListener('click', async () => {
   addClass(imageInputBtn, 'hideElement');
   await getImglink(pictureFile);
 });
-
-const container = document.querySelector('.container');
 
 container.addEventListener('click', () => {
   if (!checkclass(errormsg, 'hide')) {

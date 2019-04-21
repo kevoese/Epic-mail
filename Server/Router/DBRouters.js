@@ -11,7 +11,10 @@ router.get('/', DBUserController.welcome);
 
 router.post('/auth/signup', Validator.validateSignup, DBUserController.signup);
 router.post('/auth/login', Validator.validateLogin, DBUserController.login);
+router.put('/update/password', Validator.validatePasswordUpdate, DBUserController.updatePassword);
 router.get('/user', Auth, DBUserController.userInfo);
+router.get('/reset/:email', Validator.validateJustEmail, DBUserController.resetUserInfo);
+router.get('/resetMailer/:id', Validator.validateJustId, DBUserController.resetMethod);
 router.get('/user/contacts', Auth, DBMsgController.getContacts);
 router.get('/user/:id', Auth, Validator.validateJustId, DBUserController.getUser);
 router.post('/messages', Auth, Validator.validateMessage, DBMsgController.newMessage);

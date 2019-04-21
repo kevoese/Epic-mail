@@ -7,9 +7,10 @@
     "start": "rimraf dist/ && babel ./Server -d dist && node dist/app.js",
     "startdev": "nodemon Server/app.js  --exec babel-node",
     "createTable": "babel-node ./Server/helper/db_query/createTables.js",
+    "nodemail": "babel-node ./Server/helper/nodeMailer.js",
     "dropTable": "babel-node ./Server/helper/db_query/dropTable.js",
     "DBcontrol": "babel-node ./Server/Models/EpicmailDB/DBUserController.js",
-    "test": "npm run dropTable && npm run createTable && cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --timeout 3000 --exit",
+    "test": "npm run dropTable && npm run createTable && cross-env NODE_ENV=test nyc --require @babel/register mocha Server/Test --timeout 60000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "rimraf dist/ && babel ./Server -d dist"
   },
@@ -41,9 +42,11 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "generate-password": "^1.4.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.0",
     "mocha": "^6.0.2",
+    "nodemailer": "^6.1.1",
     "pg": "^7.8.2"
   },
   "devDependencies": {
