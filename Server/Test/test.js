@@ -753,6 +753,16 @@ describe('Epic Test', () => {
           done();
         });
     });
+    it('should not update a password with incorrect old password', (done) => {
+      chai.request(app)
+        .put('/api/v2/update/password')
+        .send({ email: 'kelvin@epicmail.com', newPassword: 'kelvinese', oldPassword: 'kevo' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body.status).to.equal('Failure');
+          done();
+        });
+    });
     it('should get the recovery email from a valid epic mail account', (done) => {
       chai.request(app)
         .get('/api/v2/reset/kelvin@epicmail.com')

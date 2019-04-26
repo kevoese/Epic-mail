@@ -11,17 +11,15 @@ const { userQuery, msgQuery } = queries;
 
 const userConfirm = async (details) => {
   const { email, password } = details;
-  try {
-    const { rows } = await pool.query(userQuery.getEmail, [email]);
-    const [user] = rows;
-    if (user !== undefined) {
-      const passwordStat = secure.compare(password, user.passwordhash);
-      if (passwordStat) {
-        const { id } = user;
-        return id;
-      }
+  const { rows } = await pool.query(userQuery.getEmail, [email]);
+  const [user] = rows;
+  if (user !== undefined) {
+    const passwordStat = secure.compare(password, user.passwordhash);
+    if (passwordStat) {
+      const { id } = user;
+      return id;
     }
-  } catch (err) { return false; }
+  }
   return false;
 };
 
