@@ -1,13 +1,14 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
-// async..await is not allowed in global scope, must use a wrapper
+dotenv.config();
 
-const resetMail = async (receiverEmail, subjectDetail, message) => {
+export default async (receiverEmail, subjectDetail, message) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'epicmailteam@gmail.com',
-      pass: 'kevo4life',
+      pass: process.env.emailPassword,
     },
   });
 
@@ -25,5 +26,3 @@ const resetMail = async (receiverEmail, subjectDetail, message) => {
     return false;
   }
 };
-
-export default resetMail;
