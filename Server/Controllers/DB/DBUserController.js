@@ -16,8 +16,18 @@ const userConfirm = async (details) => {
   if (user !== undefined) {
     const passwordStat = secure.compare(password, user.passwordhash);
     if (passwordStat) {
-      const { id } = user;
-      return id;
+      const {
+        id, firstname, lastname, email, alternativeEmail, profile_pic, mobile_no,
+      } = user;
+      return {
+        id,
+        firstname,
+        lastname,
+        email,
+        alternativeEmail,
+        profile_pic,
+        mobile_no,
+      };
     }
   }
   return false;
@@ -38,34 +48,50 @@ class userControllers {
     const newData = await pool.query(userQuery.getEmail, [email]);
     if (newData.rows[0] === undefined) {
       const passwordhash = secure.encrypt(password);
-      const userArray = [
-        firstname, lastname, email, passwordhash, alternativeEmail,
-      ];
+      const userArray = [firstname, lastname, email, passwordhash, alternativeEmail];
       const user = await pool.query(userQuery.insertNewUser, userArray);
-      const { id } = user.rows[0];
+      const { id, profile_pic } = user.rows[0];
       const msgArray = ['WELCOME', userQuery.welcomeMsg, id, 1, null, 'sent', null];
       const newmsg = await pool.query(msgQuery.insertNewMsg, msgArray);
       const msgId = newmsg.rows[0].id;
       const InboxMsgArray = [msgId, 'WELCOME', userQuery.welcomeMsg, id, 1, null, 'unread', null];
       await pool.query(msgQuery.insertNewInboxMsg, InboxMsgArray);
-      await resetMailer(alternativeEmail, 'EPIC MAIL', 'Welcome to epic mail. We hope you enjoy our services.');
+      await resetMailer(
+        alternativeEmail,
+        'EPIC MAIL',
+        'Welcome to epic mail. We hope you enjoy our services.',
+      );
       return res.status(201).send({
         status: 'Successful',
-        data: { Token: token.createtoken({ id }) },
+        data: {
+          Token: token.createtoken({ id }),
+          user: {
+            id,
+            firstname,
+            lastname,
+            email,
+            alternativeEmail,
+            profile_pic,
+          },
+        },
       });
     }
     return errorResponse(409, 'Email already exist', res);
   }
 
   static async login(req, res) {
-    const id = await userConfirm(req.body);
+    const user = await userConfirm(req.body);
+    const { id } = user;
     if (id) {
       return res.status(200).send({
         status: 'Successful',
-        data: { Token: token.createtoken({ id }) },
+        data: {
+          Token: token.createtoken({ id }),
+          user,
+        },
       });
     }
-    return errorResponse(400, 'Bad request', res);
+    return errorResponse(400, 'Invalid email or password', res);
   }
 
   static async updateProfile(req, res) {
@@ -76,24 +102,19 @@ class userControllers {
     let updated;
 
     if (firstname !== undefined) {
-      updated = await pool
-        .query(userQuery.updateFirstName, [firstname, id]);
+      updated = await pool.query(userQuery.updateFirstName, [firstname, id]);
     }
     if (lastname !== undefined) {
-      updated = await pool
-        .query(userQuery.updateLastName, [lastname, id]);
+      updated = await pool.query(userQuery.updateLastName, [lastname, id]);
     }
     if (profilePic !== undefined) {
-      updated = await pool
-        .query(userQuery.updateProfilePic, [profilePic, id]);
+      updated = await pool.query(userQuery.updateProfilePic, [profilePic, id]);
     }
     if (mobileNo !== undefined) {
-      updated = await pool
-        .query(userQuery.updateMobileNo, [mobileNo, id]);
+      updated = await pool.query(userQuery.updateMobileNo, [mobileNo, id]);
     }
     if (alternativeEmail !== undefined) {
-      updated = await pool
-        .query(userQuery.updateAltEmail, [alternativeEmail, id]);
+      updated = await pool.query(userQuery.updateAltEmail, [alternativeEmail, id]);
     }
     return res.status(200).send({
       status: 'Successful',
@@ -144,7 +165,11 @@ class userControllers {
     if (!rows[0]) return errorResponse(400, 'Bad request', res);
     const [user] = rows;
     const { alt_email } = user;
-    const emailStat = await resetMailer(alt_email, 'Password Reset', `This is your reset Password: ${newPassword}`);
+    const emailStat = await resetMailer(
+      alt_email,
+      'Password Reset',
+      `This is your reset Password: ${newPassword}`,
+    );
     const passwordhash = secure.encrypt(newPassword);
     if (emailStat) {
       await pool.query(userQuery.updatePassword, [passwordhash, id]);
@@ -157,17 +182,16 @@ class userControllers {
   }
 
   static async updatePassword(req, res) {
-    const {
-      email, newPassword, oldPassword,
-    } = req.body;
+    const { email, newPassword, oldPassword } = req.body;
     const password = oldPassword;
-    const id = await userConfirm({ email, password });
+    const user = await userConfirm({ email, password });
+    const { id } = user;
     if (!id) return errorResponse(400, 'Bad request', res);
     const passwordhash = secure.encrypt(newPassword);
     await pool.query(userQuery.updatePassword, [passwordhash, id]);
     return res.status(200).send({
       status: 'Successful',
-      data: { Token: token.createtoken({ id }) },
+      data: { Token: token.createtoken({ id }), user },
     });
   }
 }
