@@ -5,7 +5,7 @@ import errorResponse from '../../helper/errorResponse';
 import pool from '../../helper/db_query/queryMethod';
 import queries from '../../helper/db_query/queries';
 import randomPasswordgen from '../../helper/randomPassword';
-import resetMailer from '../../helper/nodeMailer';
+import { resetMailer } from '../../helper/nodeMailer';
 
 const { userQuery, msgQuery } = queries;
 
