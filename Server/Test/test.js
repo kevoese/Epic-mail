@@ -1,8 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import chai from 'chai';
 import chaihttp from 'chai-http';
+import sinon from 'sinon';
 import app from '../app';
 import users from './datas/testuser';
 import testmessages from './datas/testmessages';
+import { transporter } from '../helper/nodeMailer';
+
+const mockTransporter = sinon.stub(transporter, 'sendMail').resolves({});
 
 const { expect } = chai;
 chai.use(chaihttp);
@@ -10,6 +15,10 @@ let userAToken;
 let userBToken;
 
 describe('Epic Test', () => {
+  after(async () => {
+    mockTransporter.restore();
+  });
+
   describe('/display welcome message', () => {
     it('display the welcome message', (done) => {
       chai.request(app)

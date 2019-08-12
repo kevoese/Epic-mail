@@ -3,14 +3,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export default async (receiverEmail, subjectDetail, message) => {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'epicmailteam@gmail.com',
-      pass: process.env.emailPassword,
-    },
-  });
+export const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'epicmailteam@gmail.com',
+    pass: process.env.emailPassword,
+  },
+});
+
+export const resetMailer = async (receiverEmail, subjectDetail, message) => {
 
   const mailOptions = {
     from: 'epicmailteam@gmail.com', // sender address
