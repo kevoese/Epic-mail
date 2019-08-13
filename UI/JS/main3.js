@@ -170,7 +170,7 @@ const populateView = async (msgId) => {
     const {
       message_id, subject, message, created_on, sender_id, receiver_id, user_id, group_id, status, thread_id,
     } = data;
-    console.log(responseObj);
+
     if (status) {
       receiverId = receiver_id;
       senderId = user_id;
