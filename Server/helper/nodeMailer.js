@@ -12,7 +12,6 @@ export const transporter = nodemailer.createTransport({
 });
 
 export const resetMailer = async (receiverEmail, subjectDetail, message) => {
-
   const mailOptions = {
     from: 'epicmailteam@gmail.com', // sender address
     to: receiverEmail, // list of receivers
